@@ -1,5 +1,7 @@
 package com.dualnback;
 
+import com.dualnback.random.RandomNumberGenerator;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

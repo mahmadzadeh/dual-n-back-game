@@ -14,10 +14,6 @@ public class SoundPlayer {
         this.sound = sound;
     }
 
-    public SoundPlayer( Context context ) {
-        this.sound = MediaPlayer.create( context, R.raw.a );
-    }
-
     public void play( ) {
         sound.start();
     }

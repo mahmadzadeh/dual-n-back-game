@@ -1,4 +1,6 @@
-package com.dualnback;
+package com.dualnback.random;
+
+import com.dualnback.IntegerRange;
 
 import java.util.Random;
 

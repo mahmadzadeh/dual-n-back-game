@@ -1,7 +1,7 @@
 package com.dualnback.sound;
 
 import com.dualnback.IntegerRange;
-import com.dualnback.RandomNumberGenerator;
+import com.dualnback.random.RandomNumberGenerator;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class SoundCollection {
     }
 
 
-    public SoundPlayer randomSoundPlayer( ) {
+    public SoundPlayer getRandomSoundPlayer( ) {
         int index = RandomNumberGenerator.next( new IntegerRange( 0, soundClips.size() - 1 ) );
 
         return soundClips.get( index );

@@ -1,4 +1,5 @@
-package com.dualnback;
+package com.dualnback.location;
+
 
 public class Location {
 
@@ -18,4 +19,11 @@ public class Location {
         return row;
     }
 
+    @Override
+    public String toString( ) {
+        return "Location{" +
+                "col=" + col +
+                ", row=" + row +
+                '}';
+    }
 }

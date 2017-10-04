@@ -60,7 +60,7 @@ public class SoundCollectionTest {
         List<SoundPlayer> soundClips = new ArrayList<>();
         soundClips.add( new SoundPlayer( mockMediaPlayer ) );
 
-        SoundPlayer soundPlayer = new SoundCollection( soundClips ).randomSoundPlayer();
+        SoundPlayer soundPlayer = new SoundCollection( soundClips ).getRandomSoundPlayer();
 
         assertNotNull( soundPlayer );
     }
