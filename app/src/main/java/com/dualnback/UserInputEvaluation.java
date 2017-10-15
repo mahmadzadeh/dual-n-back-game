@@ -1,8 +1,8 @@
 package com.dualnback;
 
 enum UserInputEvaluation {
-    CorrectSoundAndLocation,
-    IncorrectSoundAndLocation,
-    CorrectSoundIncorrectLocation,
-    IncorrectSoundCorrectLocation;
+    CorrectSound,
+    CorrectLocation,
+    IncorrectSound,
+    IncorrectLocation;
 }

@@ -33,16 +33,20 @@ public class Score {
 
     public Score update( UserInputEvaluation userInputEvaluation ) {
         switch ( userInputEvaluation ) {
-            case CorrectSoundAndLocation:
-                return new Score( this.totalTrials + 1, this.numCorrectLocationGuess + 1, this.numCorrectSoundGuess + 1 );
-            case IncorrectSoundAndLocation:
-                return new Score( this.totalTrials + 1, numCorrectLocationGuess, numCorrectSoundGuess );
-            case CorrectSoundIncorrectLocation:
-                return new Score( this.totalTrials + 1, numCorrectLocationGuess, numCorrectSoundGuess + 1 );
-            case IncorrectSoundCorrectLocation:
-                return new Score( this.totalTrials + 1, numCorrectLocationGuess + 1, numCorrectSoundGuess );
+            case CorrectSound:
+                return new Score( this.totalTrials, this.numCorrectLocationGuess, this.numCorrectSoundGuess + 1 );
+            case IncorrectSound:
+                return new Score( this.totalTrials, numCorrectLocationGuess, numCorrectSoundGuess );
+            case CorrectLocation:
+                return new Score( this.totalTrials, numCorrectLocationGuess + 1, numCorrectSoundGuess );
+            case IncorrectLocation:
+                return new Score( this.totalTrials, numCorrectLocationGuess, numCorrectSoundGuess );
             default:
                 throw new IllegalArgumentException( "Invalid user input given " + userInputEvaluation );
         }
+    }
+
+    public Score updateTrialsByeOne( ) {
+        return new Score( this.totalTrials + 1, this.numCorrectLocationGuess, this.numCorrectSoundGuess );
     }
 }

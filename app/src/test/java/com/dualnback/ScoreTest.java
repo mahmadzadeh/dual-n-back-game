@@ -2,10 +2,10 @@ package com.dualnback;
 
 import org.junit.Test;
 
-import static com.dualnback.UserInputEvaluation.IncorrectSoundCorrectLocation;
-import static com.dualnback.UserInputEvaluation.CorrectSoundAndLocation;
-import static com.dualnback.UserInputEvaluation.CorrectSoundIncorrectLocation;
-import static com.dualnback.UserInputEvaluation.IncorrectSoundAndLocation;
+import static com.dualnback.UserInputEvaluation.IncorrectLocation;
+import static com.dualnback.UserInputEvaluation.CorrectLocation;
+import static com.dualnback.UserInputEvaluation.CorrectSound;
+import static com.dualnback.UserInputEvaluation.IncorrectSound;
 import static org.junit.Assert.assertEquals;
 
 
@@ -61,15 +61,17 @@ public class ScoreTest {
     @Test
     public void updatingScoreBasedOnUserInput( ) {
 
-        Score score = new Score().update( CorrectSoundAndLocation );
+        Score score = new Score()
+                .update( CorrectSound )
+                .updateTrialsByeOne();
 
-        assertEquals( 100.00, score.calculateScorePercentage(), DELTA );
+        assertEquals( 50.00, score.calculateScorePercentage(), DELTA );
     }
 
     @Test
     public void updatingScoreBasedOnIncorrectUserInput( ) {
 
-        Score score = new Score().update( IncorrectSoundAndLocation );
+        Score score = new Score().update( IncorrectSound );
 
         assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
     }
@@ -77,7 +79,9 @@ public class ScoreTest {
     @Test
     public void updatingScoreBasedOnCorrectSoundUserInputButIncorrectLocation( ) {
 
-        Score score = new Score().update( CorrectSoundIncorrectLocation );
+        Score score = new Score()
+                .update( CorrectSound )
+                .updateTrialsByeOne();
 
         assertEquals( 50.00, score.calculateScorePercentage(), DELTA );
     }
@@ -85,31 +89,37 @@ public class ScoreTest {
     @Test
     public void updatingScoreBasedOnCorrectLocationUserInputButIncorrectSound( ) {
 
-        Score score = new Score().update( IncorrectSoundCorrectLocation );
+        Score score = new Score()
+                .update( IncorrectLocation )
+                .updateTrialsByeOne();
 
-        assertEquals( 50.00, score.calculateScorePercentage(), DELTA );
+        assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
     }
 
     @Test
     public void updatingScoreBasedOnMultipleInputs( ) {
 
         Score score = new Score()
-                .update( CorrectSoundAndLocation )
-                .update( IncorrectSoundCorrectLocation )
-                .update( IncorrectSoundAndLocation )
-                .update( IncorrectSoundCorrectLocation );
+                .update( CorrectSound )
+                .update( IncorrectLocation )
+                .updateTrialsByeOne()
+                .update( IncorrectSound )
+                .update( IncorrectLocation )
+                .updateTrialsByeOne();
 
-        assertEquals( 50.00, score.calculateScorePercentage(), DELTA );
+        assertEquals( 25.00, score.calculateScorePercentage(), DELTA );
     }
 
     @Test
     public void updatingScoreWhenUserAnswersAllCorrect( ) {
 
         Score score = new Score()
-                .update( CorrectSoundAndLocation )
-                .update( CorrectSoundAndLocation )
-                .update( CorrectSoundAndLocation )
-                .update( CorrectSoundAndLocation ) ;
+                .update( CorrectSound )
+                .update( CorrectLocation )
+                .updateTrialsByeOne()
+                .update( CorrectSound )
+                .update( CorrectLocation )
+                .updateTrialsByeOne() ;
 
         assertEquals( 100.00, score.calculateScorePercentage(), DELTA );
     }
@@ -118,10 +128,12 @@ public class ScoreTest {
     public void updatingScoreWhenUserAnswersAllincorrectly( ) {
 
         Score score = new Score()
-                .update( IncorrectSoundAndLocation )
-                .update( IncorrectSoundAndLocation )
-                .update( IncorrectSoundAndLocation )
-                .update( IncorrectSoundAndLocation ) ;
+                .update( IncorrectSound )
+                .update( IncorrectLocation )
+                .updateTrialsByeOne()
+                .update( IncorrectSound )
+                .update( IncorrectLocation )
+                .updateTrialsByeOne() ;
 
         assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
     }
