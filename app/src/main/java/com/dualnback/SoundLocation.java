@@ -1,19 +1,19 @@
 package com.dualnback;
 
 import com.dualnback.location.Location;
-import com.dualnback.sound.SoundPlayer;
+import com.dualnback.sound.Sound;
 
 class SoundLocation {
 
-    private final SoundPlayer sound;
+    private final Sound sound;
     private final Location location;
 
-    SoundLocation( SoundPlayer sound, Location location ) {
+    SoundLocation( Sound sound, Location location ) {
         this.sound = sound;
         this.location = location;
     }
 
-    public SoundPlayer getSound( ) {
+    public Sound getSound( ) {
         return this.sound;
     }
 

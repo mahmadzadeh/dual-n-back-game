@@ -5,12 +5,14 @@ import android.media.MediaPlayer;
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.random.RandomTrialGenerator;
+import com.dualnback.sound.ASound;
 import com.dualnback.sound.SoundCollection;
-import com.dualnback.sound.SoundPlayer;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,6 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RandomTrialGeneratorTest {
 
     @Mock
@@ -28,6 +31,7 @@ public class RandomTrialGeneratorTest {
 
     @Mock
     private MediaPlayer mockMediaPlayer;
+
 
     @Before
     public void setUp( ) {
@@ -42,8 +46,8 @@ public class RandomTrialGeneratorTest {
 
     @Test
     public void generateNextTrial( ) {
-        when(mockLocationCollection.getRandomLocation()).thenReturn( new Location( 0,0 ) );
-        when(mockSoundCollection.getRandomSoundPlayer()).thenReturn( new SoundPlayer( mockMediaPlayer ) );
+        when( mockLocationCollection.getRandomLocation() ).thenReturn( new Location( 0, 0 ) );
+        when( mockSoundCollection.getRandomSoundPlayer() ).thenReturn( new ASound( 1111 ) );
 
         RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
 
@@ -57,4 +61,5 @@ public class RandomTrialGeneratorTest {
         assertEquals( 0, trial.getLocation().getCol() );
         assertEquals( 0, trial.getLocation().getRow() );
     }
+
 }

@@ -7,9 +7,9 @@ import java.util.List;
 
 public class SoundCollection {
 
-    private final List<SoundPlayer> soundClips;
+    private final List<Sound> soundClips;
 
-    public SoundCollection( List<SoundPlayer> soundClips ) {
+    public SoundCollection( List<Sound> soundClips ) {
 
         if ( soundClips.isEmpty() ) {
             throw new IllegalArgumentException( "Unable to create sound collection. Need a non-empty list of sound players " );
@@ -23,7 +23,7 @@ public class SoundCollection {
     }
 
 
-    public SoundPlayer getRandomSoundPlayer( ) {
+    public Sound getRandomSoundPlayer( ) {
         int index = RandomNumberGenerator.next( new IntegerRange( 0, soundClips.size() - 1 ) );
 
         return soundClips.get( index );

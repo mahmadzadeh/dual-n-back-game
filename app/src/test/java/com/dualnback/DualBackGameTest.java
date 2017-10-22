@@ -2,13 +2,15 @@ package com.dualnback;
 
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
+import com.dualnback.sound.ASound;
+import com.dualnback.sound.Sound;
 import com.dualnback.sound.SoundCollection;
-import com.dualnback.sound.SoundPlayer;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import static com.dualnback.UserInputEvaluation.CorrectSound;
 import static com.dualnback.UserInputEvaluation.IncorrectSound;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -19,7 +21,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class DualBackGameTest {
 
     @Mock
-    SoundPlayer mockSoundPlayer;
+    Sound sound;
     @Mock
     Location mockLocation;
     @Mock
@@ -68,7 +70,7 @@ public class DualBackGameTest {
 
     @Test
     public void given1NBackWhenNothingInHistoryThenEvaluateUserInputReturnsIncorrectSoundAndLocation( ) {
-        SoundLocation userInput = new SoundLocation( mockSoundPlayer, new Location( 0, 0 ) );
+        Sound userInput = new ASound( 111 );
 
         UserInputEvaluation result = subjectUnderTest.evaluateSound( userInput );
 
@@ -80,16 +82,26 @@ public class DualBackGameTest {
      */
     @Test
     public void given1NBackWhenOneItemHistoryAndCorrectLocationGivenThenEvaluateUserInputReturnsIncorrectSoundAndCorrectLocation( ) {
-        SoundLocation userInput = new SoundLocation( mockSoundPlayer, new Location( 0, 0 ) );
+
+        when( mockSoundCollection.getRandomSoundPlayer() ).thenReturn( new ASound( 111 ) );
+        when( mockLocationCollection.getRandomLocation() ).thenReturn( new Location( 0, 0 ) );
+
+        SoundLocation newSoundAndLoc = subjectUnderTest.getRandomSoundAndLocation( mockSoundCollection, mockLocationCollection );
+        subjectUnderTest.storeInHistory( newSoundAndLoc );
+
+
+        Sound userInput = newSoundAndLoc.getSound();
 
         UserInputEvaluation result = subjectUnderTest.evaluateSound( userInput );
 
-        assertEquals( IncorrectSound, result );
+        assertEquals( CorrectSound, result );
+
+        assertEquals( 0.00, subjectUnderTest.getScore(), 0.001 );
     }
 
 
     private void setUpMocks( ) {
-        when( mockSoundCollection.getRandomSoundPlayer() ).thenReturn( mockSoundPlayer );
+        when( mockSoundCollection.getRandomSoundPlayer() ).thenReturn( sound );
         when( mockLocationCollection.getRandomLocation() ).thenReturn( mockLocation );
     }
 

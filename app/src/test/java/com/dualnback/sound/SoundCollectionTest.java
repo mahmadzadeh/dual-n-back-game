@@ -16,9 +16,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class SoundCollectionTest {
 
+    private final Sound sound = new ASound( 11111 );
     @Mock
     private MediaPlayer mockMediaPlayer;
-
 
     @Before
     public void setUp( ) {
@@ -29,7 +29,7 @@ public class SoundCollectionTest {
     @Test(expected = RuntimeException.class)
     public void givenInvalidListOfSoundPlayersThenSoundCollectionConstructorThrowsRuntimeException( ) {
 
-        List<SoundPlayer> soundClips = null;
+        List<Sound> soundClips = null;
 
         new SoundCollection( soundClips );
     }
@@ -37,8 +37,9 @@ public class SoundCollectionTest {
     @Test
     public void givenValidListOfSoundPlayersThenCanCreateInstance( ) {
 
-        List<SoundPlayer> soundClips = new ArrayList<>();
-        soundClips.add( new SoundPlayer( mockMediaPlayer ) );
+        List<Sound> soundClips = new ArrayList<>();
+
+        soundClips.add( sound );
 
         new SoundCollection( soundClips );
     }
@@ -46,8 +47,8 @@ public class SoundCollectionTest {
     @Test
     public void givenSoundCollectionThenCanGetCountOfSoundClipsInCollection( ) {
 
-        List<SoundPlayer> soundClips = new ArrayList<>();
-        soundClips.add( new SoundPlayer( mockMediaPlayer ) );
+        List<Sound> soundClips = new ArrayList<>();
+        soundClips.add( sound );
 
         SoundCollection soundCollection = new SoundCollection( soundClips );
 
@@ -57,10 +58,10 @@ public class SoundCollectionTest {
     @Test
     public void givenSoundCollectionThenCanGetARandomSoundPlayer( ) {
 
-        List<SoundPlayer> soundClips = new ArrayList<>();
-        soundClips.add( new SoundPlayer( mockMediaPlayer ) );
+        List<Sound> soundClips = new ArrayList<>();
+        soundClips.add( sound );
 
-        SoundPlayer soundPlayer = new SoundCollection( soundClips ).getRandomSoundPlayer();
+        Sound soundPlayer = new SoundCollection( soundClips ).getRandomSoundPlayer();
 
         assertNotNull( soundPlayer );
     }
