@@ -47,14 +47,14 @@ public class RandomTrialGeneratorTest {
     @Test
     public void generateNextTrial( ) {
         when( mockLocationCollection.getRandomLocation() ).thenReturn( new Location( 0, 0 ) );
-        when( mockSoundCollection.getRandomSoundPlayer() ).thenReturn( new ASound( 1111 ) );
+        when( mockSoundCollection.getRandomSound() ).thenReturn( new ASound( 1111 ) );
 
         RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
 
         Trial trial = generator.nextTrial();
 
         verify( mockLocationCollection ).getRandomLocation();
-        verify( mockSoundCollection ).getRandomSoundPlayer();
+        verify( mockSoundCollection ).getRandomSound();
 
         assertNotNull( trial );
 

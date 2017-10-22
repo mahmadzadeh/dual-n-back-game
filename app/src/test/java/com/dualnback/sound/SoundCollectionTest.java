@@ -61,7 +61,7 @@ public class SoundCollectionTest {
         List<Sound> soundClips = new ArrayList<>();
         soundClips.add( sound );
 
-        Sound soundPlayer = new SoundCollection( soundClips ).getRandomSoundPlayer();
+        Sound soundPlayer = new SoundCollection( soundClips ).getRandomSound();
 
         assertNotNull( soundPlayer );
     }

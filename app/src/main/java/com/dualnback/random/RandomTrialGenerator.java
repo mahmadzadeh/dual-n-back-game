@@ -16,6 +16,6 @@ public class RandomTrialGenerator {
     }
 
     public Trial nextTrial( ) {
-        return new Trial( locationCollection.getRandomLocation(), soundCollection.getRandomSoundPlayer() );
+        return new Trial( locationCollection.getRandomLocation(), soundCollection.getRandomSound() );
     }
 }

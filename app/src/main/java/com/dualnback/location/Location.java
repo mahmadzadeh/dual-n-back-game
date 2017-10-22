@@ -19,6 +19,10 @@ public class Location {
         return row;
     }
 
+    public boolean matches( Location another ) {
+        return this.row == another.row && this.col == another.col;
+    }
+
     @Override
     public String toString( ) {
         return "Location{" +

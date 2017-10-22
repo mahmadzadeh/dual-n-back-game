@@ -23,7 +23,7 @@ public class SoundCollection {
     }
 
 
-    public Sound getRandomSoundPlayer( ) {
+    public Sound getRandomSound( ) {
         int index = RandomNumberGenerator.next( new IntegerRange( 0, soundClips.size() - 1 ) );
 
         return soundClips.get( index );
