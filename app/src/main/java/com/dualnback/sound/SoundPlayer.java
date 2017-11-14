@@ -1,10 +1,7 @@
 package com.dualnback.sound;
 
 
-import android.content.Context;
 import android.media.MediaPlayer;
-
-import com.dualnback.R;
 
 public class SoundPlayer {
 

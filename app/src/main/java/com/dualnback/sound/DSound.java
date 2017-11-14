@@ -1,13 +1,11 @@
 package com.dualnback.sound;
 
-import android.content.res.Resources;
-
 import com.dualnback.R;
 
 public class DSound extends Sound {
 
     public DSound( ) {
-        soundRespurce = Resources.getSystem().getInteger( R.raw.d );
+        soundRespurce = R.raw.d;
     }
 
     public DSound( int resource ) {

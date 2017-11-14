@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">DualNBack</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="todo">TODO</string>
+    <string name="nback_game">N Back</string>
+    <string name="_0">0</string>
+    <string name="score">SCORE</string>
+    <string name="_11_12">11:12</string>
+    <string name="position">Position</string>
+    <string name="audio">Audio</string>>
+    <string name="clock">11:12</string>
+    <string name="score_zero">0</string>
+    <string name="time">TIME</string>
+    <string name="image_view_content_desc">nback image holder</string>
+        <string name="soundMatch">Sound</string>
+    <string name="positionMatch">Position</string>
 </resources>

@@ -179,7 +179,7 @@ public class DualBackGameTest {
         UserInputEvaluation result = subjectUnderTest.evaluateSound( correctSoundInput );
         subjectUnderTest.markEndOfOneRound();
 
-        // only 50% since only a correct sound guess was recorded for the round
+        // only 50% score since only a correct sound guess was recorded for the round
         assertExpectedValues( result, CorrectSound, 50.0 );
     }
 
@@ -202,6 +202,7 @@ public class DualBackGameTest {
         setupMockSoundAndLocation( testSound, testLocation );
 
         SoundLocation soundLocation = addItemToHistory();
+
         Location correctLocInput = soundLocation.getLocation();
         Sound correctSound = soundLocation.getSound();
 
@@ -210,7 +211,7 @@ public class DualBackGameTest {
 
         subjectUnderTest.markEndOfOneRound();
 
-        // 100% since sound and location are both correctly guessed
+        // score is 100% since sound and location are both correctly guessed
         assertExpectedValues( locationResult, CorrectLocation, 100 );
         assertExpectedValues( soundResult, CorrectSound, 100 );
     }

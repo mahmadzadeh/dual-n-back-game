@@ -1,13 +1,11 @@
 package com.dualnback.sound;
 
-import android.content.res.Resources;
-
 import com.dualnback.R;
 
 public class XSound extends Sound {
 
     public XSound( ) {
-        soundRespurce = Resources.getSystem().getInteger( R.raw.x );
+        soundRespurce = R.raw.x;
     }
 
     public XSound( int resource ) {
