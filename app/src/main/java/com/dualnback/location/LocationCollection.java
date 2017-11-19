@@ -12,15 +12,15 @@ public class LocationCollection {
 
     public LocationCollection( ) {
 
-        locations.add( 0, new Location( 0, 0 ) );
-        locations.add( 0, new Location( 0, 1 ) );
-        locations.add( 0, new Location( 0, 2 ) );
-        locations.add( 0, new Location( 1, 0 ) );
-        locations.add( 0, new Location( 1, 1 ) );
-        locations.add( 0, new Location( 1, 2 ) );
-        locations.add( 0, new Location( 2, 0 ) );
-        locations.add( 0, new Location( 2, 1 ) );
-        locations.add( 0, new Location( 2, 2 ) );
+        locations.add( new Location( 0, 0 ) );
+        locations.add( new Location( 1, 0 ) );
+        locations.add( new Location( 2, 0 ) );
+        locations.add( new Location( 0, 1 ) );
+        locations.add( new Location( 1, 1 ) );
+        locations.add( new Location( 2, 1 ) );
+        locations.add( new Location( 0, 2 ) );
+        locations.add( new Location( 1, 2 ) );
+        locations.add( new Location( 2, 2 ) );
 
     }
 

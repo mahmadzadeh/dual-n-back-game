@@ -1,14 +1,26 @@
 package com.dualnback;
 
-import android.widget.ImageView;
-
 class Cell {
 
-    private final ImageView imageView;
+    private int onImage;
+    private int offImage;
+    private int currentState;
 
-    public Cell( ImageView imageView ) {
-        this.imageView = imageView;
+    public Cell( int onImageResourceId, int offImageResourceId ) {
+        this.onImage = onImageResourceId;
+        this.offImage = offImageResourceId;
+        this.currentState = offImageResourceId;
     }
 
+    public boolean isTurnedOn( ) {
+        return currentState == onImage;
+    }
 
+    public void turnOff( ) {
+        currentState = offImage;
+    }
+
+    public void turnOn( ) {
+        currentState = onImage;
+    }
 }

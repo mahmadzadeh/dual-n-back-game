@@ -12,6 +12,6 @@
     <string name="score_zero">0</string>
     <string name="time">TIME</string>
     <string name="image_view_content_desc">nback image holder</string>
-        <string name="soundMatch">Sound</string>
+    <string name="soundMatch">Sound</string>
     <string name="positionMatch">Position</string>
 </resources>

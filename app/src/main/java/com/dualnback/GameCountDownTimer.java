@@ -2,13 +2,14 @@ package com.dualnback;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
 public class GameCountDownTimer extends CountDownTimer {
 
     private MainActivity gameScreenActivity;
-
+    private int oneRoundInSeconds;
     /**
      * @param millisInFuture    The number of millis in the future from the call
      *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
@@ -19,6 +20,7 @@ public class GameCountDownTimer extends CountDownTimer {
     public GameCountDownTimer( MainActivity gameScreenActivity, long millisInFuture, long countDownInterval ) {
         super( millisInFuture, countDownInterval );
         this.gameScreenActivity = gameScreenActivity;
+        this.oneRoundInSeconds  = 4;
     }
 
     @Override
@@ -29,6 +31,13 @@ public class GameCountDownTimer extends CountDownTimer {
         );
 
         gameScreenActivity.setCountDownText( text );
+
+        oneRoundInSeconds--;
+
+        if ( oneRoundInSeconds == 0) {
+            gameScreenActivity.markEndOfOneRound();
+            oneRoundInSeconds = 4;
+        }
     }
 
     @Override

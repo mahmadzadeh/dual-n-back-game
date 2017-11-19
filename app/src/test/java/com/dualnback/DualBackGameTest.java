@@ -3,7 +3,6 @@ package com.dualnback;
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.ASound;
-import com.dualnback.sound.BSound;
 import com.dualnback.sound.Sound;
 import com.dualnback.sound.SoundCollection;
 
@@ -17,6 +16,8 @@ import static com.dualnback.UserInputEvaluation.IncorrectLocation;
 import static com.dualnback.UserInputEvaluation.IncorrectSound;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -39,6 +40,7 @@ public class DualBackGameTest {
     private LocationCollection mockLocationCollection;
     private DualBackGame subjectUnderTest;
 
+    @Mock
     private DualBackGrid dualBackGrid;
 
     @Before
@@ -70,7 +72,9 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        SoundLocation newSoundAndLoc = addItemToHistory();
+        SoundLocation newSoundAndLoc = getRandomSoundAndLocation();
+
+        subjectUnderTest.updateGame( newSoundAndLoc );
 
         assertEquals( 1, subjectUnderTest.getCopyOfHistory().size() );
     }
@@ -78,7 +82,7 @@ public class DualBackGameTest {
     @Test
     public void given1NBackWhenNothingInHistoryThenEvaluateSoundInputReturnsIncorrectSound( ) {
 
-        UserInputEvaluation result = subjectUnderTest.evaluateSound( testSound );
+        UserInputEvaluation result = subjectUnderTest.evaluateSound();
 
         assertEquals( IncorrectSound, result );
     }
@@ -87,7 +91,7 @@ public class DualBackGameTest {
     public void given1NBackWhenNothingInHistoryThenEvaluateLocationInputReturnsIncorrectLocation( ) {
         Location userInput = new Location( 0, 0 );
 
-        UserInputEvaluation result = subjectUnderTest.evaluateLocation( userInput );
+        UserInputEvaluation result = subjectUnderTest.evaluateLocation();
 
         assertEquals( IncorrectLocation, result );
     }
@@ -100,10 +104,15 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        Sound userInput = addItemToHistory().getSound();
+        SoundLocation correctSoundInput = getRandomSoundAndLocation();
 
-        UserInputEvaluation result = subjectUnderTest.evaluateSound( userInput );
+        doNothing().when( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
 
+        subjectUnderTest.updateGame( correctSoundInput );
+
+        UserInputEvaluation result = subjectUnderTest.evaluateSound();
+
+        verify( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
         assertExpectedValues( result, CorrectSound, 0.00 );
     }
 
@@ -115,9 +124,13 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        Location userInput = addItemToHistory().getLocation();
+        SoundLocation correctSoundInput = getRandomSoundAndLocation();
 
-        UserInputEvaluation result = subjectUnderTest.evaluateLocation( userInput );
+        doNothing().when( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
+
+        subjectUnderTest.updateGame( correctSoundInput );
+
+        UserInputEvaluation result = subjectUnderTest.evaluateLocation();
 
         assertExpectedValues( result, CorrectLocation, 0.00 );
     }
@@ -127,7 +140,7 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        UserInputEvaluation result = subjectUnderTest.evaluateSound( new BSound( 222 ) );
+        UserInputEvaluation result = subjectUnderTest.evaluateSound();
 
         UserInputEvaluation expectedResult = IncorrectSound;
         double expectedScorePercentage = 0.00;
@@ -140,7 +153,7 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        UserInputEvaluation result = subjectUnderTest.evaluateLocation( new Location( 100, 100 ) );
+        UserInputEvaluation result = subjectUnderTest.evaluateLocation();
 
         assertExpectedValues( result, IncorrectLocation, 0.00 );
     }
@@ -150,7 +163,7 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        UserInputEvaluation result = subjectUnderTest.evaluateSound( new BSound( 222 ) );
+        UserInputEvaluation result = subjectUnderTest.evaluateSound();
 
         subjectUnderTest.markEndOfOneRound();
 
@@ -162,7 +175,7 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        UserInputEvaluation result = subjectUnderTest.evaluateLocation( new Location( 100, 100 ) );
+        UserInputEvaluation result = subjectUnderTest.evaluateLocation();
 
         subjectUnderTest.markEndOfOneRound();
 
@@ -174,10 +187,17 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        Sound correctSoundInput = addItemToHistory().getSound();
+        SoundLocation correctSoundInput = getRandomSoundAndLocation();
 
-        UserInputEvaluation result = subjectUnderTest.evaluateSound( correctSoundInput );
+        doNothing().when( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
+
+        subjectUnderTest.updateGame( correctSoundInput );
+
+        UserInputEvaluation result = subjectUnderTest.evaluateSound();
+
         subjectUnderTest.markEndOfOneRound();
+
+        verify( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
 
         // only 50% score since only a correct sound guess was recorded for the round
         assertExpectedValues( result, CorrectSound, 50.0 );
@@ -188,10 +208,17 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        Location correctSoundInput = addItemToHistory().getLocation();
+        SoundLocation correctSoundInput = getRandomSoundAndLocation();
 
-        UserInputEvaluation result = subjectUnderTest.evaluateLocation( correctSoundInput );
+        doNothing().when( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
+
+        subjectUnderTest.updateGame( correctSoundInput );
+
+        UserInputEvaluation result = subjectUnderTest.evaluateLocation();
+
         subjectUnderTest.markEndOfOneRound();
+
+        verify( dualBackGrid ).updateGridAtLocation( correctSoundInput.getLocation() );
 
         assertExpectedValues( result, CorrectLocation, 50.0 );
     }
@@ -201,19 +228,32 @@ public class DualBackGameTest {
 
         setupMockSoundAndLocation( testSound, testLocation );
 
-        SoundLocation soundLocation = addItemToHistory();
+        SoundLocation soundLocation = getRandomSoundAndLocation();
 
-        Location correctLocInput = soundLocation.getLocation();
-        Sound correctSound = soundLocation.getSound();
+        doNothing().when( dualBackGrid ).updateGridAtLocation( soundLocation.getLocation() );
 
-        UserInputEvaluation soundResult = subjectUnderTest.evaluateSound( correctSound );
-        UserInputEvaluation locationResult = subjectUnderTest.evaluateLocation( correctLocInput );
+        subjectUnderTest.updateGame( soundLocation );
+
+        UserInputEvaluation soundResult = subjectUnderTest.evaluateSound();
+        UserInputEvaluation locationResult = subjectUnderTest.evaluateLocation();
 
         subjectUnderTest.markEndOfOneRound();
+
+        verify( dualBackGrid ).updateGridAtLocation( soundLocation.getLocation() );
 
         // score is 100% since sound and location are both correctly guessed
         assertExpectedValues( locationResult, CorrectLocation, 100 );
         assertExpectedValues( soundResult, CorrectSound, 100 );
+    }
+
+    @Test
+    public void givenRandomSoundAndLocationThenImageAtLocationIsSet( ) {
+        setupMockSoundAndLocation( testSound, testLocation );
+
+        SoundLocation soundLocation = getRandomSoundAndLocation();
+
+//        subjectUnderTest.
+
     }
 
     private void setupMockSoundAndLocation( ASound testSound, Location testLocation ) {
@@ -221,10 +261,8 @@ public class DualBackGameTest {
         when( mockLocationCollection.getRandomLocation() ).thenReturn( testLocation );
     }
 
-    private SoundLocation addItemToHistory( ) {
-        SoundLocation newSoundAndLoc = subjectUnderTest.getRandomSoundAndLocation( mockSoundCollection, mockLocationCollection );
-        subjectUnderTest.storeInHistory( newSoundAndLoc );
-        return newSoundAndLoc;
+    private SoundLocation getRandomSoundAndLocation( ) {
+        return subjectUnderTest.getRandomSoundAndLocation( mockSoundCollection, mockLocationCollection );
     }
 
     private void assertExpectedValues( UserInputEvaluation result, UserInputEvaluation expectedResult, double expectedScorePercentage ) {

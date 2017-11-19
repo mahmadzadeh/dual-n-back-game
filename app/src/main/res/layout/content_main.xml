@@ -176,7 +176,11 @@
             android:layout_weight=".67"
             android:background="@color/colorPrimaryDark"
             android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
+            >
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/positionMatchButton"
@@ -185,7 +189,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/roundbutton"
                 android:text="@string/positionMatch"
-                android:textColor="#16A3F1"
+                android:textColor="#fbfcfc"
                 android:textStyle="bold|italic"/>
 
             <Space
@@ -200,8 +204,13 @@
                 android:layout_weight="1"
                 android:background="@drawable/roundbutton"
                 android:text="@string/soundMatch"
-                android:textColor="#16A3F1"
+                android:textColor="#fbfcfc"
                 android:textStyle="bold|italic"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
         </LinearLayout>
     </LinearLayout>

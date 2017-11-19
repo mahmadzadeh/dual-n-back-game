@@ -5,23 +5,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dualnback.location.LocationCollection;
-import com.dualnback.sound.ASound;
-import com.dualnback.sound.BSound;
-import com.dualnback.sound.CSound;
-import com.dualnback.sound.ESound;
-import com.dualnback.sound.Sound;
 import com.dualnback.sound.SoundCollection;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.dualnback.LocationToImageMapper.map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView countdownTimerTxt;
     private GameCountDownTimer timer;
     private Handler handler;
-    private SoundCollection soundCollection;
-    private LocationCollection locationCollection;
+    private SoundCollection soundCollection = new SoundCollection( SoundCollectionFactory.instance() );
+    private LocationCollection locationCollection = new LocationCollection();
+
     private GridLayout gridLayout;
 
     @Override
@@ -46,16 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        List<Sound> soundClips = new ArrayList<>();
-
-        soundClips.add( new ASound() );
-        soundClips.add( new BSound() );
-        soundClips.add( new CSound() );
-        soundClips.add( new ESound() );
-
-        locationCollection = new LocationCollection();
-
-        dualBackGame = new DualBackGame( new DualBackGrid(), version );
+        dualBackGame = new DualBackGame( GridFactory.instance(), version );
 
         soundMatch = findViewById( R.id.soundMatchButton );
         positionMatchButton = findViewById( R.id.positionMatchButton );
@@ -65,24 +53,70 @@ public class MainActivity extends AppCompatActivity {
 
         timer = new GameCountDownTimer( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
 
-        SoundLocation randomSoundAndLocation = dualBackGame.getRandomSoundAndLocation( new SoundCollection( soundClips ), locationCollection );
-        ImageView imageView = findViewById( R.id.image_00 );
-
-        imageView.setImageResource( R.mipmap.square_blue );
-
         timer.start();
 
         updateUI();
 
         handler = new Handler() {
             public void handleMessage( Message m ) {
-                Log.d( "HANDLE MESSAGE", "handleMessage: " );
+
+                turnOffImageBasedOnCurrentLocation();
+                //gridLayout.invalidate();
+
+                SoundLocation randomSoundAndLocation = dualBackGame.getRandomSoundAndLocation( soundCollection, locationCollection );
+                dualBackGame.updateGame( randomSoundAndLocation );
+
+                updateImageBasedOnGameState();
+                randomSoundAndLocation.getSound().playSound( MainActivity.this );
+                //gridLayout.invalidate();
             }
         };
+
+
+        positionMatchButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick( View view ) {
+                        dualBackGame.evaluateLocation();
+                    }
+                }
+        );
+
+        soundMatch.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick( View view ) {
+                        dualBackGame.evaluateSound();
+                    }
+                }
+        );
+    }
+
+    private void updateImageBasedOnGameState( ) {
+        if ( dualBackGame.getCurrentSoundLocation().isPresent() ) {
+            ImageView imageView = findViewById(
+                    map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
+
+            imageView.setImageResource( R.mipmap.square_blue );
+        }
+    }
+
+    private void turnOffImageBasedOnCurrentLocation( ) {
+        if ( dualBackGame.getCurrentSoundLocation().isPresent() ) {
+            ImageView imageView = findViewById(
+                    map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
+
+            imageView.setImageResource( R.mipmap.square );
+        }
     }
 
     public void setCountDownText( String text ) {
         countdownTimerTxt.setText( text );
+    }
+
+    public void markEndOfOneRound( ) {
+        dualBackGame.markEndOfOneRound();
+        updateUI();
     }
 
     public int currentPoints( ) {
@@ -90,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI( ) {
-        long TIMER_DELAY = 100;
+        long TIMER_DELAY = 10;
         final Timer timer = new Timer();
         timer.schedule( new TimerTask() {
             public void run( ) {
