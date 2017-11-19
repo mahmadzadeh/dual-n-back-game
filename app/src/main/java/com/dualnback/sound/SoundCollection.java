@@ -1,6 +1,6 @@
 package com.dualnback.sound;
 
-import com.dualnback.IntegerRange;
+import com.dualnback.game.IntegerRange;
 import com.dualnback.random.RandomNumberGenerator;
 
 import java.util.List;

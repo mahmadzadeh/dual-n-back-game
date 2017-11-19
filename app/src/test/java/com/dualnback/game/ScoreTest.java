@@ -1,11 +1,11 @@
-package com.dualnback;
+package com.dualnback.game;
 
 import org.junit.Test;
 
-import static com.dualnback.UserInputEvaluation.IncorrectLocation;
-import static com.dualnback.UserInputEvaluation.CorrectLocation;
-import static com.dualnback.UserInputEvaluation.CorrectSound;
-import static com.dualnback.UserInputEvaluation.IncorrectSound;
+import static com.dualnback.game.UserInputEvaluation.CorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.CorrectSound;
+import static com.dualnback.game.UserInputEvaluation.IncorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.IncorrectSound;
 import static org.junit.Assert.assertEquals;
 
 
@@ -119,7 +119,7 @@ public class ScoreTest {
                 .updateTrialsByeOne()
                 .update( CorrectSound )
                 .update( CorrectLocation )
-                .updateTrialsByeOne() ;
+                .updateTrialsByeOne();
 
         assertEquals( 100.00, score.calculateScorePercentage(), DELTA );
     }
@@ -133,7 +133,7 @@ public class ScoreTest {
                 .updateTrialsByeOne()
                 .update( IncorrectSound )
                 .update( IncorrectLocation )
-                .updateTrialsByeOne() ;
+                .updateTrialsByeOne();
 
         assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
     }

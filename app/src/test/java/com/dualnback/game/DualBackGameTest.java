@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.game;
 
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
@@ -10,10 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import static com.dualnback.UserInputEvaluation.CorrectLocation;
-import static com.dualnback.UserInputEvaluation.CorrectSound;
-import static com.dualnback.UserInputEvaluation.IncorrectLocation;
-import static com.dualnback.UserInputEvaluation.IncorrectSound;
+import static com.dualnback.game.UserInputEvaluation.CorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.CorrectSound;
+import static com.dualnback.game.UserInputEvaluation.IncorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.IncorrectSound;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doNothing;

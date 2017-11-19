@@ -1,7 +1,7 @@
-package com.dualnback;
+package com.dualnback.game;
 
 
-enum NBackVersion {
+public enum NBackVersion {
 
     OneBack( 1 ),
     TwoBack( 2 ),

@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.game;
 
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
@@ -9,10 +9,10 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import java.util.Optional;
 
-import static com.dualnback.UserInputEvaluation.CorrectLocation;
-import static com.dualnback.UserInputEvaluation.CorrectSound;
-import static com.dualnback.UserInputEvaluation.IncorrectLocation;
-import static com.dualnback.UserInputEvaluation.IncorrectSound;
+import static com.dualnback.game.UserInputEvaluation.CorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.CorrectSound;
+import static com.dualnback.game.UserInputEvaluation.IncorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.IncorrectSound;
 
 public class DualBackGame {
 

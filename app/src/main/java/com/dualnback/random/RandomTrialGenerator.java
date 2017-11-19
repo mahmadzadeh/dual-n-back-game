@@ -1,6 +1,6 @@
 package com.dualnback.random;
 
-import com.dualnback.Trial;
+import com.dualnback.game.Trial;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
 

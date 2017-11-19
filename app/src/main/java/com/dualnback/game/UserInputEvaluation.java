@@ -1,6 +1,6 @@
-package com.dualnback;
+package com.dualnback.game;
 
-enum UserInputEvaluation {
+public enum UserInputEvaluation {
     CorrectSound,
     CorrectLocation,
     IncorrectSound,

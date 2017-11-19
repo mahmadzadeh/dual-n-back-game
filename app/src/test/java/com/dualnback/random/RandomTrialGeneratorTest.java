@@ -1,10 +1,10 @@
-package com.dualnback;
+package com.dualnback.random;
 
 import android.media.MediaPlayer;
 
+import com.dualnback.game.Trial;
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
-import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.ASound;
 import com.dualnback.sound.SoundCollection;
 

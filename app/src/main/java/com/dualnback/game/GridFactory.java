@@ -1,10 +1,12 @@
-package com.dualnback;
+package com.dualnback.game;
+
+import com.dualnback.R;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
-class GridFactory {
+public class GridFactory {
 
     public static DualBackGrid instance( ) {
         int onImage = R.mipmap.square;

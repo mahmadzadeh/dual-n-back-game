@@ -4,20 +4,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dualnback.game.DualBackGame;
+import com.dualnback.game.GridFactory;
+import com.dualnback.game.NBackVersion;
+import com.dualnback.game.SoundCollectionFactory;
+import com.dualnback.game.SoundLocation;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.dualnback.LocationToImageMapper.map;
+import static com.dualnback.game.LocationToImageMapper.map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,24 +55,16 @@ public class MainActivity extends AppCompatActivity {
         countdownTimerTxt = findViewById( R.id.textViewCountDownTImer );
         gridLayout = findViewById( R.id.grid_layout );
 
-        timer = new GameCountDownTimer( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
-
-        timer.start();
-
-        updateUI();
-
         handler = new Handler() {
             public void handleMessage( Message m ) {
 
                 turnOffImageBasedOnCurrentLocation();
-                //gridLayout.invalidate();
 
                 SoundLocation randomSoundAndLocation = dualBackGame.getRandomSoundAndLocation( soundCollection, locationCollection );
                 dualBackGame.updateGame( randomSoundAndLocation );
 
                 updateImageBasedOnGameState();
                 randomSoundAndLocation.getSound().playSound( MainActivity.this );
-                //gridLayout.invalidate();
             }
         };
 
@@ -90,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        updateUI();
+
+        timer = new GameCountDownTimer( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
+        timer.start();
     }
 
     private void updateImageBasedOnGameState( ) {

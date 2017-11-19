@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.game;
 
 
 import java.util.Collection;
@@ -9,9 +9,11 @@ public class IntegerRange {
     private final Integer upper;
 
     public IntegerRange( int lower, int upper ) {
+
         if ( lower > upper ) {
             throw new IllegalArgumentException( "lower bound of the range has to be smaller than upper: given " + lower );
         }
+
         this.lower = lower;
         this.upper = upper;
     }

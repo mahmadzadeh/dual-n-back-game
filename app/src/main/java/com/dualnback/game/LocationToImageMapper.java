@@ -1,11 +1,12 @@
-package com.dualnback;
+package com.dualnback.game;
 
+import com.dualnback.R;
 import com.dualnback.location.Location;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class LocationToImageMapper {
+public class LocationToImageMapper {
     private final static Map<String, Integer> LOCATION_TO_IMAGE_MAP = new HashMap<String, Integer>() {{
         put( "00", R.id.image_00 );
         put( "01", R.id.image_01 );

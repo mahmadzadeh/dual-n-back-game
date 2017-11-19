@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.game;
 
 
 public class Score {

@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.game;
 
 import com.dualnback.sound.*;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class SoundCollectionFactory {
+public class SoundCollectionFactory {
 
     public static List<Sound> instance( ) {
         List<Sound> soundClips = new ArrayList<>();

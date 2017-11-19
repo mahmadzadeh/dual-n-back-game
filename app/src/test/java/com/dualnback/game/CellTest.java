@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.game;
 
 import android.widget.ImageView;
 

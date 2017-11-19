@@ -1,9 +1,9 @@
-package com.dualnback;
+package com.dualnback.game;
 
 import com.dualnback.location.Location;
 import com.dualnback.sound.Sound;
 
-class SoundLocation {
+public class SoundLocation {
 
     private final Sound sound;
     private final Location location;

@@ -1,6 +1,6 @@
-package com.dualnback;
+package com.dualnback.random;
 
-import com.dualnback.random.RandomNumberGenerator;
+import com.dualnback.game.IntegerRange;
 
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class RandomNumberGeneratorTest {
 
         Integer next = RandomNumberGenerator.next( range );
 
-        assertTrue( next instanceof Integer);
+        assertTrue( next instanceof Integer );
 
         assertTrue( range.lowerBound() <= next && next <= range.upperBound() );
     }

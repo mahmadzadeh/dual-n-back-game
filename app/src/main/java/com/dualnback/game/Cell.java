@@ -1,6 +1,6 @@
-package com.dualnback;
+package com.dualnback.game;
 
-class Cell {
+public class Cell {
 
     private int onImage;
     private int offImage;
