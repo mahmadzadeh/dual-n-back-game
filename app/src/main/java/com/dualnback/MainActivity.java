@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final NBackVersion version = NBackVersion.TwoBack;
     private DualBackGame dualBackGame;
-    private Button soundMatch;
-    private Button positionMatchButton;
+    private Button soundMatchButton;
+    private Button locationMatchButton;
     private TextView scoreTxt;
     private TextView countdownTimerTxt;
     private GameCountDownTimer timer;
     private Handler handler;
-    private SoundCollection soundCollection = new SoundCollection( SoundCollectionFactory.instance() );
+    private SoundCollection soundCollection;
     private LocationCollection locationCollection = new LocationCollection();
 
     private GridLayout gridLayout;
@@ -47,17 +47,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
+        soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
         dualBackGame = new DualBackGame( GridFactory.instance(), version );
 
-        soundMatch = findViewById( R.id.soundMatchButton );
-        positionMatchButton = findViewById( R.id.positionMatchButton );
+        soundMatchButton = findViewById( R.id.soundMatchButton );
+        locationMatchButton = findViewById( R.id.positionMatchButton );
         scoreTxt = findViewById( R.id.textViewScore );
         countdownTimerTxt = findViewById( R.id.textViewCountDownTImer );
-        gridLayout = findViewById( R.id.grid_layout );
+        gridLayout = findViewById( R.id.gridLayout );
 
         handler = new Handler() {
             public void handleMessage( Message m ) {
-
                 turnOffImageBasedOnCurrentLocation();
 
                 SoundLocation randomSoundAndLocation = dualBackGame.getRandomSoundAndLocation( soundCollection, locationCollection );
@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-        positionMatchButton.setOnClickListener(
+        locationMatchButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick( View view ) {
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        soundMatch.setOnClickListener(
+        soundMatchButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick( View view ) {
@@ -87,9 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        updateUI();
-
-        timer = new GameCountDownTimer( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
+        timer = GameCountDownTimer.INSTANCE( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
         timer.start();
     }
 
@@ -125,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI( ) {
-        long TIMER_DELAY = 10;
+        long TIMER_DELAY = 1;
         final Timer timer = new Timer();
         timer.schedule( new TimerTask() {
             public void run( ) {

@@ -6,7 +6,8 @@ import android.media.MediaPlayer;
 
 public abstract class Sound {
 
-    protected int soundRespurce;
+    protected int soundResource;
+    protected MediaPlayer mediaPlayer;
 
     abstract int getSoundResource( );
 
@@ -15,7 +16,6 @@ public abstract class Sound {
     }
 
     public void playSound( Context context ) {
-        MediaPlayer mediaPlayer = MediaPlayer.create( context, getSoundResource() );
         mediaPlayer.start();
     }
 }

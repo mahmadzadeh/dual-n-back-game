@@ -1,19 +1,23 @@
 package com.dualnback.sound;
 
+import android.content.Context;
+import android.media.MediaPlayer;
+
 import com.dualnback.R;
 
 public class PSound extends Sound {
 
-    public PSound( ) {
-        soundRespurce = R.raw.p;
+    public PSound( Context context ) {
+        soundResource = R.raw.p;
+        mediaPlayer = MediaPlayer.create( context, R.raw.p );
     }
 
     public PSound( int resource ) {
-        soundRespurce = resource;
+        soundResource = resource;
     }
 
     @Override
     int getSoundResource( ) {
-        return soundRespurce;
+        return soundResource;
     }
 }
