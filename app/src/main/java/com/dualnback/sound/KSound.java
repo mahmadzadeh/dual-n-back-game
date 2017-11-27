@@ -9,7 +9,7 @@ public class KSound extends Sound {
 
     public KSound( Context context ) {
         soundResource = R.raw.k;
-        mediaPlayer = MediaPlayer.create( context,  R.raw.k );
+        mediaPlayer = MediaPlayer.create( context, R.raw.k );
     }
 
     public KSound( int resource ) {

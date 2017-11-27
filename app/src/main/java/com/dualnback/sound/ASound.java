@@ -8,7 +8,7 @@ import com.dualnback.R;
 public class ASound extends Sound {
 
     public ASound( Context context ) {
-        soundResource =  R.raw.a;
+        soundResource = R.raw.a;
         mediaPlayer = MediaPlayer.create( context, R.raw.a );
     }
 
