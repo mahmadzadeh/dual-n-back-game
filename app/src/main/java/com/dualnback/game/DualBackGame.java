@@ -1,8 +1,6 @@
 package com.dualnback.game;
 
-import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
-import com.dualnback.sound.Sound;
 import com.dualnback.sound.SoundCollection;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
@@ -13,6 +11,7 @@ import static com.dualnback.game.UserInputEvaluation.CorrectLocation;
 import static com.dualnback.game.UserInputEvaluation.CorrectSound;
 import static com.dualnback.game.UserInputEvaluation.IncorrectLocation;
 import static com.dualnback.game.UserInputEvaluation.IncorrectSound;
+import static com.dualnback.random.RandomBoolean.trueWithFiftyPercentChance;
 
 public class DualBackGame {
 
@@ -33,10 +32,14 @@ public class DualBackGame {
 
     public SoundLocation getRandomSoundAndLocation( SoundCollection soundCollection, LocationCollection locationCollection ) {
 
-        Sound randomSound = soundCollection.getRandomSound();
-        Location randomLocation = locationCollection.getRandomLocation();
+        if ( trueWithFiftyPercentChance() ) {
 
-        return new SoundLocation( randomSound, randomLocation );
+            return history.peek();
+
+        } else {
+
+            return new SoundLocation( soundCollection.getRandomSound(), locationCollection.getRandomLocation() );
+        }
     }
 
     public void updateGame( SoundLocation soundLocation ) {

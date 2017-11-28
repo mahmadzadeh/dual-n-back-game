@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.GridFactory;
+import com.dualnback.game.LocationToImageMapper;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.SoundCollectionFactory;
 import com.dualnback.game.SoundLocation;
@@ -20,8 +21,6 @@ import com.dualnback.sound.SoundCollection;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.dualnback.game.LocationToImageMapper.map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateImageBasedOnGameState( ) {
         if ( dualBackGame.getCurrentSoundLocation().isPresent() ) {
             ImageView imageView = findViewById(
-                    map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
+                    LocationToImageMapper.map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
 
             imageView.setImageResource( R.mipmap.square_blue );
         }
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     private void turnOffImageBasedOnCurrentLocation( ) {
         if ( dualBackGame.getCurrentSoundLocation().isPresent() ) {
             ImageView imageView = findViewById(
-                    map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
+                    LocationToImageMapper.map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
 
             imageView.setImageResource( R.mipmap.square );
         }
