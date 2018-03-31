@@ -1,28 +1,19 @@
 package com.dualnback.game;
 
-import com.dualnback.random.RandomTrialGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dualnback.game.UserInput.NoInput;
+
 class GameTrialCollection {
 
-    protected static final int DEFAULT_TRIALS_COUNT = 24;
-
-    private final List<Trial> trials = new ArrayList<>();
+    private final List<Trial> trials;
 
     private final NBackVersion version;
-    private final RandomTrialGenerator randomTrialGenerator;
-    private final int trialsCnt;
 
-    public GameTrialCollection( NBackVersion version, RandomTrialGenerator randomTrialGenerator ) {
-        this( version, DEFAULT_TRIALS_COUNT, randomTrialGenerator );
-    }
-
-    public GameTrialCollection( NBackVersion version, int trialsCount, RandomTrialGenerator randomTrialGenerator ) {
+    public GameTrialCollection( NBackVersion version, List<Trial> trials ) {
         this.version = version;
-        this.randomTrialGenerator = randomTrialGenerator;
-        this.trialsCnt = trialsCount;
+        this.trials = new ArrayList<>( trials );
 
         initTrials();
     }
@@ -32,8 +23,31 @@ class GameTrialCollection {
     }
 
     private void initTrials( ) {
-        for ( int i = 0; i < trialsCnt; i++ ) {
-            this.trials.add( randomTrialGenerator.nextTrial() );
+
+        for ( int i = 0; i < trials.size(); i++ ) {
+            Trial trial = trials.get( i );
+            Trial nTrialsBack = getNTrialsBack( i );
+            if ( nTrialsBack == null ) {
+                trial.setUserInput( new ExpectedUserInput( NoInput, NoInput ) );
+            } else {
+                UserInput localMatch = UserInput.NoInput;
+                UserInput soundMatch = UserInput.NoInput;
+                if ( nTrialsBack.getLocation().equals( trial.getLocation() ) ) {
+                    localMatch = UserInput.LocationMatch;
+                }
+                if ( nTrialsBack.getSound().equals( trial.getSound() ) ) {
+                    soundMatch = UserInput.SoundMatch;
+                }
+                trial.setUserInput( new ExpectedUserInput( soundMatch, localMatch ) );
+            }
+        }
+    }
+
+    private Trial getNTrialsBack( int currIndex ) {
+        if ( currIndex - version.howFarBack < 0 ) {
+            return null;
+        } else {
+            return trials.get( currIndex - version.howFarBack );
         }
     }
 }

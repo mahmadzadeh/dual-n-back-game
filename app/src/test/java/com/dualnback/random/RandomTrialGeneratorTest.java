@@ -8,17 +8,19 @@ import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.ASound;
 import com.dualnback.sound.SoundCollection;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
+
+import static com.dualnback.game.UserInput.NoInput;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RandomTrialGeneratorTest {
@@ -33,12 +35,6 @@ public class RandomTrialGeneratorTest {
     private MediaPlayer mockMediaPlayer;
 
 
-    @Before
-    public void setUp( ) {
-
-        initMocks( this );
-    }
-
     @Test
     public void canCreateInstance( ) {
         RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
@@ -46,8 +42,10 @@ public class RandomTrialGeneratorTest {
 
     @Test
     public void generateNextTrial( ) {
-        when( mockLocationCollection.getRandomLocation() ).thenReturn( new Location( 0, 0 ) );
-        when( mockSoundCollection.getRandomSound() ).thenReturn( new ASound( 1111 ) );
+        when( mockLocationCollection.getRandomLocation() )
+                .thenReturn( new Location( 0, 0 ) );
+        when( mockSoundCollection.getRandomSound() )
+                .thenReturn( new ASound( 1111 ) );
 
         RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
 
@@ -61,5 +59,38 @@ public class RandomTrialGeneratorTest {
         assertEquals( 0, trial.getLocation().getCol() );
         assertEquals( 0, trial.getLocation().getRow() );
     }
+
+
+    @Test
+    public void getListOfRandomTrials( ) {
+
+        when( mockLocationCollection.getRandomLocation() )
+                .thenReturn( new Location( 0, 0 ) )
+                .thenReturn( new Location( 1, 1 ) )
+                .thenReturn( new Location( 2, 2 ) );
+
+        when( mockSoundCollection.getRandomSound() )
+                .thenReturn( new ASound( 1111 ) )
+                .thenReturn( new ASound( 1112 ) )
+                .thenReturn( new ASound( 1113 ) );
+
+
+        RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
+
+        int expectedTrialCount = 3;
+
+        List<Trial> trials = generator.listOfRandomTrials( expectedTrialCount );
+
+        assertEquals( expectedTrialCount, trials.size() );
+
+        trials.stream().forEach( t -> {
+            assertEquals( NoInput, t.getUserInput().getSoundMatch() );
+            assertEquals( NoInput, t.getUserInput().getSoundMatch() );
+        } );
+
+        verify( mockLocationCollection, times( expectedTrialCount ) ).getRandomLocation();
+        verify( mockSoundCollection, times( expectedTrialCount ) ).getRandomSound();
+    }
+
 
 }

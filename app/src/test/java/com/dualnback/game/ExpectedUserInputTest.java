@@ -3,6 +3,7 @@ package com.dualnback.game;
 import org.junit.Test;
 
 import static com.dualnback.game.UserInput.LocationMatch;
+import static com.dualnback.game.UserInput.NoInput;
 import static com.dualnback.game.UserInput.SoundMatch;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,7 +19,7 @@ public class ExpectedUserInputTest {
     @Test
     public void givenInvalidSoundMatchThenIsSoundMatchReturnsFalse( ) {
 
-        ExpectedUserInput input = new ExpectedUserInput( null, LocationMatch );
+        ExpectedUserInput input = new ExpectedUserInput( NoInput, LocationMatch );
 
         assertFalse( input.isSoundMatch( SoundMatch ) );
     }
@@ -26,7 +27,7 @@ public class ExpectedUserInputTest {
     @Test
     public void givenInvalidLocationMatchThenIsSoundMatchReturnsFalse( ) {
 
-        ExpectedUserInput input = new ExpectedUserInput( null, null );
+        ExpectedUserInput input = new ExpectedUserInput( NoInput, NoInput );
 
         assertFalse( input.isLocationMatch( LocationMatch ) );
     }

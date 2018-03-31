@@ -1,24 +1,31 @@
 package com.dualnback.game;
 
-import java.util.Optional;
+public class ExpectedUserInput {
 
-class ExpectedUserInput {
+    private final UserInput soundMatch;
 
-    private final Optional<UserInput> soundMatch;
-    private final Optional<UserInput> locationMatch;
+    private final UserInput locationMatch;
 
     public ExpectedUserInput( UserInput soundMatch, UserInput locationMatch ) {
 
-        this.soundMatch = Optional.ofNullable( soundMatch );
-        this.locationMatch = Optional.ofNullable( locationMatch );
+        this.soundMatch = soundMatch;
+        this.locationMatch = locationMatch;
     }
-
 
     public boolean isSoundMatch( UserInput soundMatch ) {
-        return this.soundMatch.map( sm -> sm == soundMatch ).orElse( false );
+        return this.soundMatch == soundMatch;
     }
 
+
     public boolean isLocationMatch( UserInput locationMatch ) {
-        return this.locationMatch.map( lm-> lm == locationMatch ).orElse( false );
+        return this.locationMatch == locationMatch;
+    }
+
+    public UserInput getSoundMatch( ) {
+        return soundMatch;
+    }
+
+    public UserInput getLocationMatch( ) {
+        return locationMatch;
     }
 }

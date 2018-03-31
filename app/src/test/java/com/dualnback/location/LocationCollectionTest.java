@@ -29,6 +29,4 @@ public class LocationCollectionTest {
 
         assertEquals( location.size(), locationCollection.getSize() );
     }
-
-
 }
