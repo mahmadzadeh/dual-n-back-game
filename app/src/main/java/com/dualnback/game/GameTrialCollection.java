@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.dualnback.game.UserInput.NoInput;
+import static java.util.stream.IntStream.range;
 
 class GameTrialCollection {
 
@@ -23,23 +24,32 @@ class GameTrialCollection {
     }
 
     private void initTrials( ) {
+        range( 0, trials.size() )
+                .forEach( i -> {
 
-        for ( int i = 0; i < trials.size(); i++ ) {
-            Trial trial = trials.get( i );
-            Trial nTrialsBack = getNTrialsBack( i );
-            if ( nTrialsBack == null ) {
-                trial.setUserInput( new ExpectedUserInput( NoInput, NoInput ) );
-            } else {
-                UserInput localMatch = UserInput.NoInput;
-                UserInput soundMatch = UserInput.NoInput;
-                if ( nTrialsBack.getLocation().equals( trial.getLocation() ) ) {
-                    localMatch = UserInput.LocationMatch;
-                }
-                if ( nTrialsBack.getSound().equals( trial.getSound() ) ) {
-                    soundMatch = UserInput.SoundMatch;
-                }
-                trial.setUserInput( new ExpectedUserInput( soundMatch, localMatch ) );
+                    Trial nTrialsBack = getNTrialsBack( i );
+                    updateCurrentTrialsUserInput( trials.get( i ), nTrialsBack );
+
+                } );
+    }
+
+    private void updateCurrentTrialsUserInput( Trial currentTrial, Trial nTrialsBack ) {
+        setUserInput( currentTrial, nTrialsBack );
+    }
+
+    private void setUserInput( Trial trial, Trial nTrialsBack ) {
+        if ( nTrialsBack == null ) {
+            trial.setUserInput( new ExpectedUserInput( NoInput, NoInput ) );
+        } else {
+            UserInput localMatch = UserInput.NoInput;
+            UserInput soundMatch = UserInput.NoInput;
+            if ( nTrialsBack.getLocation().equals( trial.getLocation() ) ) {
+                localMatch = UserInput.LocationMatch;
             }
+            if ( nTrialsBack.getSound().equals( trial.getSound() ) ) {
+                soundMatch = UserInput.SoundMatch;
+            }
+            trial.setUserInput( new ExpectedUserInput( soundMatch, localMatch ) );
         }
     }
 

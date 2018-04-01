@@ -117,6 +117,32 @@ public class GameTrialCollectionTest {
         assertExpectedUserInput( actual.get( 2 ), LocationMatch, SoundMatch );
     }
 
+    @Test
+    public void givenThreeBackGameThenTwoNonAdjacentTrialsWithMatchingSoundLocationHaveCorrectUserInputs( ) {
+
+        List<Trial> trials = new ArrayList<Trial>() {{
+            add( new Trial( new Location( 0, 0 ), new SSound( 11 ) ) );
+            add( new Trial( new Location( 1, 2 ), new SSound( 12 ) ) );
+            add( new Trial( new Location( 0, 0 ), new SSound( 13 ) ) );
+            add( new Trial( new Location( 0, 0 ), new SSound( 11 ) ) );
+            add( new Trial( new Location( 1, 2 ), new SSound( 14 ) ) );
+            add( new Trial( new Location( 1, 2 ), new SSound( 15 ) ) );
+            add( new Trial( new Location( 2, 2 ), new SSound( 11 ) ) );
+        }};
+
+        GameTrialCollection gameTrialCollection = new GameTrialCollection( NBackVersion.ThreeBack, trials );
+
+        List<Trial> actual = gameTrialCollection.getTrials();
+
+        assertExpectedUserInput( actual.get( 0 ), NoInput, NoInput );
+        assertExpectedUserInput( actual.get( 1 ), NoInput, NoInput );
+        assertExpectedUserInput( actual.get( 2 ), NoInput, NoInput );
+        assertExpectedUserInput( actual.get( 3 ), LocationMatch, SoundMatch );
+        assertExpectedUserInput( actual.get( 4 ), LocationMatch, NoInput );
+        assertExpectedUserInput( actual.get( 5 ), NoInput, NoInput );
+        assertExpectedUserInput( actual.get( 6 ), NoInput, SoundMatch );
+    }
+
 
     private void assertExpectedUserInput( Trial trial, UserInput locationInput, UserInput soundInput ) {
         assertEquals( locationInput, trial.getUserInput().getLocationMatch() );
