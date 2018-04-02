@@ -1,12 +1,15 @@
 package com.dualnback.game;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.dualnback.game.UserInput.NoInput;
 import static java.util.stream.IntStream.range;
 
-class GameTrialCollection {
+class GameTrialCollection implements Iterable<Trial> {
 
     private final List<Trial> trials;
 
@@ -59,5 +62,11 @@ class GameTrialCollection {
         } else {
             return trials.get( currIndex - version.howFarBack );
         }
+    }
+
+    @NonNull
+    @Override
+    public Iterator<Trial> iterator( ) {
+        return this.trials.iterator();
     }
 }
