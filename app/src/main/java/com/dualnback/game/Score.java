@@ -49,4 +49,8 @@ public class Score {
     public Score updateTrialsByeOne( ) {
         return new Score( this.totalTrials + 1, this.numCorrectLocationGuess, this.numCorrectSoundGuess );
     }
+
+    public Score clone( ) {
+        return new Score( totalTrials, numCorrectLocationGuess, numCorrectSoundGuess );
+    }
 }

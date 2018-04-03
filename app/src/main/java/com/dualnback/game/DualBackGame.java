@@ -95,7 +95,7 @@ public class DualBackGame {
 
 
     public void markEndOfOneRound( ) {
-        score = score.updateTrialsByeOne();
+        return;
     }
 
     public Optional<SoundLocation> getCurrentSoundLocation( ) {
