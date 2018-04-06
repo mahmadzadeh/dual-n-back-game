@@ -5,8 +5,12 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import static com.dualnback.game.UserInput.LocationMatch;
 import static com.dualnback.game.UserInput.NoInput;
+import static com.dualnback.game.UserInput.SoundMatch;
 import static java.util.stream.IntStream.range;
 
 class GameTrialCollection implements Iterable<Trial> {
@@ -50,7 +54,7 @@ class GameTrialCollection implements Iterable<Trial> {
                 localMatch = UserInput.LocationMatch;
             }
             if ( nTrialsBack.getSound().equals( trial.getSound() ) ) {
-                soundMatch = UserInput.SoundMatch;
+                soundMatch = SoundMatch;
             }
             trial.setUserInput( new ExpectedUserInput( soundMatch, localMatch ) );
         }
@@ -68,5 +72,23 @@ class GameTrialCollection implements Iterable<Trial> {
     @Override
     public Iterator<Trial> iterator( ) {
         return this.trials.iterator();
+    }
+
+    public int totalSoundMatches( ) {
+        Predicate<Trial> trialPredicate = trial -> trial.getUserInput().getSoundMatch() == SoundMatch;
+        return filterByPredicate( trialPredicate );
+    }
+
+    public int totalLocationMatches( ) {
+        Predicate<Trial> trialPredicate = trial -> trial.getUserInput().getLocationMatch() == LocationMatch;
+        return filterByPredicate( trialPredicate );
+    }
+
+    private int filterByPredicate( Predicate<Trial> trialPredicate ) {
+        return trials
+                .stream()
+                .filter( trialPredicate )
+                .collect( Collectors.toList() )
+                .size();
     }
 }

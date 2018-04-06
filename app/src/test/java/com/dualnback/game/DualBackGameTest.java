@@ -1,6 +1,7 @@
 package com.dualnback.game;
 
 import com.dualnback.location.Location;
+import com.dualnback.sound.BSound;
 import com.dualnback.sound.SSound;
 
 import org.junit.Before;
@@ -8,29 +9,32 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
+import static com.dualnback.game.NBackVersion.TwoBack;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 
 public class DualBackGameTest {
 
+    private final SSound sSound = new SSound( 1 );
+    private final BSound bSound = new BSound( 2 );
+
     @Mock
     DualBackGrid dualBackGrid;
 
     GameTrialCollection gameTrialCollection;
 
-    Alternative alternative;
+    AlternativeDualBackGame alternative;
 
     List<Trial> trials = Arrays.asList(
             new Trial( new Location( 0, 0 ), new SSound( 1 ) ) );
 
     @Before
     public void setUp( ) {
-        gameTrialCollection = new GameTrialCollection( NBackVersion.TwoBack, trials );
-        alternative = new Alternative( dualBackGrid, gameTrialCollection );
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
     }
 
     @Test
@@ -62,69 +66,89 @@ public class DualBackGameTest {
         assertEquals( 0.0, score, 0.0001 );
     }
 
+    @Test
+    public void givenThreeTrialsAndTwoNBackWhenNoInputFromUserThenMarkEndOfTrialUpdatesScoreAccordingly( ) {
 
-    private class Alternative {
+        trials = Arrays.asList(
+                new Trial( new Location( 0, 0 ), new SSound( 1 ) ),
+                new Trial( new Location( 1, 1 ), bSound ),
+                new Trial( new Location( 0, 0 ), new SSound( 1 ) ) );
 
-        private final DualBackGrid dualBackGrid;
-        private final GameTrialCollection gameTrialCollection;
-        private final Iterator<Trial> trialIterator;
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        private UserInput soundMatch;
-        private UserInput locationMatch;
-        private Score score;
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
 
-        public Alternative( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
+        alternative.markEndOfTrial( alternative.getNextTrial() );
+        alternative.markEndOfTrial( alternative.getNextTrial() );
+        alternative.markEndOfTrial( alternative.getNextTrial() );
 
-            this.dualBackGrid = dualBackGrid;
-            this.gameTrialCollection = gameTrialCollection;
-            this.trialIterator = gameTrialCollection.iterator();
-            this.score = new Score();
-        }
+        double score = alternative.getCurrentScore();
 
-        public Score getScore( ) {
-            return score.clone();
-        }
-
-        public Trial getNextTrial( ) {
-            return trialIterator.hasNext() ? trialIterator.next() : null;
-        }
-
-
-        public void recordSoundMatch( ) {
-            this.soundMatch = UserInput.SoundMatch;
-        }
-
-        public void recordLocationMatch( ) {
-            this.locationMatch = UserInput.LocationMatch;
-        }
-
-
-        public void markEndOfTrial( Trial currentTrial ) {
-            UserInput soundMatch = this.soundMatch;
-            UserInput locMatch = this.locationMatch;
-
-            this.score = score.updateTrialsByeOne();
-
-            if ( currentTrial.getUserInput().isLocationMatch( locMatch ) ) {
-                score = score.update( UserInputEvaluation.CorrectLocation );
-            } else {
-                score = score.update( UserInputEvaluation.IncorrectLocation );
-            }
-
-            if ( currentTrial.getUserInput().isSoundMatch( soundMatch ) ) {
-                score = score.update( UserInputEvaluation.CorrectSound );
-            } else {
-                score = score.update( UserInputEvaluation.IncorrectSound );
-            }
-
-            // clear current sound/location  match
-
-            this.soundMatch = null;
-            this.locationMatch = null;
-        }
-
-        public double getCurrentScore( ) {
-            return score.calculateScorePercentage();
-        }
+        assertEquals( 0.0, score, 0.0001 );
     }
+
+    @Test
+    public void givenThreeTrialsAndTwoNBackWhenOneWrongInputFromUserThenMarkEndOfTrialUpdatesScoreAccordingly( ) {
+
+        trials = Arrays.asList(
+                new Trial( new Location( 0, 0 ), new SSound( 1 ) ),
+                new Trial( new Location( 1, 1 ), new SSound( 2 ) ),
+                new Trial( new Location( 0, 0 ), new SSound( 1 ) ) );
+
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+
+        Trial nextTrial = alternative.getNextTrial();
+
+        alternative.recordLocationMatch();
+        alternative.recordSoundMatch();
+
+        alternative.markEndOfTrial( nextTrial );
+
+        nextTrial = alternative.getNextTrial();
+        alternative.markEndOfTrial( nextTrial );
+
+
+        nextTrial = alternative.getNextTrial();
+        alternative.markEndOfTrial( nextTrial );
+
+        double score = alternative.getCurrentScore();
+
+        assertEquals( 0.0, score, 0.0001 );
+    }
+
+    @Test
+    public void givenFourTrialsAndTwoNBackWhenUserGuessesFiftyPercentCorrectThenMarkEndOfTrialUpdatesScoreAccordingly( ) {
+
+
+        trials = Arrays.asList(
+                new Trial( new Location( 0, 0 ), sSound ),
+                new Trial( new Location( 1, 1 ), bSound ),
+                new Trial( new Location( 0, 0 ), sSound ),
+                new Trial( new Location( 1, 1 ), bSound ) );
+
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+
+        Trial nextTrial = alternative.getNextTrial();
+        alternative.markEndOfTrial( nextTrial );
+
+        nextTrial = alternative.getNextTrial();
+        alternative.markEndOfTrial( nextTrial );
+
+        nextTrial = alternative.getNextTrial();
+        alternative.recordLocationMatch();
+        alternative.recordSoundMatch();
+        alternative.markEndOfTrial( nextTrial );
+
+        nextTrial = alternative.getNextTrial();
+        alternative.markEndOfTrial( nextTrial );
+
+        double score = alternative.getCurrentScore();
+
+        assertEquals( 50.0, score, 0.0001 );
+    }
+
 }

@@ -11,130 +11,68 @@ import static org.junit.Assert.assertEquals;
 
 public class ScoreTest {
 
-    public static final double DELTA = 0.01;
+    private static final double DELTA = 0.1;
 
     @Test
-    public void givenTotalNumberOfTrialsAndCorrectGuessForLocationAndSoundThenCanCalculateFinalScore( ) {
+    public void givenZeroTotalSoundAndLocationMatchAndNoUserInputThenCorrectScoreCalculated( ) {
+        double score = new ScoreAlt( 0, 0 )
+                .calculateScorePercentage();
 
-        int totalTrials = 15;
-        int numCorrectLocationGuess = 10;
-        int numCorrectSoundGuess = 10;
-        double expected = 66.67;
-
-        assertEquals( expected,
-                new Score( totalTrials, numCorrectLocationGuess, numCorrectSoundGuess ).calculateScorePercentage(),
-                DELTA );
+        assertEquals( 0.0, score, 0.00001 );
     }
 
     @Test
-    public void testScoreCalculationWhenAllCorrectAnswersAreGiven( ) {
+    public void givenZeroTotalSoundAndLocationMatchAndWhenOneWrongAnswerGivenThenCorrectScoreCalculated( ) {
+        double score = new ScoreAlt( 0, 0 )
+                .update( IncorrectSound )
+                .calculateScorePercentage();
 
-        int totalTrials = 3;
-        int numCorrectLocationGuess = 3;
-        int numCorrectSoundGuess = 3;
-        double expected = 100.00;
-
-        assertEquals( expected,
-                new Score( totalTrials, numCorrectLocationGuess, numCorrectSoundGuess ).calculateScorePercentage(),
-                DELTA );
+        assertEquals( 0.0, score, 0.00001 );
     }
 
     @Test
-    public void testScoreCalculationWhenNoCorrectAnswersAreGiven( ) {
-
-        int totalTrials = 3;
-        int numCorrectLocationGuess = 0;
-        int numCorrectSoundGuess = 0;
-        double expected = 0;
-
-        assertEquals( expected,
-                new Score( totalTrials, numCorrectLocationGuess, numCorrectSoundGuess ).calculateScorePercentage(),
-                DELTA );
-    }
-
-    @Test
-    public void canCalculateScoreForNewlyCreatedObject( ) {
-
-        assertEquals( 0, new Score().calculateScorePercentage(), DELTA );
-    }
-
-    @Test
-    public void updatingScoreBasedOnUserInput( ) {
-
-        Score score = new Score()
-                .update( CorrectSound )
-                .updateTrialsByeOne();
-
-        assertEquals( 50.00, score.calculateScorePercentage(), DELTA );
-    }
-
-    @Test
-    public void updatingScoreBasedOnIncorrectUserInput( ) {
-
-        Score score = new Score().update( IncorrectSound );
-
-        assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
-    }
-
-    @Test
-    public void updatingScoreBasedOnCorrectSoundUserInputButIncorrectLocation( ) {
-
-        Score score = new Score()
-                .update( CorrectSound )
-                .updateTrialsByeOne();
-
-        assertEquals( 50.00, score.calculateScorePercentage(), DELTA );
-    }
-
-    @Test
-    public void updatingScoreBasedOnCorrectLocationUserInputButIncorrectSound( ) {
-
-        Score score = new Score()
-                .update( IncorrectLocation )
-                .updateTrialsByeOne();
-
-        assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
-    }
-
-    @Test
-    public void updatingScoreBasedOnMultipleInputs( ) {
-
-        Score score = new Score()
-                .update( CorrectSound )
-                .update( IncorrectLocation )
-                .updateTrialsByeOne()
+    public void givenZeroTotalSoundAndLocationMatchAndWhenTwoWrongAnswersGivenThenCorrectScoreCalculated( ) {
+        double score = new ScoreAlt( 0, 0 )
                 .update( IncorrectSound )
                 .update( IncorrectLocation )
-                .updateTrialsByeOne();
+                .calculateScorePercentage();
 
-        assertEquals( 25.00, score.calculateScorePercentage(), DELTA );
+        assertEquals( 0.0, score, 0.00001 );
     }
 
     @Test
-    public void updatingScoreWhenUserAnswersAllCorrect( ) {
+    public void givenOneSoundAndOneLocationMatchAndWhenOneWrongAnswersAndOneCorrectGivenThenCorrectScoreCalculated( ) {
+        double score = new ScoreAlt( 1, 1 )
+                .update( CorrectSound )
+                .update( IncorrectLocation )
+                .calculateScorePercentage();
 
-        Score score = new Score()
+        assertEquals( 50.0, score, 0.00001 );
+    }
+
+    @Test
+    public void givenOneSoundAndOneLocationMatchAndWhenTwoRightAnswersThenCorrectScoreCalculated( ) {
+        double score = new ScoreAlt( 1, 1 )
                 .update( CorrectSound )
                 .update( CorrectLocation )
-                .updateTrialsByeOne()
-                .update( CorrectSound )
-                .update( CorrectLocation )
-                .updateTrialsByeOne();
+                .calculateScorePercentage();
 
-        assertEquals( 100.00, score.calculateScorePercentage(), DELTA );
+        assertEquals( 100.0, score, 0.00001 );
     }
 
     @Test
-    public void updatingScoreWhenUserAnswersAllincorrectly( ) {
+    public void givenSixSoundAndSixLocationMatchAndWhenFourCorrectLocationAndThreeCorrectSoundAnswersGivenThenCorrectScoreCalculated( ) {
+        double score = new ScoreAlt( 6, 6 )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectLocation )
+                .update( CorrectLocation )
+                .update( CorrectLocation )
+                .update( CorrectLocation )
+                .calculateScorePercentage();
 
-        Score score = new Score()
-                .update( IncorrectSound )
-                .update( IncorrectLocation )
-                .updateTrialsByeOne()
-                .update( IncorrectSound )
-                .update( IncorrectLocation )
-                .updateTrialsByeOne();
-
-        assertEquals( 0.00, score.calculateScorePercentage(), DELTA );
+        assertEquals( 58.3, score, DELTA );
     }
+
 }
