@@ -151,4 +151,10 @@ public class DualBackGameTest {
         assertEquals( 50.0, score, 0.0001 );
     }
 
+    @Test
+    public void givenTrialThenUpdate( ) {
+
+    }
+
+
 }

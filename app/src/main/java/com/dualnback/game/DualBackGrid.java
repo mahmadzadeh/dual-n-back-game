@@ -25,6 +25,10 @@ class DualBackGrid {
         turnOnCellAtCurrentLocation();
     }
 
+    public Location getTurnedOnCell( ) {
+        return currentTurnedOnCell;
+    }
+
     private void turnOnCellAtCurrentLocation( ) {
         grid.get( currentTurnedOnCell.getRow() )
                 .get( currentTurnedOnCell.getCol() )
@@ -43,9 +47,5 @@ class DualBackGrid {
 
     private boolean thereIsCellToTurnOff( ) {
         return !( currentTurnedOnCell instanceof NullLocation );
-    }
-
-    public Location getTurnedOnCell( ) {
-        return currentTurnedOnCell;
     }
 }
