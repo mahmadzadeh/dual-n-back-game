@@ -1,28 +1,36 @@
 package com.dualnback.game;
 
+import android.support.annotation.NonNull;
+
 import com.dualnback.location.Location;
 import com.dualnback.sound.BSound;
 import com.dualnback.sound.SSound;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.dualnback.game.NBackVersion.TwoBack;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-
-public class DualBackGameTest {
+@RunWith(MockitoJUnitRunner.class)
+public class AlternativeDualBackGameTest {
 
     private final SSound sSound = new SSound( 1 );
     private final BSound bSound = new BSound( 2 );
 
     @Mock
-    DualBackGrid dualBackGrid;
+    AlternativeDualBackGrid dualBackGrid;
 
     GameTrialCollection gameTrialCollection;
 
@@ -122,11 +130,7 @@ public class DualBackGameTest {
     public void givenFourTrialsAndTwoNBackWhenUserGuessesFiftyPercentCorrectThenMarkEndOfTrialUpdatesScoreAccordingly( ) {
 
 
-        trials = Arrays.asList(
-                new Trial( new Location( 0, 0 ), sSound ),
-                new Trial( new Location( 1, 1 ), bSound ),
-                new Trial( new Location( 0, 0 ), sSound ),
-                new Trial( new Location( 1, 1 ), bSound ) );
+        trials = getTestTrials();
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
@@ -152,8 +156,69 @@ public class DualBackGameTest {
     }
 
     @Test
-    public void givenTrialThenUpdate( ) {
+    public void givenCurrentGameStateWhenNoCellInGridTurnedOnThenTurnOffOnGridCellDoesNothing( ) {
 
+        trials = getTestTrials();
+
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+
+        when( dualBackGrid.getTurnedOnCell() ).thenReturn( Optional.empty() );
+
+        assertEquals( Optional.empty(), alternative.turnOffOnCell() );
+
+        verify( dualBackGrid ).getTurnedOnCell();
+    }
+
+    @Test
+    public void givenCurrentGameStateWhenOneCellInGridTurnedOnThenTurnOffOnGridCellTurnsOffCell( ) {
+        Cell expectedOffCell = new Cell( 1, 2 );
+
+        trials = getTestTrials();
+
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+
+        when( dualBackGrid.getTurnedOnCell() ).thenReturn( Optional.of( expectedOffCell ) );
+
+        Optional<Cell> onCell = alternative.turnOffOnCell();
+
+        assertTrue( onCell.isPresent() );
+
+        assertTrue( !onCell.get().isTurnedOn() );
+    }
+
+    @Test
+    public void givenLocationThenCanTurnOnCellAtLocation( ) {
+        Location location = new Location( 0, 0 );
+
+        Cell expectedOnCell = new Cell( 1, 2 );
+        expectedOnCell.turnOn();
+
+        trials = getTestTrials();
+
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+
+        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+
+        when( dualBackGrid.turnOnCellAtLocation( location ) ).thenReturn( expectedOnCell );
+
+        Cell turnOnCell = alternative.turnOnCellAtLocation( location );
+
+        assertTrue( turnOnCell.isTurnedOn() );
+
+        verify( dualBackGrid ).turnOnCellAtLocation( location );
+    }
+
+    @NonNull
+    private List<Trial> getTestTrials( ) {
+        return Arrays.asList(
+                new Trial( new Location( 0, 0 ), sSound ),
+                new Trial( new Location( 1, 1 ), bSound ),
+                new Trial( new Location( 0, 0 ), sSound ),
+                new Trial( new Location( 1, 1 ), bSound ) );
     }
 
 

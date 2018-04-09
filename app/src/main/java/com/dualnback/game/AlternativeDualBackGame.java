@@ -1,10 +1,13 @@
 package com.dualnback.game;
 
+import com.dualnback.location.Location;
+
 import java.util.Iterator;
+import java.util.Optional;
 
 class AlternativeDualBackGame {
 
-    private final DualBackGrid dualBackGrid;
+    private final AlternativeDualBackGrid dualBackGrid;
     private final GameTrialCollection gameTrialCollection;
     private final Iterator<Trial> trialIterator;
 
@@ -12,7 +15,7 @@ class AlternativeDualBackGame {
     private UserInput locationMatch;
     private ScoreAlt score;
 
-    public AlternativeDualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
+    public AlternativeDualBackGame( AlternativeDualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
         this.gameTrialCollection = gameTrialCollection;
@@ -59,5 +62,20 @@ class AlternativeDualBackGame {
 
     public double getCurrentScore( ) {
         return score.calculateScorePercentage();
+    }
+
+    public Optional<Cell> turnOffOnCell( ) {
+
+        return dualBackGrid
+                .getTurnedOnCell()
+                .map( cell -> {
+                    cell.turnOff();
+                    return cell;
+                } );
+    }
+
+    public Cell turnOnCellAtLocation( Location location ) {
+        return dualBackGrid
+                .turnOnCellAtLocation( location );
     }
 }
