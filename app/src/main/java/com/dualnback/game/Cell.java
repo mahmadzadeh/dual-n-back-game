@@ -23,4 +23,11 @@ public class Cell {
     public void turnOn( ) {
         currentState = onImage;
     }
+
+    @Override
+    public String toString( ) {
+        return "Cell{" +
+                "currentState is off ?" + ( currentState == offImage ) +
+                '}';
+    }
 }

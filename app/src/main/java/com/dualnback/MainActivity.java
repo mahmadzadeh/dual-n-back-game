@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dualnback.game.DualBackGame;
-import com.dualnback.game.GridFactory;
 import com.dualnback.game.LocationToImageMapper;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.SoundCollectionFactory;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView( R.layout.activity_main );
 
         soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
-        dualBackGame = new DualBackGame( GridFactory.instance(), version );
+//        dualBackGame = new DualBackGame( GridFactory.instance(), version );
 
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );

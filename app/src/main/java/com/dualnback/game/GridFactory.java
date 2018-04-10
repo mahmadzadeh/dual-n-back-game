@@ -8,7 +8,7 @@ import static java.util.Arrays.asList;
 
 public class GridFactory {
 
-    public static DualBackGrid instance( ) {
+    public static AlternativeDualBackGrid instance( ) {
         int onImage = R.mipmap.square;
         int offImage = R.mipmap.square_blue;
 
@@ -27,6 +27,6 @@ public class GridFactory {
                 new Cell( onImage, offImage ),
                 new Cell( onImage, offImage ) );
 
-        return new DualBackGrid( asList( row1, row2, row3 ) );
+        return new AlternativeDualBackGrid( asList( row1, row2, row3 ) );
     }
 }

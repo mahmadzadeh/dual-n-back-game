@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static com.dualnback.game.NBackVersion.TwoBack;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -166,7 +167,7 @@ public class AlternativeDualBackGameTest {
 
         when( dualBackGrid.getTurnedOnCell() ).thenReturn( Optional.empty() );
 
-        assertEquals( Optional.empty(), alternative.turnOffOnCell() );
+        assertEquals( Optional.empty(), alternative.turnOffCurrentOnCell() );
 
         verify( dualBackGrid ).getTurnedOnCell();
     }
@@ -183,7 +184,7 @@ public class AlternativeDualBackGameTest {
 
         when( dualBackGrid.getTurnedOnCell() ).thenReturn( Optional.of( expectedOffCell ) );
 
-        Optional<Cell> onCell = alternative.turnOffOnCell();
+        Optional<Cell> onCell = alternative.turnOffCurrentOnCell();
 
         assertTrue( onCell.isPresent() );
 
@@ -210,6 +211,47 @@ public class AlternativeDualBackGameTest {
         assertTrue( turnOnCell.isTurnedOn() );
 
         verify( dualBackGrid ).turnOnCellAtLocation( location );
+    }
+
+    /**
+     * Some kind of integration test of all collaborators
+     */
+    @Test
+    public void playTwoBackWithThreeTrials( ) {
+
+        alternative = new AlternativeDualBackGame( GridFactory.instance(),
+                new GameTrialCollection( TwoBack, getTestTrials() ) );
+
+        Trial trial = alternative.getNextTrial();
+
+        Optional<Cell> offCell = alternative.turnOffCurrentOnCell();
+        assertFalse( offCell.isPresent() ); // initially nothing is turned on
+
+        Cell onCell = alternative.turnOnCellAtLocation( trial.getLocation() );
+        assertTrue( onCell.isTurnedOn() ); // initially nothing is turned on
+
+        alternative.markEndOfTrial( trial );
+
+        trial = alternative.markStartOfTrial();
+        alternative.markEndOfTrial( trial );
+
+        trial = alternative.markStartOfTrial();
+
+        alternative.recordLocationMatch();
+        alternative.recordSoundMatch();
+
+        alternative.markEndOfTrial( trial );
+
+        trial = alternative.markStartOfTrial();
+
+        alternative.recordLocationMatch();
+        alternative.recordSoundMatch();
+
+        alternative.markEndOfTrial( trial );
+
+        double currentScore = alternative.getCurrentScore();
+
+        assertEquals( 100.00, currentScore, 0.0001 );
     }
 
     @NonNull

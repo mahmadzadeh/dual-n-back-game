@@ -5,7 +5,7 @@ import com.dualnback.location.Location;
 import java.util.Iterator;
 import java.util.Optional;
 
-class AlternativeDualBackGame {
+public class AlternativeDualBackGame {
 
     private final AlternativeDualBackGrid dualBackGrid;
     private final GameTrialCollection gameTrialCollection;
@@ -19,14 +19,13 @@ class AlternativeDualBackGame {
 
         this.dualBackGrid = dualBackGrid;
         this.gameTrialCollection = gameTrialCollection;
-        this.trialIterator = gameTrialCollection.iterator();
+        this.trialIterator = gameTrialCollection.getTrials().iterator();
         this.score = new ScoreAlt( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
     }
 
     public Trial getNextTrial( ) {
         return trialIterator.hasNext() ? trialIterator.next() : null;
     }
-
 
     public void recordSoundMatch( ) {
         this.soundMatch = UserInput.SoundMatch;
@@ -64,7 +63,7 @@ class AlternativeDualBackGame {
         return score.calculateScorePercentage();
     }
 
-    public Optional<Cell> turnOffOnCell( ) {
+    public Optional<Cell> turnOffCurrentOnCell( ) {
 
         return dualBackGrid
                 .getTurnedOnCell()
@@ -77,5 +76,16 @@ class AlternativeDualBackGame {
     public Cell turnOnCellAtLocation( Location location ) {
         return dualBackGrid
                 .turnOnCellAtLocation( location );
+    }
+
+    public Trial markStartOfTrial( ) {
+        Trial trial = getNextTrial();
+
+        turnOffCurrentOnCell();
+
+        Cell cell = turnOnCellAtLocation( trial.getLocation() );
+//        Log.i( "CELL_OFF", cell.toString() );
+
+        return trial;
     }
 }
