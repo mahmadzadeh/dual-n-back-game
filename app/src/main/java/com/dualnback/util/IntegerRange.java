@@ -1,4 +1,4 @@
-package com.dualnback.game;
+package com.dualnback.util;
 
 
 import java.util.Collection;

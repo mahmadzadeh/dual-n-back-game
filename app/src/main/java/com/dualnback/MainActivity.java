@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.LocationToImageMapper;
 import com.dualnback.game.NBackVersion;
-import com.dualnback.game.SoundCollectionFactory;
 import com.dualnback.game.SoundLocation;
+import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
 

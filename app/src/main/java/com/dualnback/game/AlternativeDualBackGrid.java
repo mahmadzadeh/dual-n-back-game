@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-class AlternativeDualBackGrid {
+public class AlternativeDualBackGrid {
     private static final int ROW_CNT = 3;
     private static final int COL_CNT = 3;
 

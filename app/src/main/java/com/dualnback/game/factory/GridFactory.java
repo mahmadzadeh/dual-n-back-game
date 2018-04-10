@@ -1,6 +1,8 @@
-package com.dualnback.game;
+package com.dualnback.game.factory;
 
 import com.dualnback.R;
+import com.dualnback.game.AlternativeDualBackGrid;
+import com.dualnback.game.Cell;
 
 import java.util.List;
 

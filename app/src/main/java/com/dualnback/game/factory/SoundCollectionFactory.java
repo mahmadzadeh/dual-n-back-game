@@ -1,4 +1,4 @@
-package com.dualnback.game;
+package com.dualnback.game.factory;
 
 import android.content.Context;
 
