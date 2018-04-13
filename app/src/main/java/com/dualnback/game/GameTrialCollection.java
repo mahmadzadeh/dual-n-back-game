@@ -10,7 +10,7 @@ import static com.dualnback.game.UserInput.NoInput;
 import static com.dualnback.game.UserInput.SoundMatch;
 import static java.util.stream.IntStream.range;
 
-class GameTrialCollection {
+public class GameTrialCollection {
 
     private final List<Trial> trials;
 

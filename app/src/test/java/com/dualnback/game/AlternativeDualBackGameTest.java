@@ -1,6 +1,8 @@
 package com.dualnback.game;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import com.dualnback.game.factory.GridFactory;
 import com.dualnback.location.Location;
@@ -22,6 +24,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,6 +38,9 @@ public class AlternativeDualBackGameTest {
 
     @Mock
     AlternativeDualBackGrid dualBackGrid;
+
+    @Mock
+    ImageView imageView;
 
     GameTrialCollection gameTrialCollection;
 
@@ -175,7 +183,7 @@ public class AlternativeDualBackGameTest {
 
     @Test
     public void givenCurrentGameStateWhenOneCellInGridTurnedOnThenTurnOffOnGridCellTurnsOffCell( ) {
-        Cell expectedOffCell = new Cell( 1, 2 );
+        Cell expectedOffCell = new Cell( 1, 2, imageView );
 
         trials = getTestTrials();
 
@@ -196,7 +204,7 @@ public class AlternativeDualBackGameTest {
     public void givenLocationThenCanTurnOnCellAtLocation( ) {
         Location location = new Location( 0, 0 );
 
-        Cell expectedOnCell = new Cell( 1, 2 );
+        Cell expectedOnCell = new Cell( 1, 2, imageView );
         expectedOnCell.turnOn();
 
         trials = getTestTrials();
@@ -219,8 +227,19 @@ public class AlternativeDualBackGameTest {
      */
     @Test
     public void playTwoBackWithThreeTrials( ) {
+        Activity context = mock( Activity.class );
+        when( context.findViewById( anyInt() ) )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView )
+                .thenReturn( imageView );
 
-        alternative = new AlternativeDualBackGame( GridFactory.instance(),
+        alternative = new AlternativeDualBackGame( GridFactory.instance( context ),
                 new GameTrialCollection( TwoBack, getTestTrials() ) );
 
         Trial trial = alternative.getNextTrial();
@@ -253,6 +272,8 @@ public class AlternativeDualBackGameTest {
         double currentScore = alternative.getCurrentScore();
 
         assertEquals( 100.00, currentScore, 0.0001 );
+
+        verify( context, times( 9 ) ).findViewById( anyInt() );
     }
 
     @NonNull

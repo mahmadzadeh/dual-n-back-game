@@ -1,11 +1,15 @@
 package com.dualnback.game;
 
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import com.dualnback.location.Location;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,15 +17,21 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class DualBackGridTest {
+
+    @Mock
+    ImageView mockImgView;
 
     int onImageId = 0;
     int offImageId = 1;
 
-    Cell onCell = new Cell( 1, 2 );
-    Cell offCell = new Cell( 1, 2 );
+    Cell onCell;
+    Cell offCell;
 
     List<List<Cell>> grid;
 
@@ -29,6 +39,11 @@ public class DualBackGridTest {
 
     @Before
     public void setUp( ) {
+        doNothing().when( mockImgView ).setImageResource( anyInt() );
+
+        onCell = new Cell( 1, 2, mockImgView );
+        offCell = new Cell( 1, 2, mockImgView );
+
         onCell.turnOn();
     }
 
@@ -39,11 +54,13 @@ public class DualBackGridTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void givenMalformedGridThenConstructorThrowsException( ) {
-        Cell onCell = new Cell( 1, 2 );
+        Cell onCell = new Cell( 1, 2, mockImgView );
         onCell.turnOn();
-        Cell offCell = new Cell( 1, 2 );
+        Cell offCell = new Cell( 1, 2, mockImgView );
 
         new AlternativeDualBackGrid( Arrays.asList( buildOneRowWithOneOnCellAnd( onCell, offCell ) ) );
+
+        verify( mockImgView ).setImageResource( anyInt() );
     }
 
     @Test

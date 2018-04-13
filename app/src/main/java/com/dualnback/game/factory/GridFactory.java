@@ -1,34 +1,35 @@
 package com.dualnback.game.factory;
 
+import android.app.Activity;
+
 import com.dualnback.R;
 import com.dualnback.game.AlternativeDualBackGrid;
 import com.dualnback.game.Cell;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
+import static com.dualnback.game.LocationToImageMapper.map;
+import static java.util.stream.IntStream.range;
 
 public class GridFactory {
 
-    public static AlternativeDualBackGrid instance( ) {
-        int onImage = R.mipmap.square;
-        int offImage = R.mipmap.square_blue;
+    public static AlternativeDualBackGrid instance( Activity context ) {
+        int onImg = R.mipmap.square;
+        int offImg = R.mipmap.square_blue;
 
-        List<Cell> row1 = asList(
-                new Cell( onImage, offImage ),
-                new Cell( onImage, offImage ),
-                new Cell( onImage, offImage ) );
+        List<List<Cell>> grid =
+                range( 0, 3 )
+                        .mapToObj( row ->
+                                range( 0, 3 )
+                                        .mapToObj( col -> createSingleCell( onImg, offImg, row, col, context ) )
+                                        .collect( Collectors.toList() ) )
+                        .collect( Collectors.toList() );
 
-        List<Cell> row2 = asList(
-                new Cell( onImage, offImage ),
-                new Cell( onImage, offImage ),
-                new Cell( onImage, offImage ) );
+        return new AlternativeDualBackGrid( grid );
+    }
 
-        List<Cell> row3 = asList(
-                new Cell( onImage, offImage ),
-                new Cell( onImage, offImage ),
-                new Cell( onImage, offImage ) );
-
-        return new AlternativeDualBackGrid( asList( row1, row2, row3 ) );
+    private static Cell createSingleCell( int onImg, int offImg, int row, int col, Activity context ) {
+        return new Cell( onImg, offImg, context.findViewById( map( row, col ) ) );
     }
 }

@@ -7,17 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dualnback.game.DualBackGame;
-import com.dualnback.game.LocationToImageMapper;
+import com.dualnback.game.AlternativeDualBackGame;
+import com.dualnback.game.GameTrialCollection;
 import com.dualnback.game.NBackVersion;
-import com.dualnback.game.SoundLocation;
+import com.dualnback.game.Trial;
+import com.dualnback.game.factory.GridFactory;
 import com.dualnback.game.factory.SoundCollectionFactory;
+import com.dualnback.game.factory.TrialListFactory;
 import com.dualnback.location.LocationCollection;
+import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.SoundCollection;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
     private final NBackVersion version = NBackVersion.TwoBack;
-    private DualBackGame dualBackGame;
+    private AlternativeDualBackGame dualBackGame;
     private Button soundMatchButton;
     private Button locationMatchButton;
     private TextView scoreTxt;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private SoundCollection soundCollection;
     private LocationCollection locationCollection = new LocationCollection();
+    private Trial currentTrial;
 
     private GridLayout gridLayout;
 
@@ -46,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView( R.layout.activity_main );
 
         soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
-//        dualBackGame = new DualBackGame( GridFactory.instance(), version );
+        List<Trial> trials = TrialListFactory.create( new RandomTrialGenerator( locationCollection, soundCollection ) );
+
+        dualBackGame = new AlternativeDualBackGame( GridFactory.instance( this ), new GameTrialCollection( version, trials ) );
 
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
@@ -56,13 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler() {
             public void handleMessage( Message m ) {
-                turnOffImageBasedOnCurrentLocation();
-
-                SoundLocation randomSoundAndLocation = dualBackGame.getRandomSoundAndLocation( soundCollection, locationCollection );
-                dualBackGame.updateGame( randomSoundAndLocation );
-
-                updateImageBasedOnGameState();
-                randomSoundAndLocation.getSound().playSound( MainActivity.this );
+                currentTrial = dualBackGame.markStartOfTrial();
             }
         };
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick( View view ) {
-                        dualBackGame.evaluateLocation();
+                        dualBackGame.recordLocationMatch();
                     }
                 }
         );
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick( View view ) {
-                        dualBackGame.evaluateSound();
+                        dualBackGame.recordSoundMatch();
                     }
                 }
         );
@@ -88,30 +88,12 @@ public class MainActivity extends AppCompatActivity {
         timer.start();
     }
 
-    private void updateImageBasedOnGameState( ) {
-        if ( dualBackGame.getCurrentSoundLocation().isPresent() ) {
-            ImageView imageView = findViewById(
-                    LocationToImageMapper.map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
-
-            imageView.setImageResource( R.mipmap.square_blue );
-        }
-    }
-
-    private void turnOffImageBasedOnCurrentLocation( ) {
-        if ( dualBackGame.getCurrentSoundLocation().isPresent() ) {
-            ImageView imageView = findViewById(
-                    LocationToImageMapper.map( dualBackGame.getCurrentSoundLocation().get().getLocation() ) );
-
-            imageView.setImageResource( R.mipmap.square );
-        }
-    }
-
     public void setCountDownText( String text ) {
         countdownTimerTxt.setText( text );
     }
 
     public void markEndOfOneRound( ) {
-        dualBackGame.markEndOfOneRound();
+        dualBackGame.markEndOfTrial( currentTrial );
         updateUI();
     }
 

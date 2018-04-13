@@ -21,7 +21,7 @@ public class CellTest {
     public void setUp( ) {
         initMocks( this );
 
-        cell = new Cell( 0, 1 );
+        cell = new Cell( 0, 1, mockImageView );
     }
 
     @Test
