@@ -38,6 +38,7 @@ public class LocationCollection {
     public int getSize( ) {
 
         return locations.size();
-
     }
+
+
 }

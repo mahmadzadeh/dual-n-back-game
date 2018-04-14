@@ -18,6 +18,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
@@ -35,11 +36,11 @@ public class DualBackGridTest {
 
     List<List<Cell>> grid;
 
-    AlternativeDualBackGrid subjectUnderTest;
+    DualBackGrid sut;
 
     @Before
     public void setUp( ) {
-        doNothing().when( mockImgView ).swapImage( any( Cell.class ) );
+        doNothing().when( mockImgView ).swapImage( any( Cell.class ), anyInt() );
 
         onCell = new Cell( 1, 2, mockImgView );
         offCell = new Cell( 1, 2, mockImgView );
@@ -49,7 +50,7 @@ public class DualBackGridTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void givenInvalidGridThenConstructorThrowsException( ) {
-        new AlternativeDualBackGrid( null );
+        new DualBackGrid( null );
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -58,17 +59,17 @@ public class DualBackGridTest {
         onCell.turnOn();
         Cell offCell = new Cell( 1, 2, mockImgView );
 
-        new AlternativeDualBackGrid( Arrays.asList( buildOneRowWithOneOnCellAnd( onCell, offCell ) ) );
+        new DualBackGrid( Arrays.asList( buildOneRowWithOneOnCellAnd( onCell, offCell ) ) );
 
-        verify( mockImgView ).swapImage( any( Cell.class ) );
+        verify( mockImgView ).swapImage( any( Cell.class ), anyInt() );
     }
 
     @Test
     public void givenGridWhenNoCellOnThenGetCurrentTurnedOnCellReturnsOptionalEmpty( ) {
         grid = getGrid( offCell, offCell );
-        subjectUnderTest = new AlternativeDualBackGrid( grid );
+        sut = new DualBackGrid( grid );
 
-        assertEquals( Optional.empty(), subjectUnderTest.getTurnedOnCell() );
+        assertEquals( Optional.empty(), sut.getTurnedOnCell() );
     }
 
     @Test
@@ -76,9 +77,9 @@ public class DualBackGridTest {
 
         grid = getGrid( onCell, offCell );
 
-        subjectUnderTest = new AlternativeDualBackGrid( grid );
+        sut = new DualBackGrid( grid );
 
-        Optional<Cell> turnedOnCell = subjectUnderTest.getTurnedOnCell();
+        Optional<Cell> turnedOnCell = sut.getTurnedOnCell();
 
         assertTrue( turnedOnCell.isPresent() );
         assertEquals( onCell, turnedOnCell.get() );
@@ -91,11 +92,11 @@ public class DualBackGridTest {
 
         grid = getGrid( offCell, offCell );
 
-        subjectUnderTest = new AlternativeDualBackGrid( grid );
+        sut = new DualBackGrid( grid );
 
-        assertEquals( Optional.empty(), subjectUnderTest.getTurnedOnCell() );
+        assertEquals( Optional.empty(), sut.getTurnedOnCell() );
 
-        Cell cell = subjectUnderTest.turnOnCellAtLocation( location );
+        Cell cell = sut.turnOnCellAtLocation( location );
 
         assertTrue( cell.isTurnedOn() );
     }
@@ -104,12 +105,12 @@ public class DualBackGridTest {
     public void givenGridContainsTurnedOnCellThenGetTurnedOnCellLocationReturnsItsLocation( ) {
         grid = getGrid( onCell, offCell );
 
-        subjectUnderTest = new AlternativeDualBackGrid( grid );
+        sut = new DualBackGrid( grid );
 
-        assertTrue( subjectUnderTest.getTurnedOnCell().isPresent() );
+        assertTrue( sut.getTurnedOnCell().isPresent() );
 
 
-        Optional<Location> location = subjectUnderTest.getLocationOfTurnedOnCell();
+        Optional<Location> location = sut.getLocationOfTurnedOnCell();
 
         assertTrue( location.isPresent() );
 
@@ -120,10 +121,32 @@ public class DualBackGridTest {
     public void givenInvalidLocationToTurnOnTheCellThenTurnOnCellAtLocationThrowsException( ) {
         grid = getGrid( onCell, offCell );
 
-        subjectUnderTest = new AlternativeDualBackGrid( grid );
+        sut = new DualBackGrid( grid );
 
-        subjectUnderTest.turnOnCellAtLocation( new Location( 333, 3333 ) );
+        sut.turnOnCellAtLocation( new Location( 333, 3333 ) );
     }
+
+    @Test
+    public void givenInvalidCellThenLocationOfCellReturnsOptionalEmpty( ) {
+        Cell nonExistentCell = new Cell( 333, 444, mockImgView );
+
+        grid = getGrid( onCell, offCell );
+
+        sut = new DualBackGrid( grid );
+
+        assertEquals( Optional.empty(), sut.locationOfCell( nonExistentCell ) );
+    }
+
+
+    @Test
+    public void givenValidCellThenLocationOfCellReturnsIt( ) {
+        grid = getGrid( onCell, offCell );
+
+        sut = new DualBackGrid( grid );
+
+        assertEquals( new Location( 0, 0 ), sut.locationOfCell( onCell ).get() );
+    }
+
 
     @NonNull
     private List<List<Cell>> getGrid( Cell onCell, Cell offCell ) {

@@ -28,20 +28,20 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AlternativeDualBackGameTest {
+public class DualBackGameTest {
 
     private final SSound sSound = new SSound( 1 );
     private final BSound bSound = new BSound( 2 );
 
     @Mock
-    AlternativeDualBackGrid dualBackGrid;
+    DualBackGrid dualBackGrid;
 
     @Mock
-    SwappableImage imageView;
+    SwappableImage swappableImage;
 
     GameTrialCollection gameTrialCollection;
 
-    AlternativeDualBackGame alternative;
+    DualBackGame sut;
 
     List<Trial> trials = Arrays.asList(
             new Trial( new Location( 0, 0 ), new SSound( 1 ) ) );
@@ -49,12 +49,12 @@ public class AlternativeDualBackGameTest {
     @Before
     public void setUp( ) {
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
     }
 
     @Test
     public void givenInstanceThenGetNextSoundLocationReturns( ) {
-        Trial trial = alternative.getNextTrial();
+        Trial trial = sut.getNextTrial();
 
         assertNotNull( trial );
     }
@@ -62,21 +62,21 @@ public class AlternativeDualBackGameTest {
     @Test
     public void givenStartOfATrialThenRecordSoundMatchRecordsASingleSoundMatch( ) {
 
-        alternative.recordSoundMatch();
+        sut.recordSoundMatch();
     }
 
     @Test
     public void givenStartOfTrialThenRecordLocationMatchRecordsSingleLocationMatch( ) {
-        alternative.recordLocationMatch();
+        sut.recordLocationMatch();
     }
 
     @Test
     public void givenSingleTrialAndTwoNBackThenMarkEndOfTrialUpdatesScoreAccordingly( ) {
-        Trial currTrial = alternative.getNextTrial();
+        Trial currTrial = sut.getNextTrial();
 
-        alternative.markEndOfTrial( currTrial );
+        sut.markEndOfTrial( currTrial );
 
-        double score = alternative.getCurrentScore();
+        double score = sut.getCurrentScore();
 
         assertEquals( 0.0, score, 0.0001 );
     }
@@ -91,13 +91,13 @@ public class AlternativeDualBackGameTest {
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
-        alternative.markEndOfTrial( alternative.getNextTrial() );
-        alternative.markEndOfTrial( alternative.getNextTrial() );
-        alternative.markEndOfTrial( alternative.getNextTrial() );
+        sut.markEndOfTrial( sut.getNextTrial() );
+        sut.markEndOfTrial( sut.getNextTrial() );
+        sut.markEndOfTrial( sut.getNextTrial() );
 
-        double score = alternative.getCurrentScore();
+        double score = sut.getCurrentScore();
 
         assertEquals( 0.0, score, 0.0001 );
     }
@@ -112,23 +112,23 @@ public class AlternativeDualBackGameTest {
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
-        Trial nextTrial = alternative.getNextTrial();
+        Trial nextTrial = sut.getNextTrial();
 
-        alternative.recordLocationMatch();
-        alternative.recordSoundMatch();
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
 
-        alternative.markEndOfTrial( nextTrial );
+        sut.markEndOfTrial( nextTrial );
 
-        nextTrial = alternative.getNextTrial();
-        alternative.markEndOfTrial( nextTrial );
+        nextTrial = sut.getNextTrial();
+        sut.markEndOfTrial( nextTrial );
 
 
-        nextTrial = alternative.getNextTrial();
-        alternative.markEndOfTrial( nextTrial );
+        nextTrial = sut.getNextTrial();
+        sut.markEndOfTrial( nextTrial );
 
-        double score = alternative.getCurrentScore();
+        double score = sut.getCurrentScore();
 
         assertEquals( 0.0, score, 0.0001 );
     }
@@ -141,23 +141,23 @@ public class AlternativeDualBackGameTest {
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
-        Trial nextTrial = alternative.getNextTrial();
-        alternative.markEndOfTrial( nextTrial );
+        Trial nextTrial = sut.getNextTrial();
+        sut.markEndOfTrial( nextTrial );
 
-        nextTrial = alternative.getNextTrial();
-        alternative.markEndOfTrial( nextTrial );
+        nextTrial = sut.getNextTrial();
+        sut.markEndOfTrial( nextTrial );
 
-        nextTrial = alternative.getNextTrial();
-        alternative.recordLocationMatch();
-        alternative.recordSoundMatch();
-        alternative.markEndOfTrial( nextTrial );
+        nextTrial = sut.getNextTrial();
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
+        sut.markEndOfTrial( nextTrial );
 
-        nextTrial = alternative.getNextTrial();
-        alternative.markEndOfTrial( nextTrial );
+        nextTrial = sut.getNextTrial();
+        sut.markEndOfTrial( nextTrial );
 
-        double score = alternative.getCurrentScore();
+        double score = sut.getCurrentScore();
 
         assertEquals( 50.0, score, 0.0001 );
     }
@@ -169,28 +169,28 @@ public class AlternativeDualBackGameTest {
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
         when( dualBackGrid.getTurnedOnCell() ).thenReturn( Optional.empty() );
 
-        assertEquals( Optional.empty(), alternative.turnOffCurrentOnCell() );
+        assertEquals( Optional.empty(), sut.turnOffCurrentOnCell() );
 
         verify( dualBackGrid ).getTurnedOnCell();
     }
 
     @Test
     public void givenCurrentGameStateWhenOneCellInGridTurnedOnThenTurnOffOnGridCellTurnsOffCell( ) {
-        Cell expectedOffCell = new Cell( 1, 2, imageView );
+        Cell expectedOffCell = new Cell( 1, 2, swappableImage );
 
         trials = getTestTrials();
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
         when( dualBackGrid.getTurnedOnCell() ).thenReturn( Optional.of( expectedOffCell ) );
 
-        Optional<Cell> onCell = alternative.turnOffCurrentOnCell();
+        Optional<Cell> onCell = sut.turnOffCurrentOnCell();
 
         assertTrue( onCell.isPresent() );
 
@@ -201,18 +201,18 @@ public class AlternativeDualBackGameTest {
     public void givenLocationThenCanTurnOnCellAtLocation( ) {
         Location location = new Location( 0, 0 );
 
-        Cell expectedOnCell = new Cell( 1, 2, imageView );
+        Cell expectedOnCell = new Cell( 1, 2, swappableImage );
         expectedOnCell.turnOn();
 
         trials = getTestTrials();
 
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
 
-        alternative = new AlternativeDualBackGame( dualBackGrid, gameTrialCollection );
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
         when( dualBackGrid.turnOnCellAtLocation( location ) ).thenReturn( expectedOnCell );
 
-        Cell turnOnCell = alternative.turnOnCellAtLocation( location );
+        Cell turnOnCell = sut.turnOnCellAtLocation( location );
 
         assertTrue( turnOnCell.isTurnedOn() );
 
@@ -221,6 +221,20 @@ public class AlternativeDualBackGameTest {
 
     @Test
     public void giveInvalidCellThenFindCellLocationReturnOptionalEmpty( ) {
+        Location location = new Location( 0, 0 );
+
+        Cell expectedOnCell = new Cell( 1, 2, swappableImage );
+        expectedOnCell.turnOn();
+
+        trials = getTestTrials();
+
+        gameTrialCollection = new GameTrialCollection( TwoBack, trials );
+
+        sut = new DualBackGame( dualBackGrid, gameTrialCollection );
+
+        Cell nonExistentCell = new Cell( 22, 222, swappableImage );
+
+        Optional<Location> loc = sut.findCellLocation( nonExistentCell );
 
 
     }
@@ -233,37 +247,37 @@ public class AlternativeDualBackGameTest {
     public void playTwoBackWithThreeTrials( ) {
         SwappableImage context = mock( SwappableImage.class );
 
-        alternative = new AlternativeDualBackGame( GridFactory.instance( context ),
+        sut = new DualBackGame( GridFactory.instance( context ),
                 new GameTrialCollection( TwoBack, getTestTrials() ) );
 
-        Trial trial = alternative.getNextTrial();
+        Trial trial = sut.getNextTrial();
 
-        Optional<Cell> offCell = alternative.turnOffCurrentOnCell();
+        Optional<Cell> offCell = sut.turnOffCurrentOnCell();
         assertFalse( offCell.isPresent() ); // initially nothing is turned on
 
-        Cell onCell = alternative.turnOnCellAtLocation( trial.getLocation() );
+        Cell onCell = sut.turnOnCellAtLocation( trial.getLocation() );
         assertTrue( onCell.isTurnedOn() ); // initially nothing is turned on
 
-        alternative.markEndOfTrial( trial );
+        sut.markEndOfTrial( trial );
 
-        trial = alternative.markStartOfTrial();
-        alternative.markEndOfTrial( trial );
+        trial = sut.markStartOfTrial();
+        sut.markEndOfTrial( trial );
 
-        trial = alternative.markStartOfTrial();
+        trial = sut.markStartOfTrial();
 
-        alternative.recordLocationMatch();
-        alternative.recordSoundMatch();
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
 
-        alternative.markEndOfTrial( trial );
+        sut.markEndOfTrial( trial );
 
-        trial = alternative.markStartOfTrial();
+        trial = sut.markStartOfTrial();
 
-        alternative.recordLocationMatch();
-        alternative.recordSoundMatch();
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
 
-        alternative.markEndOfTrial( trial );
+        sut.markEndOfTrial( trial );
 
-        double currentScore = alternative.getCurrentScore();
+        double currentScore = sut.getCurrentScore();
 
         assertEquals( 100.00, currentScore, 0.0001 );
 

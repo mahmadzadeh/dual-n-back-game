@@ -6,21 +6,25 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dualnback.game.AlternativeDualBackGame;
 import com.dualnback.game.Cell;
+import com.dualnback.game.DualBackGame;
 import com.dualnback.game.GameTrialCollection;
+import com.dualnback.game.LocationToImageMapper;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
 import com.dualnback.game.factory.GridFactory;
 import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.game.factory.TrialListFactory;
+import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.SoundCollection;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
     private final NBackVersion version = NBackVersion.TwoBack;
-    private AlternativeDualBackGame dualBackGame;
+    private DualBackGame dualBackGame;
     private Button soundMatchButton;
     private Button locationMatchButton;
     private TextView scoreTxt;
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
         List<Trial> trials = TrialListFactory.create( new RandomTrialGenerator( locationCollection, soundCollection ) );
 
-        dualBackGame = new AlternativeDualBackGame( GridFactory.instance( this ), new GameTrialCollection( version, trials ) );
+        dualBackGame = new DualBackGame( GridFactory.instance( this ), new GameTrialCollection( version, trials ) );
 
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
@@ -84,8 +88,12 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         updateUI();
     }
 
-    public void swapImage( Cell cell ) {
-        return;
+    public void swapImage( Cell cell, int resourceId ) {
+        Optional<Location> cellLocation = dualBackGame.findCellLocation( cell );
+        if ( cellLocation.isPresent() ) {
+            ImageView imageView = findViewById( LocationToImageMapper.map( cellLocation.get() ) );
+            imageView.setImageResource( resourceId );
+        }
     }
 
     public int currentPoints( ) {

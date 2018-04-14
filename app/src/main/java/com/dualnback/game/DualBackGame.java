@@ -5,9 +5,9 @@ import com.dualnback.location.Location;
 import java.util.Iterator;
 import java.util.Optional;
 
-public class AlternativeDualBackGame {
+public class DualBackGame {
 
-    private final AlternativeDualBackGrid dualBackGrid;
+    private final DualBackGrid dualBackGrid;
     private final GameTrialCollection gameTrialCollection;
     private final Iterator<Trial> trialIterator;
 
@@ -15,7 +15,7 @@ public class AlternativeDualBackGame {
     private UserInput locationMatch;
     private ScoreAlt score;
 
-    public AlternativeDualBackGame( AlternativeDualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
+    public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
         this.gameTrialCollection = gameTrialCollection;
@@ -89,11 +89,13 @@ public class AlternativeDualBackGame {
 
         turnOffCurrentOnCell();
 
-        Cell cell = turnOnCellAtLocation( trial.getLocation() );
-//        Log.i( "CELL_OFF", cell.toString() );
+        turnOnCellAtLocation( trial.getLocation() );
 
         return trial;
     }
 
 
+    public Optional<Location> findCellLocation( Cell cell ) {
+        return dualBackGrid.locationOfCell( cell );
+    }
 }

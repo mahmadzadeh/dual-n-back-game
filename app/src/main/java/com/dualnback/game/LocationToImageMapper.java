@@ -23,15 +23,7 @@ public class LocationToImageMapper {
         return LOCATION_TO_IMAGE_MAP.get( buildMapKey( location ) );
     }
 
-    public static int map( int row, int col ) {
-        return LOCATION_TO_IMAGE_MAP.get( buildMapKey( row, col ) );
-    }
-
     private static String buildMapKey( Location location ) {
         return location.getRow() + "" + location.getCol();
-    }
-
-    private static String buildMapKey( int row, int col ) {
-        return row + "" + col;
     }
 }

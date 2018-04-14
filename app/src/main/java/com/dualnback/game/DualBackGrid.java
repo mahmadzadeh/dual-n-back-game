@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class AlternativeDualBackGrid {
+public class DualBackGrid {
     private static final int ROW_CNT = 3;
     private static final int COL_CNT = 3;
 
     List<List<Cell>> grid;
 
-    public AlternativeDualBackGrid( List<List<Cell>> grid ) {
+    public DualBackGrid( List<List<Cell>> grid ) {
         if ( grid == null || grid.size() < ROW_CNT ) {
             throw new IllegalArgumentException( "Invalid Grid Given. Need a grid of 3X3" );
         }
@@ -70,5 +70,17 @@ public class AlternativeDualBackGrid {
                 location.getRow() >= 0 &&
                 location.getCol() <= COL_CNT &&
                 location.getCol() >= 0;
+    }
+
+    public Optional<Location> locationOfCell( Cell cell ) {
+        for ( int row = 0; row < ROW_CNT; row++ ) {
+            for ( int col = 0; col < COL_CNT; col++ ) {
+                if ( this.grid.get( row ).get( col ).equals( cell ) ) {
+                    return Optional.of( new Location( row, col ) );
+                }
+            }
+        }
+
+        return Optional.empty();
     }
 }

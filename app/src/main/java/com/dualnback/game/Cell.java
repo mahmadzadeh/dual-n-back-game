@@ -22,12 +22,12 @@ public class Cell {
 
     public void turnOff( ) {
         currentState = offImage;
-        image.swapImage( this );
+        image.swapImage( this, offImage );
     }
 
     public void turnOn( ) {
         currentState = onImage;
-        image.swapImage( this );
+        image.swapImage( this, onImage );
     }
 
     @Override
