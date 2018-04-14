@@ -1,8 +1,8 @@
 package com.dualnback.game;
 
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
+import com.dualnback.SwappableImage;
 import com.dualnback.location.Location;
 
 import org.junit.Before;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 public class DualBackGridTest {
 
     @Mock
-    ImageView mockImgView;
+    SwappableImage mockImgView;
 
     int onImageId = 0;
     int offImageId = 1;
@@ -39,7 +39,7 @@ public class DualBackGridTest {
 
     @Before
     public void setUp( ) {
-        doNothing().when( mockImgView ).setImageResource( anyInt() );
+        doNothing().when( mockImgView ).swapImage( any( Cell.class ) );
 
         onCell = new Cell( 1, 2, mockImgView );
         offCell = new Cell( 1, 2, mockImgView );
@@ -60,7 +60,7 @@ public class DualBackGridTest {
 
         new AlternativeDualBackGrid( Arrays.asList( buildOneRowWithOneOnCellAnd( onCell, offCell ) ) );
 
-        verify( mockImgView ).setImageResource( anyInt() );
+        verify( mockImgView ).swapImage( any( Cell.class ) );
     }
 
     @Test

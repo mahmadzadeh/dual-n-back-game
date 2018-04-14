@@ -1,19 +1,19 @@
 package com.dualnback.game;
 
-import android.widget.ImageView;
+import com.dualnback.SwappableImage;
 
 public class Cell {
 
     private int onImage;
     private int offImage;
     private int currentState;
-    private ImageView backgroundImage;
+    private SwappableImage image;
 
-    public Cell( int onImageResourceId, int offImageResourceId, ImageView backgroundImg ) {
+    public Cell( int onImageResourceId, int offImageResourceId, SwappableImage backgroundImg ) {
         this.onImage = onImageResourceId;
         this.offImage = offImageResourceId;
         this.currentState = offImageResourceId;
-        this.backgroundImage = backgroundImg;
+        this.image = backgroundImg;
     }
 
     public boolean isTurnedOn( ) {
@@ -22,12 +22,12 @@ public class Cell {
 
     public void turnOff( ) {
         currentState = offImage;
-        backgroundImage.setImageResource( offImage );
+        image.swapImage( this );
     }
 
     public void turnOn( ) {
         currentState = onImage;
-        backgroundImage.setImageResource( onImage );
+        image.swapImage( this );
     }
 
     @Override

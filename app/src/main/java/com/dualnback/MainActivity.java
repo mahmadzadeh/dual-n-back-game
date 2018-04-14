@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.dualnback.game.AlternativeDualBackGame;
+import com.dualnback.game.Cell;
 import com.dualnback.game.GameTrialCollection;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public static final String FINAL_SCORE = "FINAL_SCORE";
     public final int ONE_ROUND_IN_MILLIS = 90000;
@@ -61,28 +61,15 @@ public class MainActivity extends AppCompatActivity {
         gridLayout = findViewById( R.id.gridLayout );
 
         handler = new Handler() {
+
             public void handleMessage( Message m ) {
                 currentTrial = dualBackGame.markStartOfTrial();
             }
         };
 
-        locationMatchButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick( View view ) {
-                        dualBackGame.recordLocationMatch();
-                    }
-                }
-        );
+        locationMatchButton.setOnClickListener( view -> dualBackGame.recordLocationMatch() );
 
-        soundMatchButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick( View view ) {
-                        dualBackGame.recordSoundMatch();
-                    }
-                }
-        );
+        soundMatchButton.setOnClickListener( view -> dualBackGame.recordSoundMatch() );
 
         timer = GameCountDownTimer.INSTANCE( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
         timer.start();
@@ -95,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
     public void markEndOfOneRound( ) {
         dualBackGame.markEndOfTrial( currentTrial );
         updateUI();
+    }
+
+    public void swapImage( Cell cell ) {
+        return;
     }
 
     public int currentPoints( ) {

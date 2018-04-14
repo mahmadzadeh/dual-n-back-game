@@ -40,6 +40,12 @@ public class AlternativeDualBackGame {
         UserInput soundMatch = this.soundMatch;
         UserInput locMatch = this.locationMatch;
 
+        if ( currentTrial == null ) {
+            this.soundMatch = null;
+            this.locationMatch = null;
+            return;
+        }
+
 
         if ( currentTrial.getUserInput().isLocationMatch( locMatch ) ) {
             score = score.update( UserInputEvaluation.CorrectLocation );
@@ -88,4 +94,6 @@ public class AlternativeDualBackGame {
 
         return trial;
     }
+
+
 }

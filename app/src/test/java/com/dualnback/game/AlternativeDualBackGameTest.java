@@ -1,9 +1,8 @@
 package com.dualnback.game;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
+import com.dualnback.SwappableImage;
 import com.dualnback.game.factory.GridFactory;
 import com.dualnback.location.Location;
 import com.dualnback.sound.BSound;
@@ -24,9 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +37,7 @@ public class AlternativeDualBackGameTest {
     AlternativeDualBackGrid dualBackGrid;
 
     @Mock
-    ImageView imageView;
+    SwappableImage imageView;
 
     GameTrialCollection gameTrialCollection;
 
@@ -222,22 +219,19 @@ public class AlternativeDualBackGameTest {
         verify( dualBackGrid ).turnOnCellAtLocation( location );
     }
 
+    @Test
+    public void giveInvalidCellThenFindCellLocationReturnOptionalEmpty( ) {
+
+
+    }
+
+
     /**
      * Some kind of integration test of all collaborators
      */
     @Test
     public void playTwoBackWithThreeTrials( ) {
-        Activity context = mock( Activity.class );
-        when( context.findViewById( anyInt() ) )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView )
-                .thenReturn( imageView );
+        SwappableImage context = mock( SwappableImage.class );
 
         alternative = new AlternativeDualBackGame( GridFactory.instance( context ),
                 new GameTrialCollection( TwoBack, getTestTrials() ) );
@@ -273,7 +267,6 @@ public class AlternativeDualBackGameTest {
 
         assertEquals( 100.00, currentScore, 0.0001 );
 
-        verify( context, times( 9 ) ).findViewById( anyInt() );
     }
 
     @NonNull
