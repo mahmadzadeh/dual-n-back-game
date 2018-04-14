@@ -33,4 +33,11 @@ public abstract class Sound {
     public int hashCode( ) {
         return Objects.hash( getSoundResource() );
     }
+
+    @Override
+    public String toString( ) {
+        return "Sound{" +
+                ", class =" + this.getClass().getSimpleName() +
+                '}';
+    }
 }

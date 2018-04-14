@@ -35,4 +35,13 @@ public class Trial {
 
         this.userInput = userInput;
     }
+
+    @Override
+    public String toString( ) {
+        return "Trial{" +
+                "location=" + location +
+                ", sound=" + sound +
+                ", userInput=" + userInput +
+                '}';
+    }
 }

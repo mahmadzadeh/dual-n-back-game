@@ -82,4 +82,12 @@ public class GameTrialCollection {
                 .collect( Collectors.toList() )
                 .size();
     }
+
+    @Override
+    public String toString( ) {
+        return "GameTrialCollection{" +
+                "version=" + version +
+                "trials=" + this.trials.stream().map( t -> t.toString() ).collect( Collectors.joining( ", " ) ) +
+                '}';
+    }
 }

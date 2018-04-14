@@ -13,14 +13,14 @@ public class DualBackGame {
 
     private UserInput soundMatch;
     private UserInput locationMatch;
-    private ScoreAlt score;
+    private Score score;
 
     public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
         this.gameTrialCollection = gameTrialCollection;
         this.trialIterator = gameTrialCollection.getTrials().iterator();
-        this.score = new ScoreAlt( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
+        this.score = new Score( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
     }
 
     public Trial getNextTrial( ) {

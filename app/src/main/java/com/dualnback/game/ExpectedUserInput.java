@@ -28,4 +28,12 @@ public class ExpectedUserInput {
     public UserInput getLocationMatch( ) {
         return locationMatch;
     }
+
+    @Override
+    public String toString( ) {
+        return "ExpectedUserInput{" +
+                "soundMatch=" + soundMatch +
+                ", locationMatch=" + locationMatch +
+                '}';
+    }
 }

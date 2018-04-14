@@ -2,7 +2,6 @@ package com.dualnback;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,8 +34,6 @@ public class GameCountDownTimer extends CountDownTimer {
 
     @Override
     public void onTick( long millisUntilFinished ) {
-        Log.e( "onTick", "millisUntilFinished: " + millisUntilFinished );
-
         String text = String.format( "%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes( millisUntilFinished ) - TimeUnit.HOURS.toMinutes( TimeUnit.MILLISECONDS.toHours( millisUntilFinished ) ),
                 TimeUnit.MILLISECONDS.toSeconds( millisUntilFinished ) - TimeUnit.MINUTES.toSeconds( TimeUnit.MILLISECONDS.toMinutes( millisUntilFinished ) )

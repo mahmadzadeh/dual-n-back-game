@@ -1,56 +1,56 @@
 package com.dualnback.game;
 
+class Score {
+    private final int expectedTotalSoundMatch;
+    private final int expectedTotalLocationMatch;
+    private int countOfRightLocationGuesses;
+    private int countOfRightSoundGuesses;
 
-public class Score {
 
-    private final int numCorrectLocationGuess;
-    private final int numCorrectSoundGuess;
-    private final int totalTrials;
-
-    public Score( ) {
-        this.numCorrectLocationGuess = 0;
-        this.numCorrectSoundGuess = 0;
-        this.totalTrials = 0;
+    public Score( int expectedTotalSoundMatch, int expectedTotalLocationMatch ) {
+        this.expectedTotalSoundMatch = expectedTotalSoundMatch;
+        this.expectedTotalLocationMatch = expectedTotalLocationMatch;
+        this.countOfRightSoundGuesses = 0;
+        this.countOfRightLocationGuesses = 0;
     }
 
-    public Score( int totalTrials, int numCorrectLocationGuess, int numCorrectSoundGuess ) {
-        this.numCorrectLocationGuess = numCorrectLocationGuess;
-        this.numCorrectSoundGuess = numCorrectSoundGuess;
-        this.totalTrials = totalTrials;
-    }
-
-
-    public double calculateScorePercentage( ) {
-        if ( totalTrials == 0 ) {
-            return 0.00;
-        }
-
-        double correctLocPercentage = ( 100 * numCorrectLocationGuess ) / ( double ) totalTrials;
-        double correctSoundPercentage = ( 100 * numCorrectSoundGuess ) / ( double ) totalTrials;
-
-        return ( correctLocPercentage + correctSoundPercentage ) / 2;
-    }
 
     public Score update( UserInputEvaluation userInputEvaluation ) {
         switch ( userInputEvaluation ) {
             case CorrectSound:
-                return new Score( this.totalTrials, this.numCorrectLocationGuess, this.numCorrectSoundGuess + 1 );
-            case IncorrectSound:
-                return new Score( this.totalTrials, numCorrectLocationGuess, numCorrectSoundGuess );
+                this.countOfRightSoundGuesses++;
+                return this;
             case CorrectLocation:
-                return new Score( this.totalTrials, numCorrectLocationGuess + 1, numCorrectSoundGuess );
+                this.countOfRightLocationGuesses++;
+                return this;
+            case IncorrectSound:
+                return this;
             case IncorrectLocation:
-                return new Score( this.totalTrials, numCorrectLocationGuess, numCorrectSoundGuess );
+                return this;
             default:
                 throw new IllegalArgumentException( "Invalid user input given " + userInputEvaluation );
         }
     }
 
-    public Score updateTrialsByeOne( ) {
-        return new Score( this.totalTrials + 1, this.numCorrectLocationGuess, this.numCorrectSoundGuess );
+    public double calculateScorePercentage( ) {
+
+        int rightGuessPercent = 100 * countOfRightSoundGuesses;
+        int righLocGuessPercent = 100 * countOfRightLocationGuesses;
+
+        double correctSoundPercentage =
+                divideIfDivisorOrDefault( rightGuessPercent, expectedTotalSoundMatch, 0 );
+        double correctLocPercentage = divideIfDivisorOrDefault( righLocGuessPercent, expectedTotalLocationMatch, 0 );
+
+        double totalPercentage = correctLocPercentage + correctSoundPercentage;
+
+
+        return totalPercentage != 0
+                ? totalPercentage / 2
+                : 0;
     }
 
-    public Score clone( ) {
-        return new Score( totalTrials, numCorrectLocationGuess, numCorrectSoundGuess );
+    private double divideIfDivisorOrDefault( int numerator, double denom, double defaultNum ) {
+
+        return numerator != 0 ? ( numerator / denom ) : defaultNum;
     }
 }

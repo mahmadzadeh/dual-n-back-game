@@ -15,7 +15,7 @@ public class ScoreTest {
 
     @Test
     public void givenZeroTotalSoundAndLocationMatchAndNoUserInputThenCorrectScoreCalculated( ) {
-        double score = new ScoreAlt( 0, 0 )
+        double score = new Score( 0, 0 )
                 .calculateScorePercentage();
 
         assertEquals( 0.0, score, 0.00001 );
@@ -23,7 +23,7 @@ public class ScoreTest {
 
     @Test
     public void givenZeroTotalSoundAndLocationMatchAndWhenOneWrongAnswerGivenThenCorrectScoreCalculated( ) {
-        double score = new ScoreAlt( 0, 0 )
+        double score = new Score( 0, 0 )
                 .update( IncorrectSound )
                 .calculateScorePercentage();
 
@@ -32,7 +32,7 @@ public class ScoreTest {
 
     @Test
     public void givenZeroTotalSoundAndLocationMatchAndWhenTwoWrongAnswersGivenThenCorrectScoreCalculated( ) {
-        double score = new ScoreAlt( 0, 0 )
+        double score = new Score( 0, 0 )
                 .update( IncorrectSound )
                 .update( IncorrectLocation )
                 .calculateScorePercentage();
@@ -42,7 +42,7 @@ public class ScoreTest {
 
     @Test
     public void givenOneSoundAndOneLocationMatchAndWhenOneWrongAnswersAndOneCorrectGivenThenCorrectScoreCalculated( ) {
-        double score = new ScoreAlt( 1, 1 )
+        double score = new Score( 1, 1 )
                 .update( CorrectSound )
                 .update( IncorrectLocation )
                 .calculateScorePercentage();
@@ -52,7 +52,7 @@ public class ScoreTest {
 
     @Test
     public void givenOneSoundAndOneLocationMatchAndWhenTwoRightAnswersThenCorrectScoreCalculated( ) {
-        double score = new ScoreAlt( 1, 1 )
+        double score = new Score( 1, 1 )
                 .update( CorrectSound )
                 .update( CorrectLocation )
                 .calculateScorePercentage();
@@ -62,7 +62,7 @@ public class ScoreTest {
 
     @Test
     public void givenSixSoundAndSixLocationMatchAndWhenFourCorrectLocationAndThreeCorrectSoundAnswersGivenThenCorrectScoreCalculated( ) {
-        double score = new ScoreAlt( 6, 6 )
+        double score = new Score( 6, 6 )
                 .update( CorrectSound )
                 .update( CorrectSound )
                 .update( CorrectSound )

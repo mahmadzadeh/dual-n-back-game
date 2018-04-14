@@ -13,8 +13,8 @@ import static java.util.stream.IntStream.range;
 public class GridFactory {
 
     public static DualBackGrid instance( SwappableImage context ) {
-        int onImg = R.mipmap.square;
-        int offImg = R.mipmap.square_blue;
+        int onImg = R.mipmap.square_blue;
+        int offImg = R.mipmap.square;
 
         List<List<Cell>> grid =
                 range( 0, 3 )

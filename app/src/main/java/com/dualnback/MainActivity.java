@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -56,7 +57,11 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
         List<Trial> trials = TrialListFactory.create( new RandomTrialGenerator( locationCollection, soundCollection ) );
 
-        dualBackGame = new DualBackGame( GridFactory.instance( this ), new GameTrialCollection( version, trials ) );
+        GameTrialCollection gameTrialCollection = new GameTrialCollection( version, trials );
+
+        Log.i( "MainActivity", "Trials: " + gameTrialCollection.toString() );
+
+        dualBackGame = new DualBackGame( GridFactory.instance( this ), gameTrialCollection );
 
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
@@ -92,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         Optional<Location> cellLocation = dualBackGame.findCellLocation( cell );
         if ( cellLocation.isPresent() ) {
             ImageView imageView = findViewById( LocationToImageMapper.map( cellLocation.get() ) );
+            imageView.invalidate();
             imageView.setImageResource( resourceId );
         }
     }

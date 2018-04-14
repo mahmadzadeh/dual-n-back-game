@@ -20,7 +20,8 @@ public class LocationToImageMapper {
     }};
 
     public static int map( Location location ) {
-        return LOCATION_TO_IMAGE_MAP.get( buildMapKey( location ) );
+        String mapKey = buildMapKey( location );
+        return LOCATION_TO_IMAGE_MAP.get( mapKey );
     }
 
     private static String buildMapKey( Location location ) {
