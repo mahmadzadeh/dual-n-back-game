@@ -4,7 +4,6 @@ package com.dualnback.game;
 import com.dualnback.location.Location;
 import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.BSound;
-import com.dualnback.sound.CSound;
 import com.dualnback.sound.JSound;
 import com.dualnback.sound.KSound;
 import com.dualnback.sound.SSound;
@@ -29,7 +28,7 @@ public class GameTrialCollectionTest {
 
     private final SSound sSound = new SSound( 11 );
     private final BSound bSound = new BSound( 12 );
-    private final CSound cSound = new CSound( 13 );
+    private final KSound cSound = new KSound( 13 );
     private final JSound jSound = new JSound( 14 );
     private final KSound kSound = new KSound( 15 );
 

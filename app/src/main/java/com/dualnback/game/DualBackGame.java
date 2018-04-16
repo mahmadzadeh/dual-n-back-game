@@ -5,6 +5,9 @@ import com.dualnback.location.Location;
 import java.util.Iterator;
 import java.util.Optional;
 
+import static com.dualnback.game.UserInput.LocationMatch;
+import static com.dualnback.game.UserInput.SoundMatch;
+
 public class DualBackGame {
 
     private final DualBackGrid dualBackGrid;
@@ -28,13 +31,12 @@ public class DualBackGame {
     }
 
     public void recordSoundMatch( ) {
-        this.soundMatch = UserInput.SoundMatch;
+        this.soundMatch = SoundMatch;
     }
 
     public void recordLocationMatch( ) {
-        this.locationMatch = UserInput.LocationMatch;
+        this.locationMatch = LocationMatch;
     }
-
 
     public void markEndOfTrial( Trial currentTrial ) {
         UserInput soundMatch = this.soundMatch;

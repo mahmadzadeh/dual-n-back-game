@@ -87,7 +87,7 @@ public class GameTrialCollection {
     public String toString( ) {
         return "GameTrialCollection{" +
                 "version=" + version +
-                "trials=" + this.trials.stream().map( t -> t.toString() ).collect( Collectors.joining( ", " ) ) +
+                "trials=" + this.trials.stream().map( t -> t.toString() ).collect( Collectors.joining( ", \n" ) ) +
                 '}';
     }
 }

@@ -16,7 +16,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class SoundCollectionTest {
 
-    private final Sound sound = new ASound( 11111 );
+    private final KSound sound = new KSound( 11111 );
+
     @Mock
     private MediaPlayer mockMediaPlayer;
 

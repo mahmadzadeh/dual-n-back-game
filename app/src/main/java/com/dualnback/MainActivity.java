@@ -13,21 +13,20 @@ import android.widget.TextView;
 import com.dualnback.game.Cell;
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.GameTrialCollection;
-import com.dualnback.game.LocationToImageMapper;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
 import com.dualnback.game.factory.GridFactory;
 import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.game.factory.TrialListFactory;
-import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.SoundCollection;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.dualnback.game.LocationToImageMapper.map;
 
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
@@ -73,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
             public void handleMessage( Message m ) {
                 currentTrial = dualBackGame.markStartOfTrial();
+                currentTrial.getSound().playSound( MainActivity.this );
             }
         };
 
@@ -94,12 +94,12 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     }
 
     public void swapImage( Cell cell, int resourceId ) {
-        Optional<Location> cellLocation = dualBackGame.findCellLocation( cell );
-        if ( cellLocation.isPresent() ) {
-            ImageView imageView = findViewById( LocationToImageMapper.map( cellLocation.get() ) );
-            imageView.invalidate();
-            imageView.setImageResource( resourceId );
-        }
+        dualBackGame
+                .findCellLocation( cell )
+                .ifPresent( cellLocation -> {
+                    ImageView imageView = findViewById( map( cellLocation ) );
+                    imageView.setImageResource( resourceId );
+                } );
     }
 
     public int currentPoints( ) {

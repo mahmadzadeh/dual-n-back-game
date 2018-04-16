@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import com.dualnback.game.Trial;
 import com.dualnback.location.Location;
 import com.dualnback.location.LocationCollection;
-import com.dualnback.sound.ASound;
+import com.dualnback.sound.KSound;
 import com.dualnback.sound.SoundCollection;
 
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class RandomTrialGeneratorTest {
         when( mockLocationCollection.getRandomLocation() )
                 .thenReturn( new Location( 0, 0 ) );
         when( mockSoundCollection.getRandomSound() )
-                .thenReturn( new ASound( 1111 ) );
+                .thenReturn( new KSound( 1111 ) );
 
         RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
 
@@ -70,9 +70,9 @@ public class RandomTrialGeneratorTest {
                 .thenReturn( new Location( 2, 2 ) );
 
         when( mockSoundCollection.getRandomSound() )
-                .thenReturn( new ASound( 1111 ) )
-                .thenReturn( new ASound( 1112 ) )
-                .thenReturn( new ASound( 1113 ) );
+                .thenReturn( new KSound( 1111 ) )
+                .thenReturn( new KSound( 1112 ) )
+                .thenReturn( new KSound( 1113 ) );
 
 
         RandomTrialGenerator generator = new RandomTrialGenerator( mockLocationCollection, mockSoundCollection );
