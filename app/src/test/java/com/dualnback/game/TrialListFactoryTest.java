@@ -3,6 +3,7 @@ package com.dualnback.game;
 import com.dualnback.game.factory.TrialListFactory;
 import com.dualnback.location.Location;
 import com.dualnback.random.RandomTrialGenerator;
+import com.dualnback.sound.GSound;
 import com.dualnback.sound.SSound;
 import com.dualnback.sound.Sound;
 
@@ -50,5 +51,67 @@ public class TrialListFactoryTest {
 
         verify( mockRandomTrialGenerator, times( 3 ) ).nextTrial();
     }
+
+    @Test
+    public void givenArrayOfTrialsThereIsAlwaysSixSoundMatchAndSixLocationMatch( ) {
+
+        NBackVersion version = NBackVersion.TwoBack;
+
+        expectTwentyFourInvocations();
+
+        List<Trial> trials = TrialListFactory.create( mockRandomTrialGenerator );
+
+        GameTrialCollection trialCollection = new GameTrialCollection( version, trials );
+
+        assertEquals( 6, trialCollection.totalLocationMatches() );
+
+        trials = TrialListFactory.updateListWithExpectedSoundAndLocationMatch( trials,
+                6,
+                6,
+                NBackVersion.TwoBack );
+
+    }
+
+
+    /**
+     * return 24 trials with only 2 sound matches and 2 location matches
+     * to be used in 2N back
+     */
+    private void expectTwentyFourInvocations( ) {
+        when( mockRandomTrialGenerator.nextTrial() )
+                .thenReturn( new Trial( getLocation( 0, 0 ), SSound ) )
+                .thenReturn( new Trial( getLocation( 1, 0 ), newSound( 2 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 0 ), SSound ) )    // sound match
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 3 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 0 ), SSound ) ) // loc match and sound match
+                .thenReturn( new Trial( getLocation( 1, 0 ), newSound( 5 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 1 ), newSound( 6 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 7 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 8 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 2 ), newSound( 9 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 10 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 1 ), newSound( 11 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 2 ), newSound( 12 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 2 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 0 ), newSound( 3 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 42 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 5 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 6 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 2 ) ) ) // loc match
+                .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 4 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 5 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 0 ), newSound( 6 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 2 ), newSound( 7 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 2 ), newSound( 2 ) ) );
+    }
+
+    private Sound newSound( int i ) {
+        return new GSound( i );
+    }
+
+    private Location getLocation( int row, int col ) {
+        return new Location( row, col );
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.dualnback.game.factory;
 
+import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
 import com.dualnback.random.RandomTrialGenerator;
 
@@ -19,5 +20,13 @@ public class TrialListFactory {
 
     public static List<Trial> create( RandomTrialGenerator randomTrialGenerator ) {
         return create( DEFAULT_TRIAL_COUNT_PER_GAME, randomTrialGenerator );
+    }
+
+
+    public static List<Trial> updateListWithExpectedSoundAndLocationMatch( List<Trial> trials,
+                                                                           int expectedSoundMatches,
+                                                                           int expectedLocMached,
+                                                                           NBackVersion version ) {
+        return null;
     }
 }
