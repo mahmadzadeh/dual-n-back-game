@@ -31,7 +31,7 @@ import static com.dualnback.game.LocationToImageMapper.map;
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public static final String FINAL_SCORE = "FINAL_SCORE";
-    public final int ONE_ROUND_IN_MILLIS = 90000;
+    public final int ONE_ROUND_IN_MILLIS = 72000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
     private final NBackVersion version = NBackVersion.TwoBack;
