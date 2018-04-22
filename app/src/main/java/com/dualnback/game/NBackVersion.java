@@ -14,4 +14,8 @@ public enum NBackVersion {
     NBackVersion( int i ) {
         howFarBack = i;
     }
+
+    public int howFarBack( ) {
+        return howFarBack;
+    }
 }

@@ -36,7 +36,7 @@ public abstract class Sound {
 
     @Override
     public String toString( ) {
-        return "Sound{" +
+        return "Sound{ resourceId=" + getSoundResource() +
                 ", class =" + this.getClass().getSimpleName() +
                 '}';
     }

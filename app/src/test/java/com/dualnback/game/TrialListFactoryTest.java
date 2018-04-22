@@ -14,7 +14,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static com.dualnback.game.NBackVersion.TwoBack;
+import static com.dualnback.game.factory.TrialListFactory.updateListWithExpectedSoundAndLocationMatch;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,7 +58,10 @@ public class TrialListFactoryTest {
     @Test
     public void givenArrayOfTrialsThereIsAlwaysSixSoundMatchAndSixLocationMatch( ) {
 
-        NBackVersion version = NBackVersion.TwoBack;
+        int expectedSoundMatches = 6;
+        int expectedLocMatches = 6;
+
+        NBackVersion version = TwoBack;
 
         expectTwentyFourInvocations();
 
@@ -63,13 +69,32 @@ public class TrialListFactoryTest {
 
         GameTrialCollection trialCollection = new GameTrialCollection( version, trials );
 
-        assertEquals( 6, trialCollection.totalLocationMatches() );
 
-        trials = TrialListFactory.updateListWithExpectedSoundAndLocationMatch( trials,
-                6,
-                6,
-                NBackVersion.TwoBack );
+        assertEquals( 2, trialCollection.totalLocationMatches() );
 
+        trials = updateListWithExpectedSoundAndLocationMatch( trials,
+                expectedSoundMatches,
+                expectedLocMatches,
+                TwoBack );
+
+        trialCollection = new GameTrialCollection( version, trials );
+
+        assertTrue( trialCollection.totalLocationMatches() > expectedLocMatches );
+        assertTrue( trialCollection.totalSoundMatches() > expectedSoundMatches );
+    }
+
+    @Test
+    public void givenTwoBackAndListOfSizeTwentyFourThenGetIndexOfNTrialsAgoReturnsCorrectIndex( ) {
+
+        NBackVersion version = TwoBack;
+
+        int currIndex = 2;
+
+        assertEquals( 0, TrialListFactory.getIndexOfNTrialsAgo( 2, version ) );
+
+        currIndex = 24;
+
+        assertEquals( 19, TrialListFactory.getIndexOfNTrialsAgo( currIndex, NBackVersion.FiveBack ) );
     }
 
 
