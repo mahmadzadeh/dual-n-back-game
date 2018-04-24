@@ -2,6 +2,10 @@ package com.dualnback;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.TextView;
+
+import static com.dualnback.MainActivity.FINAL_SCORE;
 
 
 public class ContinueScreenActivity extends AppCompatActivity {
@@ -13,13 +17,14 @@ public class ContinueScreenActivity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
-//        setContentView(R.layout.continue_screen);
-//
-//        final Button continueButton = (Button ) findViewById(R.id.continueButton);
-//        final Button quitButton = (Button ) findViewById(R.id.quit);
-//        final Button saveButton = (Button ) findViewById(R.id.saveScore);
-//        final TextView score = (TextView ) findViewById(R.id.score);
-//
+        setContentView( R.layout.continue_screen );
+
+        final Button saveButton = ( Button ) findViewById( R.id.positionMatchButton );
+        final TextView score = ( TextView ) findViewById( R.id.score );
+
+        final String actualScore = extractScoreFromIntentExtras();
+        score.setText( SCORE_TEXT + actualScore );
+
 //        final String actualScore = extractScoreFromIntentExtras();
 //        score.setText(SCORE_TEXT + actualScore);
 //
@@ -54,13 +59,13 @@ public class ContinueScreenActivity extends AppCompatActivity {
     }
 
     private String extractScoreFromIntentExtras( ) {
-//        Bundle extras = getIntent().getExtras();
-//
-//        String value="";
-//
-//        if (extras != null) {
-//            value = extras.getInt(GameScreenActivity.FINAL_SCORE)+"";
-//        }
-        return "";
+        Bundle extras = getIntent().getExtras();
+
+        String value = "";
+
+        if ( extras != null ) {
+            value = extras.getInt( FINAL_SCORE ) + "";
+        }
+        return value;
     }
 }

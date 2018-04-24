@@ -1,8 +1,10 @@
 package com.dualnback;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -17,7 +19,6 @@ import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
 import com.dualnback.game.factory.GridFactory;
 import com.dualnback.game.factory.SoundCollectionFactory;
-import com.dualnback.game.factory.TrialListFactory;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.SoundCollection;
@@ -27,10 +28,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.dualnback.game.LocationToImageMapper.map;
+import static com.dualnback.game.factory.TrialListFactory.create;
+import static com.dualnback.game.factory.TrialListFactory.updateListWithExpectedSoundAndLocationMatch;
 
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public static final String FINAL_SCORE = "FINAL_SCORE";
+    public static final int EXPECTED_SOUND_MATCHES = 7;
+    public static final int EXPECTED_LOC_MACTHES = 7;
+    public static final int VIBERATION_MILLISECONDS = 100;
     public final int ONE_ROUND_IN_MILLIS = 72000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
@@ -47,16 +53,18 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private Trial currentTrial;
 
     private GridLayout gridLayout;
+    private Vibrator v;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
+
         setContentView( R.layout.activity_main );
 
         soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
-        List<Trial> trials = TrialListFactory.create( new RandomTrialGenerator( locationCollection, soundCollection ) );
 
-        GameTrialCollection gameTrialCollection = new GameTrialCollection( version, trials );
+        GameTrialCollection gameTrialCollection = new GameTrialCollection( version,
+                getTrials( EXPECTED_SOUND_MATCHES, EXPECTED_LOC_MACTHES ) );
 
         Log.i( "MainActivity", "Trials: " + gameTrialCollection.toString() );
 
@@ -67,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         scoreTxt = findViewById( R.id.textViewScore );
         countdownTimerTxt = findViewById( R.id.textViewCountDownTImer );
         gridLayout = findViewById( R.id.gridLayout );
+        v = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
 
         handler = new Handler() {
 
@@ -76,9 +85,15 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
             }
         };
 
-        locationMatchButton.setOnClickListener( view -> dualBackGame.recordLocationMatch() );
+        locationMatchButton.setOnClickListener( view -> {
+            dualBackGame.recordLocationMatch();
+            v.vibrate( VIBERATION_MILLISECONDS );
+        } );
 
-        soundMatchButton.setOnClickListener( view -> dualBackGame.recordSoundMatch() );
+        soundMatchButton.setOnClickListener( view -> {
+            dualBackGame.recordSoundMatch();
+            v.vibrate( VIBERATION_MILLISECONDS );
+        } );
 
         timer = GameCountDownTimer.INSTANCE( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
         timer.start();
@@ -102,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
                 } );
     }
 
-    public int currentPoints( ) {
-        return 0;
+    public double currentPoints( ) {
+        return dualBackGame.getCurrentScore();
     }
 
     private void updateUI( ) {
@@ -114,5 +129,13 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
                 handler.obtainMessage( 1 ).sendToTarget();
             }
         }, TIMER_DELAY );
+    }
+
+    private List<Trial> getTrials( int soundMatches, int locMatches ) {
+        return updateListWithExpectedSoundAndLocationMatch(
+                create( new RandomTrialGenerator( locationCollection, soundCollection ) ),
+                soundMatches,
+                locMatches,
+                version );
     }
 }
