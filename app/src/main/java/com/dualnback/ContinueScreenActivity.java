@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import static com.dualnback.MainActivity.FINAL_SCORE;
+import static com.dualnback.util.NumberFormatterUtil.formatScore;
 
 
 public class ContinueScreenActivity extends AppCompatActivity {
@@ -61,11 +62,12 @@ public class ContinueScreenActivity extends AppCompatActivity {
     private String extractScoreFromIntentExtras( ) {
         Bundle extras = getIntent().getExtras();
 
-        String value = "";
+        double value = 0.0d;
 
         if ( extras != null ) {
-            value = extras.getInt( FINAL_SCORE ) + "";
+            value = extras.getDouble( FINAL_SCORE );
         }
-        return value;
+
+        return formatScore( value );
     }
 }

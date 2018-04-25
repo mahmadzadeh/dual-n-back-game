@@ -55,7 +55,9 @@ public class GameCountDownTimer extends CountDownTimer {
 
         Intent countDownIntent = new Intent( gameScreenActivity, ContinueScreenActivity.class );
 
-        countDownIntent.putExtra( gameScreenActivity.FINAL_SCORE, gameScreenActivity.currentPoints() );
+        double currentPoints = gameScreenActivity.currentPoints();
+
+        countDownIntent.putExtra( gameScreenActivity.FINAL_SCORE, currentPoints );
 
         gameScreenActivity.startActivity( countDownIntent );
     }

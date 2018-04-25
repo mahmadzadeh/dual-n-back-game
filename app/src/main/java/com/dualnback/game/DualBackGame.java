@@ -7,6 +7,10 @@ import java.util.Optional;
 
 import static com.dualnback.game.UserInput.LocationMatch;
 import static com.dualnback.game.UserInput.SoundMatch;
+import static com.dualnback.game.UserInputEvaluation.CorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.CorrectSound;
+import static com.dualnback.game.UserInputEvaluation.IncorrectLocation;
+import static com.dualnback.game.UserInputEvaluation.IncorrectSound;
 
 public class DualBackGame {
 
@@ -39,8 +43,6 @@ public class DualBackGame {
     }
 
     public void markEndOfTrial( Trial currentTrial ) {
-        UserInput soundMatch = this.soundMatch;
-        UserInput locMatch = this.locationMatch;
 
         if ( currentTrial == null ) {
             this.soundMatch = null;
@@ -49,16 +51,16 @@ public class DualBackGame {
         }
 
 
-        if ( currentTrial.getUserInput().isLocationMatch( locMatch ) ) {
-            score = score.update( UserInputEvaluation.CorrectLocation );
+        if ( currentTrial.getUserInput().isLocationMatch( this.locationMatch ) ) {
+            score = score.update( CorrectLocation );
         } else {
-            score = score.update( UserInputEvaluation.IncorrectLocation );
+            score = score.update( IncorrectLocation );
         }
 
-        if ( currentTrial.getUserInput().isSoundMatch( soundMatch ) ) {
-            score = score.update( UserInputEvaluation.CorrectSound );
+        if ( currentTrial.getUserInput().isSoundMatch( this.soundMatch ) ) {
+            score = score.update( CorrectSound );
         } else {
-            score = score.update( UserInputEvaluation.IncorrectSound );
+            score = score.update( IncorrectSound );
         }
 
         // clear current sound/location  match

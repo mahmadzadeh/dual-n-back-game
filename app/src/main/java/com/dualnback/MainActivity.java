@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -65,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         GameTrialCollection gameTrialCollection = new GameTrialCollection( version,
                 getTrials( EXPECTED_SOUND_MATCHES, EXPECTED_LOC_MACTHES ) );
-
-        Log.i( "MainActivity", "Trials: " + gameTrialCollection.toString() );
 
         dualBackGame = new DualBackGame( GridFactory.instance( this ), gameTrialCollection );
 
