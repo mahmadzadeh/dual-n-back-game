@@ -14,4 +14,7 @@
     <string name="image_view_content_desc">nback image holder</string>
     <string name="soundMatch">Sound</string>
     <string name="positionMatch">Position</string>
+    <string name="continueButton">Continue</string>
+    <string name="saveButton">Save</string>
+    <string name="exitButton">Exit</string>
 </resources>
