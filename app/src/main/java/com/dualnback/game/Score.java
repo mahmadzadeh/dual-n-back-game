@@ -35,11 +35,11 @@ class Score {
     public double calculateScorePercentage( ) {
 
         int rightGuessPercent = 100 * countOfRightSoundGuesses;
-        int righLocGuessPercent = 100 * countOfRightLocationGuesses;
+        int rightLocGuessPercent = 100 * countOfRightLocationGuesses;
 
         double correctSoundPercentage =
                 divideIfDivisorOrDefault( rightGuessPercent, expectedTotalSoundMatch, 0 );
-        double correctLocPercentage = divideIfDivisorOrDefault( righLocGuessPercent, expectedTotalLocationMatch, 0 );
+        double correctLocPercentage = divideIfDivisorOrDefault( rightLocGuessPercent, expectedTotalLocationMatch, 0 );
 
         double totalPercentage = correctLocPercentage + correctSoundPercentage;
 
@@ -52,5 +52,15 @@ class Score {
     private double divideIfDivisorOrDefault( int numerator, double denom, double defaultNum ) {
 
         return numerator != 0 ? ( numerator / denom ) : defaultNum;
+    }
+
+    @Override
+    public String toString( ) {
+        return "Score{" +
+                "expectedTotalSoundMatch=" + expectedTotalSoundMatch +
+                ", expectedTotalLocationMatch=" + expectedTotalLocationMatch +
+                ", countOfRightLocationGuesses=" + countOfRightLocationGuesses +
+                ", countOfRightSoundGuesses=" + countOfRightSoundGuesses +
+                '}';
     }
 }

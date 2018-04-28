@@ -29,6 +29,7 @@ import java.util.TimerTask;
 import static com.dualnback.game.LocationToImageMapper.map;
 import static com.dualnback.game.factory.TrialListFactory.create;
 import static com.dualnback.game.factory.TrialListFactory.updateListWithExpectedSoundAndLocationMatch;
+import static com.dualnback.util.NumberFormatterUtil.formatScore;
 
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public void markEndOfOneRound( ) {
         dualBackGame.markEndOfTrial( currentTrial );
+        scoreTxt.setText( formatScore( dualBackGame.getCurrentScore() ) );
         updateUI();
     }
 
