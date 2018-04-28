@@ -13,29 +13,25 @@ import android.widget.TextView;
 
 import com.dualnback.game.Cell;
 import com.dualnback.game.DualBackGame;
-import com.dualnback.game.GameTrialCollection;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
-import com.dualnback.game.factory.GridFactory;
+import com.dualnback.game.factory.DualBackGameFactory;
+import com.dualnback.game.factory.GameParameters;
 import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.location.LocationCollection;
-import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.sound.SoundCollection;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.dualnback.game.LocationToImageMapper.map;
-import static com.dualnback.game.factory.TrialListFactory.create;
-import static com.dualnback.game.factory.TrialListFactory.updateListWithExpectedSoundAndLocationMatch;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
 
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public static final String FINAL_SCORE = "FINAL_SCORE";
     public static final int EXPECTED_SOUND_MATCHES = 7;
-    public static final int EXPECTED_LOC_MACTHES = 7;
+    public static final int EXPECTED_LOC_MATCHES = 7;
     public static final int VIBERATION_MILLISECONDS = 100;
     public final int ONE_ROUND_IN_MILLIS = 72000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
@@ -48,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private TextView countdownTimerTxt;
     private GameCountDownTimer timer;
     private Handler handler;
-    private SoundCollection soundCollection;
-    private LocationCollection locationCollection = new LocationCollection();
+
     private Trial currentTrial;
 
     private GridLayout gridLayout;
@@ -61,12 +56,14 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         setContentView( R.layout.activity_main );
 
-        soundCollection = new SoundCollection( SoundCollectionFactory.instance( this ) );
+        GameParameters parameters = new GameParameters( version,
+                this,
+                EXPECTED_SOUND_MATCHES,
+                EXPECTED_LOC_MATCHES,
+                new LocationCollection(),
+                new SoundCollection( SoundCollectionFactory.instance( this ) ) );
 
-        GameTrialCollection gameTrialCollection = new GameTrialCollection( version,
-                getTrials( EXPECTED_SOUND_MATCHES, EXPECTED_LOC_MACTHES ) );
-
-        dualBackGame = new DualBackGame( GridFactory.instance( this ), gameTrialCollection );
+        dualBackGame = DualBackGameFactory.create( parameters );
 
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
@@ -128,13 +125,5 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
                 handler.obtainMessage( 1 ).sendToTarget();
             }
         }, TIMER_DELAY );
-    }
-
-    private List<Trial> getTrials( int soundMatches, int locMatches ) {
-        return updateListWithExpectedSoundAndLocationMatch(
-                create( new RandomTrialGenerator( locationCollection, soundCollection ) ),
-                soundMatches,
-                locMatches,
-                version );
     }
 }
