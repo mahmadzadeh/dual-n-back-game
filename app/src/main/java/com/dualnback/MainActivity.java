@@ -24,6 +24,7 @@ import com.dualnback.sound.SoundCollection;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.dualnback.StartScreenActivity.N_BACK_VERSION;
 import static com.dualnback.game.LocationToImageMapper.map;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
 
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     public final int ONE_ROUND_IN_MILLIS = 72000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
-    private final NBackVersion version = NBackVersion.TwoBack;
     private DualBackGame dualBackGame;
     private Button soundMatchButton;
     private Button locationMatchButton;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         setContentView( R.layout.activity_main );
 
-        GameParameters parameters = new GameParameters( version,
+        GameParameters parameters = new GameParameters( extractScoreFromIntentExtras(),
                 this,
                 EXPECTED_SOUND_MATCHES,
                 EXPECTED_LOC_MATCHES,
@@ -125,5 +125,18 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
                 handler.obtainMessage( 1 ).sendToTarget();
             }
         }, TIMER_DELAY );
+    }
+
+
+    private NBackVersion extractScoreFromIntentExtras( ) {
+        Bundle extras = getIntent().getExtras();
+
+        NBackVersion value = NBackVersion.TwoBack;
+
+        if ( extras != null ) {
+            value = ( NBackVersion ) extras.get( N_BACK_VERSION );
+        }
+
+        return value;
     }
 }

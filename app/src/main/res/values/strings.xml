@@ -17,4 +17,16 @@
     <string name="continueButton">Continue</string>
     <string name="saveButton">Save</string>
     <string name="exitButton">Exit</string>
+    <string name="start_game">Start</string>
+    <string name="versionDropdownTxt">Version</string>
+    <string-array name="nBackArray">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>
