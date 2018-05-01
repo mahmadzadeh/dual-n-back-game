@@ -22,7 +22,7 @@ public class StartScreenActivity extends AppCompatActivity {
 
         spinner = findViewById( R.id.nBackVersion );
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( this,
-                R.array.nBackArray, android.R.layout.simple_spinner_item );
+                R.array.nBackArray, R.layout.spinner_text );
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner.setAdapter( adapter );
 

@@ -179,7 +179,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/roundbutton"
                 android:text="@string/positionMatch"
-                android:textColor="#fbfcfc"
+                android:textColor="@color/buttonTextColour"
                 android:textStyle="bold|italic"/>
 
             <Space
@@ -194,7 +194,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/roundbutton"
                 android:text="@string/soundMatch"
-                android:textColor="#fbfcfc"
+                android:textColor="@color/buttonTextColour"
                 android:textStyle="bold|italic"/>
 
             <Space
