@@ -68,10 +68,10 @@ public class GameTrialCollection {
     }
 
     private Trial getNTrialsBack( int currIndex ) {
-        if ( currIndex - version.howFarBack < 0 ) {
+        if ( currIndex - version.getHowFarBack() < 0 ) {
             return null;
         } else {
-            return trials.get( currIndex - version.howFarBack );
+            return trials.get( currIndex - version.getHowFarBack() );
         }
     }
 

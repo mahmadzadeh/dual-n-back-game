@@ -29,7 +29,7 @@ public class TrialListFactory {
                                                                            int expectedSoundMatches,
                                                                            int expectedLocMacthes,
                                                                            NBackVersion version ) {
-        int lowerBound = 0 + version.howFarBack();
+        int lowerBound = 0 + version.getHowFarBack();
         int upperBound = trials.size() - 1;
 
         IntegerRange range = new IntegerRange( lowerBound, upperBound );
@@ -57,7 +57,7 @@ public class TrialListFactory {
     }
 
     public static int getIndexOfNTrialsAgo( int currIndex, NBackVersion version ) {
-        return currIndex - version.howFarBack();
+        return currIndex - version.getHowFarBack();
     }
 
 
