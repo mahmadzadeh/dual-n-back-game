@@ -42,6 +42,15 @@
                 android:background="@drawable/background"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignStart="@+id/nBackVersion"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="99dp"
+                    android:src="@mipmap/drop"/>
+
                 <Spinner
                     android:id="@+id/nBackVersion"
                     android:layout_width="match_parent"
@@ -53,14 +62,6 @@
                     android:gravity="center"
                     android:spinnerMode="dropdown"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignStart="@+id/nBackVersion"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="99dp"
-                    android:src="@mipmap/drop"/>
             </RelativeLayout>
 
         </LinearLayout>

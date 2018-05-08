@@ -19,6 +19,9 @@
     <string name="exitButton">Exit</string>
     <string name="start_game">Start</string>
     <string name="versionDropdownTxt">Version</string>
+    <string name="save">Save</string>
+    <string name="continueButtonTxt">Continue</string>
+    <string name="quit">Quit</string>
     <string-array name="nBackArray">
         <item>2-Back</item>
         <item>3-Back</item>
