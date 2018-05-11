@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private Button soundMatchButton;
     private Button locationMatchButton;
     private TextView scoreTxt;
-    private TextView countdownTimerTxt;
+    private CountDownText countdownTimerTxt;
     private GameCountDownTimer timer;
     private Handler handler;
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
         scoreTxt = findViewById( R.id.textViewScore );
-        countdownTimerTxt = findViewById( R.id.textViewCountDownTImer );
+        countdownTimerTxt = new CountDownText( findViewById( R.id.textViewCountDownTimer ) );
         gridLayout = findViewById( R.id.gridLayout );
         v = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
 
