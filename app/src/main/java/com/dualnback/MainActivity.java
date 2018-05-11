@@ -7,7 +7,6 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     private Trial currentTrial;
 
-    private GridLayout gridLayout;
-    private Vibrator v;
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -74,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         locationMatchButton = findViewById( R.id.positionMatchButton );
         scoreTxt = findViewById( R.id.textViewScore );
         countdownTimerTxt = new CountDownText( findViewById( R.id.textViewCountDownTimer ) );
-        gridLayout = findViewById( R.id.gridLayout );
-        v = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
+
+        vibrator = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
 
         handler = new Handler() {
 
@@ -87,12 +85,12 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         locationMatchButton.setOnClickListener( view -> {
             dualBackGame.recordLocationMatch();
-            v.vibrate( VIBERATION_MILLISECONDS );
+            vibrator.vibrate( VIBERATION_MILLISECONDS );
         } );
 
         soundMatchButton.setOnClickListener( view -> {
             dualBackGame.recordSoundMatch();
-            v.vibrate( VIBERATION_MILLISECONDS );
+            vibrator.vibrate( VIBERATION_MILLISECONDS );
         } );
 
         timer = GameCountDownTimer.INSTANCE( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );

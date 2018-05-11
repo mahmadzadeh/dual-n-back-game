@@ -27,8 +27,12 @@ public class DualBackGameFactory {
 
     private static List<Trial> getTrials( GameParameters params ) {
         RandomTrialGenerator randomTrialGenerator = new RandomTrialGenerator( params.locCollection(), params.soundCollection() );
-        return updateListWithExpectedSoundAndLocationMatch(
-                TrialListFactory.create( randomTrialGenerator ), params.getExpectedSoundMatches(), params.getExpectedLocMacthes(),
+
+        List<Trial> originalTrialList = TrialListFactory.create( randomTrialGenerator );
+
+        return updateListWithExpectedSoundAndLocationMatch( originalTrialList,
+                params.getExpectedSoundMatches(),
+                params.getExpectedLocMacthes(),
                 params.version() );
     }
 
