@@ -50,7 +50,6 @@ public class DualBackGame {
             return;
         }
 
-
         if ( currentTrial.getUserInput().isLocationMatch( this.locationMatch ) ) {
             score = score.update( CorrectLocation );
         } else {

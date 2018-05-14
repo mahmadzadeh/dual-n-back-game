@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.dualnback.game.NBackVersion;
@@ -34,7 +34,7 @@ public class StartScreenActivity extends AppCompatActivity {
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner.setAdapter( adapter );
 
-        final Button button = findViewById( R.id.continueButton );
+        final ImageButton button = findViewById( R.id.startScreenButton );
 
         button.setOnClickListener( v -> {
             Intent mainActivityIntent = new Intent( v.getContext(), MainActivity.class );
