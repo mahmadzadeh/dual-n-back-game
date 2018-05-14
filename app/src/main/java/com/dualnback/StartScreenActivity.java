@@ -48,7 +48,7 @@ public class StartScreenActivity extends AppCompatActivity {
             @Override
             public void onItemSelected( AdapterView<?> adapterView, View view, int position, long id ) {
                 CharSequence item = adapter.getItem( position );
-                selectedVersion = NBackVersion.fromUiValue( item.toString() ).orElse( DEFAULT_VERSION );
+                selectedVersion = NBackVersion.fromTextValue( item.toString() ).orElse( DEFAULT_VERSION );
             }
 
             @Override

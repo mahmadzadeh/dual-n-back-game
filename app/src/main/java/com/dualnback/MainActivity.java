@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private CountDownText countdownTimerTxt;
     private GameCountDownTimer timer;
     private Handler handler;
+    private TextView gameVersionText;
 
     private Trial currentTrial;
 
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
         scoreTxt = findViewById( R.id.textViewScore );
+
+        gameVersionText = findViewById( R.id.textViewGameName );
+        gameVersionText.setText( version.getTextRepresentation() );
+
         countdownTimerTxt = new CountDownText( findViewById( R.id.textViewCountDownTimer ) );
 
         vibrator = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );

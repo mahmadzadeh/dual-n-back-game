@@ -78,10 +78,6 @@ public class TrialListFactoryTest {
 
         trialCollection = new GameTrialCollection( version, trials );
 
-        //assertTrue( trialCollection.totalLocationMatches() > expectedLocMatches );
-        //assertTrue( trialCollection.totalSoundMatches() > expectedSoundMatches );
-        // non-deterministic nothing can be asserted regarding the outcome
-
     }
 
     @Test
