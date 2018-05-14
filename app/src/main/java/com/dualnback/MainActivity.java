@@ -20,13 +20,14 @@ import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
 
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.dualnback.StartScreenActivity.DEFAULT_VERSION;
 import static com.dualnback.StartScreenActivity.N_BACK_VERSION;
 import static com.dualnback.game.LocationToImageMapper.map;
-import static com.dualnback.game.NBackVersion.TwoBack;
-import static com.dualnback.util.IntentUtility.extractFromExtrasWithDefault;
+import static com.dualnback.util.IntentUtility.extractFromIntentExtras;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
 
 public class MainActivity extends AppCompatActivity implements SwappableImage {
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         setContentView( R.layout.activity_main );
 
-        NBackVersion version = extractFromExtrasWithDefault( this.getIntent().getExtras(), N_BACK_VERSION, TwoBack );
+        Optional<NBackVersion> mayBeVersion = extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION );
+        NBackVersion version = mayBeVersion.orElse( DEFAULT_VERSION );
 
         GameParameters parameters = new GameParameters(
                 version,

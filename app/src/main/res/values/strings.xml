@@ -23,13 +23,13 @@
     <string name="continueButtonTxt">Continue</string>
     <string name="quit">Quit</string>
     <string-array name="nBackArray">
-        <item>2-Back</item>
-        <item>3-Back</item>
-        <item>4-Back</item>
-        <item>5-Back</item>
-        <item>6-Back</item>
-        <item>7-Back</item>
-        <item>8-Back</item>
-        <item>9-Back</item>
+        <item>Dual 2-Back</item>
+        <item>Dual 3-Back</item>
+        <item>Dual 4-Back</item>
+        <item>Dual 5-Back</item>
+        <item>Dual 6-Back</item>
+        <item>Dual 7-Back</item>
+        <item>Dual 8-Back</item>
+        <item>Dual 9-Back</item>
     </string-array>
 </resources>
