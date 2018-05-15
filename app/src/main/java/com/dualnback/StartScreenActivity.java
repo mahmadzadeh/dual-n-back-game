@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.dualnback.game.NBackVersion;
+import com.dualnback.util.Pulsator;
 
 import static android.widget.ArrayAdapter.createFromResource;
 
@@ -42,6 +43,8 @@ public class StartScreenActivity extends AppCompatActivity {
             startActivity( mainActivityIntent );
 
         } );
+
+        Pulsator.pulsate( button );
 
         spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
 
