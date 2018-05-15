@@ -186,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/roundbutton"
+                android:background="@drawable/background"
                 android:text="@string/positionMatch"
                 android:textColor="@color/buttonTextColour"
                 android:textStyle="bold|italic"/>
@@ -201,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/roundbutton"
+                android:background="@drawable/background"
                 android:text="@string/soundMatch"
                 android:textColor="@color/buttonTextColour"
                 android:textStyle="bold|italic"/>
