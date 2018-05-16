@@ -20,12 +20,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="MainActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_main"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ContinueScreenActivity"/>
+        <activity
+            android:name="ContinueScreenActivity"
+            android:label="@string/title_continue_screen"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
     <uses-permission android:name="android.permission.VIBRATE"/>
 

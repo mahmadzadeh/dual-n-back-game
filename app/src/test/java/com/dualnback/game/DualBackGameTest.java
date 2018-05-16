@@ -46,6 +46,8 @@ public class DualBackGameTest {
     List<Trial> trials = Arrays.asList(
             new Trial( new Location( 0, 0 ), new SSound( 1 ) ) );
 
+    private Trial currentTrial = trials.get( 0 );
+
     @Before
     public void setUp( ) {
         gameTrialCollection = new GameTrialCollection( TwoBack, trials );
@@ -62,12 +64,12 @@ public class DualBackGameTest {
     @Test
     public void givenStartOfATrialThenRecordSoundMatchRecordsASingleSoundMatch( ) {
 
-        sut.recordSoundMatch();
+        sut.recordSoundMatch( currentTrial );
     }
 
     @Test
     public void givenStartOfTrialThenRecordLocationMatchRecordsSingleLocationMatch( ) {
-        sut.recordLocationMatch();
+        sut.recordLocationMatch( currentTrial );
     }
 
     @Test
@@ -116,8 +118,8 @@ public class DualBackGameTest {
 
         Trial nextTrial = sut.getNextTrial();
 
-        sut.recordLocationMatch();
-        sut.recordSoundMatch();
+        sut.recordLocationMatch( currentTrial );
+        sut.recordSoundMatch( currentTrial );
 
         sut.markEndOfTrial( nextTrial );
 
@@ -150,8 +152,8 @@ public class DualBackGameTest {
         sut.markEndOfTrial( nextTrial );
 
         nextTrial = sut.getNextTrial();
-        sut.recordLocationMatch();
-        sut.recordSoundMatch();
+        sut.recordLocationMatch( currentTrial );
+        sut.recordSoundMatch( currentTrial );
         sut.markEndOfTrial( nextTrial );
 
         nextTrial = sut.getNextTrial();
@@ -265,15 +267,15 @@ public class DualBackGameTest {
 
         trial = sut.markStartOfTrial();
 
-        sut.recordLocationMatch();
-        sut.recordSoundMatch();
+        sut.recordLocationMatch( currentTrial );
+        sut.recordSoundMatch( currentTrial );
 
         sut.markEndOfTrial( trial );
 
         trial = sut.markStartOfTrial();
 
-        sut.recordLocationMatch();
-        sut.recordSoundMatch();
+        sut.recordLocationMatch( currentTrial );
+        sut.recordSoundMatch( currentTrial );
 
         sut.markEndOfTrial( trial );
 

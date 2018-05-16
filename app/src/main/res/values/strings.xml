@@ -22,6 +22,7 @@
     <string name="save">Save</string>
     <string name="continueButtonTxt">Continue</string>
     <string name="quit">Quit</string>
+    <string name="title_continue_screen">Continue</string>
     <string-array name="nBackArray">
         <item>Dual 2-Back</item>
         <item>Dual 3-Back</item>

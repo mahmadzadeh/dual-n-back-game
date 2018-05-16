@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
 import com.dualnback.game.factory.DualBackGameFactory;
 import com.dualnback.game.factory.GameParameters;
+import com.dualnback.game.factory.NullTrial;
 import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
@@ -43,12 +45,15 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private Button soundMatchButton;
     private Button locationMatchButton;
     private TextView scoreTxt;
+    private ImageView positionMatchFeedBackImg;
+    private ImageView soundMatchFeedBackImg;
+
     private CountDownText countdownTimerTxt;
     private GameCountDownTimer timer;
     private Handler handler;
     private TextView gameVersionText;
 
-    private Trial currentTrial;
+    private Trial currentTrial = new NullTrial();
 
     private Vibrator vibrator;
 
@@ -74,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundMatchButton = findViewById( R.id.soundMatchButton );
         locationMatchButton = findViewById( R.id.positionMatchButton );
         scoreTxt = findViewById( R.id.textViewScore );
+        positionMatchFeedBackImg = findViewById( R.id.positionMatchFeedBackImg );
+        soundMatchFeedBackImg = findViewById( R.id.soundMatchFeedBackImg );
 
         gameVersionText = findViewById( R.id.textViewGameName );
         gameVersionText.setText( version.getTextRepresentation() );
@@ -91,13 +98,40 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         };
 
         locationMatchButton.setOnClickListener( view -> {
-            dualBackGame.recordLocationMatch();
+            boolean isCorrectAnswer = dualBackGame.recordLocationMatch( currentTrial );
             vibrator.vibrate( VIBERATION_MILLISECONDS );
+            positionMatchFeedBackImg.setImageResource( isCorrectAnswer ?
+                    R.drawable.checkmark :
+                    R.drawable.xmark
+            );
+
+            Timer t = new Timer( false );
+            t.schedule( new TimerTask() {
+                @Override
+                public void run( ) {
+                    runOnUiThread( new Runnable() {
+                        public void run( ) {
+                            positionMatchFeedBackImg.setImageResource( R.drawable.transparent );
+                        }
+                    } );
+                }
+            }, 500 );
         } );
 
-        soundMatchButton.setOnClickListener( view -> {
-            dualBackGame.recordSoundMatch();
+        soundMatchButton.setOnClickListener( ( View view ) -> {
+            boolean isCorrectAnswer = dualBackGame.recordSoundMatch( currentTrial );
             vibrator.vibrate( VIBERATION_MILLISECONDS );
+
+            Timer t = new Timer( false );
+            soundMatchFeedBackImg.setImageResource( isCorrectAnswer ?
+                    R.drawable.checkmark :
+                    R.drawable.xmark );
+            t.schedule( new TimerTask() {
+                @Override
+                public void run( ) {
+                    runOnUiThread( ( ) -> soundMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
+                }
+            }, 500 );
         } );
 
         timer = GameCountDownTimer.INSTANCE( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );

@@ -15,7 +15,7 @@ import static com.dualnback.game.UserInputEvaluation.IncorrectSound;
 public class DualBackGame {
 
     private final DualBackGrid dualBackGrid;
-    private final GameTrialCollection gameTrialCollection;
+
     private final Iterator<Trial> trialIterator;
 
     private UserInput soundMatch;
@@ -25,7 +25,6 @@ public class DualBackGame {
     public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
-        this.gameTrialCollection = gameTrialCollection;
         this.trialIterator = gameTrialCollection.getTrials().iterator();
         this.score = new Score( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
     }
@@ -34,12 +33,16 @@ public class DualBackGame {
         return trialIterator.hasNext() ? trialIterator.next() : null;
     }
 
-    public void recordSoundMatch( ) {
+    public boolean recordSoundMatch( Trial currentTrial ) {
         this.soundMatch = SoundMatch;
+
+        return currentTrial.getUserInput().isSoundMatch( this.soundMatch );
     }
 
-    public void recordLocationMatch( ) {
+    public boolean recordLocationMatch( Trial currentTrial ) {
         this.locationMatch = LocationMatch;
+
+        return currentTrial.getUserInput().isLocationMatch( this.locationMatch );
     }
 
     public void markEndOfTrial( Trial currentTrial ) {
