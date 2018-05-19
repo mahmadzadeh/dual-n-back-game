@@ -35,6 +35,7 @@ public class StartScreenActivity extends AppCompatActivity {
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner.setAdapter( adapter );
 
+
         final ImageButton button = findViewById( R.id.startScreenButton );
 
         button.setOnClickListener( v -> {

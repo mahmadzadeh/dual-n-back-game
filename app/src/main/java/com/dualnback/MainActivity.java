@@ -109,11 +109,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
             t.schedule( new TimerTask() {
                 @Override
                 public void run( ) {
-                    runOnUiThread( new Runnable() {
-                        public void run( ) {
-                            positionMatchFeedBackImg.setImageResource( R.drawable.transparent );
-                        }
-                    } );
+                    runOnUiThread( ( ) -> positionMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
                 }
             }, 500 );
         } );
