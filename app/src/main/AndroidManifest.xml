@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:name="ContinueScreenActivity"
-            android:label="@string/title_continue_screen"
+            android:label="@string/titleContinueScreen"
             android:screenOrientation="landscape">
         </activity>
     </application>

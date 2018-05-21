@@ -66,31 +66,23 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         Optional<NBackVersion> mayBeVersion = extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION );
         NBackVersion version = mayBeVersion.orElse( DEFAULT_VERSION );
 
-        GameParameters parameters = new GameParameters(
-                version,
-                this,
-                EXPECTED_SOUND_MATCHES,
-                EXPECTED_LOC_MATCHES,
-                new LocationCollection(),
-                new SoundCollection( SoundCollectionFactory.instance( this ) ) );
+        GameParameters parameters = new GameParameters()
+                .withVersion( version )
+                .withContext( this )
+                .withExpectedSoundMatches( EXPECTED_SOUND_MATCHES )
+                .withExpectedLocationMatches( EXPECTED_LOC_MATCHES )
+                .withLocationCollection( new LocationCollection() )
+                .withSoundCollection( new SoundCollection( SoundCollectionFactory.instance( this ) ) );
 
         dualBackGame = DualBackGameFactory.create( parameters );
 
-        soundMatchButton = findViewById( R.id.soundMatchButton );
-        locationMatchButton = findViewById( R.id.positionMatchButton );
-        scoreTxt = findViewById( R.id.textViewScore );
-        positionMatchFeedBackImg = findViewById( R.id.positionMatchFeedBackImg );
-        soundMatchFeedBackImg = findViewById( R.id.soundMatchFeedBackImg );
-
-        gameVersionText = findViewById( R.id.textViewGameName );
-        gameVersionText.setText( version.getTextRepresentation() );
+        initGameUiElements( version );
 
         countdownTimerTxt = new CountDownText( findViewById( R.id.textViewCountDownTimer ) );
 
         vibrator = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
 
         handler = new Handler() {
-
             public void handleMessage( Message m ) {
                 currentTrial = dualBackGame.markStartOfTrial();
                 currentTrial.getSound().playSound( MainActivity.this );
@@ -105,8 +97,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
                     R.drawable.xmark
             );
 
-            Timer t = new Timer( false );
-            t.schedule( new TimerTask() {
+            new Timer( false ).schedule( new TimerTask() {
                 @Override
                 public void run( ) {
                     runOnUiThread( ( ) -> positionMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
@@ -117,12 +108,11 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundMatchButton.setOnClickListener( ( View view ) -> {
             boolean isCorrectAnswer = dualBackGame.recordSoundMatch( currentTrial );
             vibrator.vibrate( VIBERATION_MILLISECONDS );
-
-            Timer t = new Timer( false );
             soundMatchFeedBackImg.setImageResource( isCorrectAnswer ?
                     R.drawable.checkmark :
                     R.drawable.xmark );
-            t.schedule( new TimerTask() {
+
+            new Timer( false ).schedule( new TimerTask() {
                 @Override
                 public void run( ) {
                     runOnUiThread( ( ) -> soundMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
@@ -165,5 +155,21 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
                 handler.obtainMessage( 1 ).sendToTarget();
             }
         }, TIMER_DELAY );
+    }
+
+    private void initGameUiElements( NBackVersion version ) {
+        soundMatchButton = findViewById( R.id.soundMatchButton );
+
+        locationMatchButton = findViewById( R.id.positionMatchButton );
+
+        scoreTxt = findViewById( R.id.textViewScore );
+
+        positionMatchFeedBackImg = findViewById( R.id.positionMatchFeedBackImg );
+
+        soundMatchFeedBackImg = findViewById( R.id.soundMatchFeedBackImg );
+
+        gameVersionText = findViewById( R.id.textViewGameName );
+
+        gameVersionText.setText( version.getTextRepresentation() );
     }
 }

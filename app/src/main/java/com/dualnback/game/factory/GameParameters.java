@@ -7,27 +7,12 @@ import com.dualnback.sound.SoundCollection;
 
 public class GameParameters {
 
-    private final NBackVersion version;
-    private final SwappableImage context;
-    private final int expectedSoundMatches;
-    private final int expectedLocMacthes;
-    private final LocationCollection locationCollection;
-    private final SoundCollection soundCollection;
-
-    public GameParameters( NBackVersion version,
-                           SwappableImage context,
-                           int expectedSoundMatches,
-                           int expectedLocMatches,
-                           LocationCollection locationCollection,
-                           SoundCollection soundCollection ) {
-
-        this.version = version;
-        this.context = context;
-        this.expectedSoundMatches = expectedSoundMatches;
-        this.expectedLocMacthes = expectedLocMatches;
-        this.locationCollection = locationCollection;
-        this.soundCollection = soundCollection;
-    }
+    private NBackVersion version;
+    private SwappableImage context;
+    private int expectedSoundMatches;
+    private int expectedLocMacthes;
+    private LocationCollection locationCollection;
+    private SoundCollection soundCollection;
 
     public NBackVersion version( ) {
         return version;
@@ -51,5 +36,35 @@ public class GameParameters {
 
     public SoundCollection soundCollection( ) {
         return soundCollection;
+    }
+
+    public GameParameters withVersion( NBackVersion version ) {
+        this.version = version;
+        return this;
+    }
+
+    public GameParameters withContext( SwappableImage context ) {
+        this.context = context;
+        return this;
+    }
+
+    public GameParameters withExpectedSoundMatches( int expectedSoundMatches ) {
+        this.expectedSoundMatches = expectedSoundMatches;
+        return this;
+    }
+
+    public GameParameters withExpectedLocationMatches( int expectedLocMatches ) {
+        this.expectedLocMacthes = expectedLocMatches;
+        return this;
+    }
+
+    public GameParameters withLocationCollection( LocationCollection locationCollection ) {
+        this.locationCollection = locationCollection;
+        return this;
+    }
+
+    public GameParameters withSoundCollection( SoundCollection soundCollection ) {
+        this.soundCollection = soundCollection;
+        return this;
     }
 }

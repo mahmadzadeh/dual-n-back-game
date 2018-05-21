@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.08"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 >
 
                 <ImageView
@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.08"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 >
 
                 <ImageView
@@ -206,7 +206,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".67"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:gravity="center_vertical|center_horizontal">
 
             <Space
@@ -269,7 +269,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="top|bottom|center"
-                android:text="@string/nback_game"
+                android:text="@string/nbackGame"
                 android:textColor="#ffffff"
                 android:textSize="18sp"/>
         </LinearLayout>
