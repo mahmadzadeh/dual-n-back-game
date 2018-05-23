@@ -1,12 +1,16 @@
 package com.dualnback;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import static com.dualnback.MainActivity.FINAL_SCORE;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
+import static com.dualnback.util.StartScreenActivityIntentUtil.backToStartScreen;
 
 
 public class ContinueScreenActivity extends AppCompatActivity {
@@ -20,43 +24,30 @@ public class ContinueScreenActivity extends AppCompatActivity {
 
         setContentView( R.layout.continue_screen );
 
-        final Button saveButton = ( Button ) findViewById( R.id.positionMatchButton );
-        final TextView score = ( TextView ) findViewById( R.id.score );
+        final Button saveButton = ( Button ) findViewById( R.id.saveButton );
+        final Button continueButton = ( Button ) findViewById( R.id.continueButton );
+        final Button quitButton = ( Button ) findViewById( R.id.quitButton );
 
+        final TextView score = ( TextView ) findViewById( R.id.score );
         final String actualScore = extractScoreFromIntentExtras();
         score.setText( SCORE_TEXT + actualScore );
 
-//        final String actualScore = extractScoreFromIntentExtras();
-//        score.setText(SCORE_TEXT + actualScore);
-//
-//        continueButton.setOnClickListener(
-//                new Button.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        StartScreenActivityIntentUtil.backToStartScreen(v, ContinueScreenActivity.this);
-//                    }
-//                });
-//
-//        quitButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        StartScreenActivityIntentUtil.backToStartScreen(v, ContinueScreenActivity.this);
-//                    }
-//                }
-//        );
-//
-//        saveButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent chartActivityIntent = new Intent(v.getContext(), ChartActivity.class);
-//                        chartActivityIntent.putExtra(GameScreenActivity.FINAL_SCORE, actualScore);
-//                        chartActivityIntent.putExtra(ContinueScreenActivity.DATE, format(new Date()));
-//                        startActivity(chartActivityIntent);
-//                    }
-//                }
-//        );
+        continueButton.setOnClickListener(
+                view ->
+                        backToStartScreen( view, ContinueScreenActivity.this )
+        );
+
+        quitButton.setOnClickListener(
+                view ->
+                        backToStartScreen( view, ContinueScreenActivity.this )
+        );
+
+        saveButton.setOnClickListener( view -> {
+            Intent chartActivityIntent = new Intent( view.getContext(), ChartActivity.class );
+            chartActivityIntent.putExtra( FINAL_SCORE, actualScore );
+            chartActivityIntent.putExtra( ContinueScreenActivity.DATE, format( new Date() ) );
+            startActivity( chartActivityIntent );
+        } );
     }
 
     private String extractScoreFromIntentExtras( ) {
