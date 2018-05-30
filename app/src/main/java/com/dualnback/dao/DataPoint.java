@@ -4,7 +4,8 @@ import org.json.JSONException;
 
 import java.util.Date;
 
-import static com.shapematchandroid.util.DtoJSONConversion.dataPointToJSON;
+import static com.dualnback.util.DtoJSONConversion.dataPointToJSON;
+
 
 public class DataPoint implements Comparable<DataPoint> {
 

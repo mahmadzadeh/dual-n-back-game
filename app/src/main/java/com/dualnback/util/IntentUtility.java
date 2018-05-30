@@ -2,7 +2,13 @@ package com.dualnback.util;
 
 import android.os.Bundle;
 
+import com.dualnback.ContinueScreenActivity;
+import com.dualnback.dao.DataPoint;
+
+import java.util.Date;
 import java.util.Optional;
+
+import static com.dualnback.MainActivity.FINAL_SCORE;
 
 public class IntentUtility {
 
@@ -24,5 +30,16 @@ public class IntentUtility {
         }
 
         return Optional.ofNullable( value );
+    }
+
+    public static DataPoint extractDatePointFromExtras( Bundle extras ) {
+        int score = 0;
+        Date date = new Date();
+
+        if ( extras != null ) {
+            score = Integer.valueOf( extras.getString( FINAL_SCORE ) );
+            date = DateUtil.parse( extras.getString( ContinueScreenActivity.DATE ) );
+        }
+        return new DataPoint( date, score );
     }
 }

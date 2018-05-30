@@ -5,7 +5,8 @@ import com.github.mikephil.charting.data.Entry;
 
 import java.util.ArrayList;
 
-import static com.shapematchandroid.util.DateUtil.formatForChartUI;
+import static com.dualnback.util.DateUtil.formatForChartUI;
+
 
 public class DataDtoConversion {
     public static ChartData convertToChartData( DataDto dataDto ) {

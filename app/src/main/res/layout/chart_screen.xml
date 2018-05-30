@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                tools:context="StartScreenActivity">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"/>
+
+    <Button
+        android:id="@+id/char_continue"
+        android:layout_width="300dp"
+        android:layout_height="78dp"
+        android:layout_below="@+id/line_chart"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/roundbutton"
+        android:text="@string/continueButton"
+        android:textColor="@color/buttonTextColour"/>
+</RelativeLayout>

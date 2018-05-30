@@ -11,11 +11,11 @@ public class FileIO implements IO {
     private File file;
 
     public FileIO( File file ) {
-        this.file = file;
-
         if ( file == null || !file.exists() ) {
             throw new IllegalArgumentException( "Invalid file " + file );
         }
+
+        this.file = file;
     }
 
     @Override

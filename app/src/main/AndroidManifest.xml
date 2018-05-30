@@ -31,6 +31,13 @@
             android:label="@string/titleContinueScreen"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name="ChartActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_chart"
+            android:noHistory="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
