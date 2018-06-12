@@ -3,22 +3,35 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
                 android:fitsSystemWindows="true"
                 tools:context="StartScreenActivity">
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
-        android:layout_height="220dp"/>
+        android:layout_height="220dp"
+        android:layout_weight="1">
+
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
 
     <Button
         android:id="@+id/char_continue"
         android:layout_width="300dp"
         android:layout_height="78dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/line_chart"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginStart="139dp"
         android:background="@drawable/roundbutton"
         android:text="@string/continueButton"
-        android:textColor="@color/buttonTextColour"/>
+        android:textColor="@color/buttonTextColour"
+        android:layout_weight="1"/>
+
 </RelativeLayout>

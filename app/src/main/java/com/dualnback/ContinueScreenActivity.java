@@ -51,7 +51,7 @@ public class ContinueScreenActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener( view -> {
             Intent chartActivityIntent = new Intent( view.getContext(), ChartActivity.class );
-            chartActivityIntent.putExtra( FINAL_SCORE, score );
+            chartActivityIntent.putExtra( FINAL_SCORE, score.toString() );
             chartActivityIntent.putExtra( ContinueScreenActivity.DATE, DateUtil.format( new Date() ) );
             startActivity( chartActivityIntent );
         } );
