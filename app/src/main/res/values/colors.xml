@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="mainBackground">#254524</color>
     <color name="buttonTextColour">#fbfcfc</color>
+    <color name="dropDownGray">#e8e8e8</color>
 </resources>

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layoutDirection="ltr"
           android:id="@android:id/text1"
           style="@style/spinnerItemStyle"
-          android:singleLine="true"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:ellipsize="marquee"
-          android:paddingLeft="2dp"
-          android:textColor="@color/buttonTextColour"
           android:background="@android:color/transparent"
-    />
+          android:ellipsize="marquee"
+          android:layoutDirection="ltr"
+          android:paddingLeft="20dp"
+          android:singleLine="true"
+          android:textColor="@android:color/black"/>

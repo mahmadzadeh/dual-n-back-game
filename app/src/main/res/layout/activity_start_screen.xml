@@ -6,10 +6,54 @@
                                                  android:fitsSystemWindows="true"
                                                  tools:context="StartScreenActivity">
 
-    <include
-        layout="@layout/content_start_screen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/layoutHolder1"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@drawable/gradient"
+                  android:baselineAligned="false"
+                  android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="275dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/custom_start_screen_background"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/start_screen_text_background"
+                android:text="Dual N Back"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/nBackVersion"
+                android:layout_width="180dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/start_screen_drop_down_background"
+                android:popupBackground="@color/colorPrimary"
+                android:textAlignment="center"
+                />
+
+            <ImageButton
+                android:id="@+id/startScreenButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/backgroundnoborder"
+                android:src="@drawable/play"/>
+        </LinearLayout>
+
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -30,8 +30,7 @@ public class StartScreenActivity extends AppCompatActivity {
         setContentView( R.layout.activity_start_screen );
 
         spinner = findViewById( R.id.nBackVersion );
-        adapter = createFromResource( this,
-                R.array.nBackArray, R.layout.spinner_text );
+        adapter = createFromResource( this, R.array.nBackArray, R.layout.spinner_text );
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner.setAdapter( adapter );
 
