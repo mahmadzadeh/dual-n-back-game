@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/start_screen_drop_down_background"
-                android:popupBackground="@color/colorPrimary"
+                android:popupBackground="@color/colorPrimaryDark"
                 android:textAlignment="center"
                 />
 
@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/backgroundnoborder"
-                android:src="@drawable/play"/>
+                android:src="@drawable/play_circle_24dp"/>
         </LinearLayout>
 
     </LinearLayout>

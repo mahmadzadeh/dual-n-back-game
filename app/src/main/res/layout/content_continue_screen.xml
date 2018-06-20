@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_weight="1"
+    android:background="@drawable/gradient">
 
-    <TextView
-        android:id="@+id/score"
-        android:layout_width="108sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@android:color/white"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/gradient"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="108sp"
+            android:layout_height="50sp"
+            android:text="fff"
+            android:textAlignment="center"
+            android:layout_marginTop="30dp"
+            android:textColor="@android:color/white"
+            android:layout_column="4"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/saveButton"
@@ -36,8 +38,8 @@
             android:text="@string/save"
             android:textColor="#fbfcfc"
             android:textStyle="bold|italic"
+            android:layout_column="3"
             />
-
         <Button
             android:id="@+id/quitButton"
             android:layout_width="wrap_content"
@@ -50,20 +52,19 @@
             android:text="@string/quit"
             android:textColor="#fbfcfc"
             android:textStyle="bold|italic"
+            android:layout_column="4"
             />
-
         <Button
             android:id="@+id/continueButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="136dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/background"
             android:text="@string/continueButton"
             android:textColor="#fbfcfc"
-            android:textStyle="bold|italic"/>
+            android:textStyle="bold|italic"
+            android:layout_column="5"/>
+    </TableRow>
+</TableLayout>
 
-    </LinearLayout>
-
-</LinearLayout>
+    <!--</LinearLayout>-->
