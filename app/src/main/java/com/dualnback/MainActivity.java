@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     public static final int EXPECTED_SOUND_MATCHES = 7;
     public static final int EXPECTED_LOC_MATCHES = 7;
     public static final int VIBERATION_MILLISECONDS = 100;
-    public final int ONE_ROUND_IN_MILLIS = 72000;
+    public final int ONE_ROUND_IN_MILLIS = 75000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
     private DualBackGame dualBackGame;

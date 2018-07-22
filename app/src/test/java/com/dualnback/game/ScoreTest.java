@@ -75,4 +75,23 @@ public class ScoreTest {
         assertEquals( 58.3, score, DELTA );
     }
 
+    @Test
+    public void givenSevenSoundAndFourLocationMatchAndWhenAllMatchedCorrectlyThen_100ScoreGiven( ) {
+        double score = new Score( 7, 4 )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectSound )
+                .update( CorrectLocation )
+                .update( CorrectLocation )
+                .update( CorrectLocation )
+                .update( CorrectLocation )
+                .calculateScorePercentage();
+
+        assertEquals( 100, score, DELTA );
+    }
+
 }

@@ -10,7 +10,7 @@ public class GameParameters {
     private NBackVersion version;
     private SwappableImage context;
     private int expectedSoundMatches;
-    private int expectedLocMacthes;
+    private int expectedLocMatches;
     private LocationCollection locationCollection;
     private SoundCollection soundCollection;
 
@@ -26,8 +26,8 @@ public class GameParameters {
         return expectedSoundMatches;
     }
 
-    public int getExpectedLocMacthes( ) {
-        return expectedLocMacthes;
+    public int getExpectedLocMatches( ) {
+        return expectedLocMatches;
     }
 
     public LocationCollection locCollection( ) {
@@ -54,7 +54,7 @@ public class GameParameters {
     }
 
     public GameParameters withExpectedLocationMatches( int expectedLocMatches ) {
-        this.expectedLocMacthes = expectedLocMatches;
+        this.expectedLocMatches = expectedLocMatches;
         return this;
     }
 

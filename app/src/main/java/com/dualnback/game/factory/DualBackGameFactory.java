@@ -32,7 +32,7 @@ public class DualBackGameFactory {
 
         return updateListWithExpectedSoundAndLocationMatch( originalTrialList,
                 params.getExpectedSoundMatches(),
-                params.getExpectedLocMacthes(),
+                params.getExpectedLocMatches(),
                 params.version() );
     }
 
