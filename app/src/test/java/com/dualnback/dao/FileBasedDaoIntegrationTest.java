@@ -19,12 +19,13 @@ import static org.junit.Assert.fail;
 
 public class FileBasedDaoIntegrationTest {
 
-    File file;
+    private final String TEST_RESOURCES_DIR = "app/src/test/resources";
+    private File file;
 
     @Before
     public void setUp( ) {
         try {
-            file = File.createTempFile( "testfile", ".json", new File( "src/test/resources/" ) );
+            file = File.createTempFile( "testfile", ".json", new File( TEST_RESOURCES_DIR ) );
         } catch ( IOException e ) {
             fail( "Unable to create a temp file for testing. Bailing." );
         }
