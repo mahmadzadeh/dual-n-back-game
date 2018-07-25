@@ -25,7 +25,7 @@ public class DataDtoConversionTest {
     public void givenDataDtoWithOneDataPointThenConvertToChartDataReturnsChartDataWithOneXAndYValue( ) {
 
         ArrayList<DataPoint> dataPoints = new ArrayList<>();
-        dataPoints.add( new DataPoint( new Date( 1461478244180l ), 14 ) );
+        dataPoints.add( new DataPoint( new Date( 1461478244180l ), 14, null ) );
 
         DataDto dataDto = new DataDto( dataPoints );
 

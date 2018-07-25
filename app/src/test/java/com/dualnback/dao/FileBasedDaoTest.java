@@ -4,9 +4,10 @@ package com.dualnback.dao;
 import com.dualnback.io.FileIO;
 import com.dualnback.io.FileIOException;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
@@ -17,17 +18,12 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
+@RunWith(MockitoJUnitRunner.class)
 public class FileBasedDaoTest {
 
     @Mock
     FileIO mockFileIO;
-
-    @Before
-    public void setUp( ) {
-        initMocks( this );
-    }
 
     @Test
     public void canCreateAnInstance( ) {
@@ -60,9 +56,9 @@ public class FileBasedDaoTest {
     }
 
     @Test
-    public void givenValidInputThenReadReturnsEmptyListOfContainedInFile( ) throws FileIOException {
+    public void givenValidInputThenReadReturnsListOfDataContainedInFile( ) throws FileIOException {
 
-        String JSON = "{\"data\": [ { \"datapoint\" : { \"date\": \"2012-04-23T18:25:43.511Z\", \"score\":  2} } ] }";
+        String JSON = "{\"data\": [ { \"datapoint\" : { \"date\": \"2012-04-23T18:25:43.511Z\", \"score\":  2, \"version\": \"Dual 2-Back\"} } ] }";
 
         when( mockFileIO.read() ).thenReturn( JSON );
 

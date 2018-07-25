@@ -1,6 +1,5 @@
 package com.dualnback;
 
-import android.content.Intent;
 import android.os.CountDownTimer;
 
 import java.util.concurrent.TimeUnit;
@@ -51,14 +50,6 @@ public class GameCountDownTimer extends CountDownTimer {
 
     @Override
     public void onFinish( ) {
-        gameScreenActivity.setCountDownText( "00:00" );
-
-        Intent countDownIntent = new Intent( gameScreenActivity, ContinueScreenActivity.class );
-
-        double currentPoints = gameScreenActivity.currentPoints();
-
-        countDownIntent.putExtra( gameScreenActivity.FINAL_SCORE, currentPoints );
-
-        gameScreenActivity.startActivity( countDownIntent );
+        gameScreenActivity.onFinish();
     }
 }

@@ -1,6 +1,7 @@
 package com.dualnback;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,6 +36,7 @@ import static com.dualnback.util.NumberFormatterUtil.formatScore;
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public static final String FINAL_SCORE = "FINAL_SCORE";
+    public static final String VERSION = "VERSION";
     public static final int EXPECTED_SOUND_MATCHES = 7;
     public static final int EXPECTED_LOC_MATCHES = 7;
     public static final int VIBERATION_MILLISECONDS = 100;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private GameCountDownTimer timer;
     private Handler handler;
     private TextView gameVersionText;
+    private NBackVersion version;
 
     private Trial currentTrial = new NullTrial();
 
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         setContentView( R.layout.activity_main );
 
         Optional<NBackVersion> mayBeVersion = extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION );
-        NBackVersion version = mayBeVersion.orElse( DEFAULT_VERSION );
+        version = mayBeVersion.orElse( DEFAULT_VERSION );
 
         GameParameters parameters = new GameParameters()
                 .withVersion( version )
@@ -145,6 +148,20 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     public double currentPoints( ) {
         return dualBackGame.getCurrentScore();
+    }
+
+    public void onFinish( ) {
+
+        setCountDownText( "00:00" );
+
+        Intent countDownIntent = new Intent( this, ContinueScreenActivity.class );
+
+        double currentPoints = currentPoints();
+
+        countDownIntent.putExtra( FINAL_SCORE, currentPoints );
+        countDownIntent.putExtra( VERSION, version.getTextRepresentation() );
+
+        startActivity( countDownIntent );
     }
 
     private void updateUI( ) {

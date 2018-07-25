@@ -1,15 +1,16 @@
 package com.dualnback.util;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.dualnback.ContinueScreenActivity;
 import com.dualnback.dao.DataPoint;
+import com.dualnback.game.NBackVersion;
 
 import java.util.Date;
 import java.util.Optional;
 
 import static com.dualnback.MainActivity.FINAL_SCORE;
+import static com.dualnback.MainActivity.VERSION;
 
 public class IntentUtility {
 
@@ -33,6 +34,19 @@ public class IntentUtility {
         return Optional.ofNullable( value );
     }
 
+    public static Optional<NBackVersion> extractGameVersion( Bundle extras ) {
+
+        Optional<NBackVersion> version = Optional.empty();
+
+        if ( extras != null ) {
+            String string = extras.getString( VERSION );
+
+            version = NBackVersion.fromTextValue( string );
+        }
+
+        return version;
+    }
+
     public static DataPoint extractDatePointFromExtras( Bundle extras ) {
         Float score = 0.00f;
         Date date = new Date();
@@ -40,12 +54,10 @@ public class IntentUtility {
         if ( extras != null ) {
             String string = extras.getString( FINAL_SCORE );
 
-            Log.e( "IntentUtility:FINAL_SCORE\n\n\n\n\n ", string );
-
             score = Float.valueOf( string );
 
             date = DateUtil.parse( extras.getString( ContinueScreenActivity.DATE ) );
         }
-        return new DataPoint( date, score.intValue() );
+        return new DataPoint( date, score.intValue(), null );
     }
 }

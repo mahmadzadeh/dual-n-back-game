@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static com.dualnback.game.NBackVersion.TwoBack;
 import static com.dualnback.util.JSONUtil.parse;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,7 +27,7 @@ public class DataDtoTest {
 
     @Test
     public void testToJSONWithDataPointList( ) throws JSONException {
-        List<DataPoint> dataPointList = Arrays.asList( new DataPoint( new Date(), 2 ) );
+        List<DataPoint> dataPointList = Arrays.asList( new DataPoint( new Date(), 2, TwoBack ) );
 
         String json = new DataDto( dataPointList ).toJSON();
 
@@ -40,9 +41,9 @@ public class DataDtoTest {
         Date twoDaysAgoThisTime = new Date( yesterdayThisTime.getTime() - 86400000l );
 
         List<DataPoint> dataPointList = Arrays.asList(
-                new DataPoint( today, 10 ),
-                new DataPoint( twoDaysAgoThisTime, 20 ),
-                new DataPoint( yesterdayThisTime, 30 )
+                new DataPoint( today, 10, null ),
+                new DataPoint( twoDaysAgoThisTime, 20, null ),
+                new DataPoint( yesterdayThisTime, 30, null )
         );
 
         DataDto dataDto = new DataDto( dataPointList );
@@ -97,7 +98,7 @@ public class DataDtoTest {
         List<DataPoint> dataPointList = new ArrayList<>();
 
         for ( int i = 0; i < size; ++i ) {
-            dataPointList.add( new DataPoint( new Date(), 10 ) );
+            dataPointList.add( new DataPoint( new Date(), 10, null ) );
         }
 
         return dataPointList;

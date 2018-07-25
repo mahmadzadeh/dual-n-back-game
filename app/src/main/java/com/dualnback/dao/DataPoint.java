@@ -1,5 +1,7 @@
 package com.dualnback.dao;
 
+import com.dualnback.game.NBackVersion;
+
 import org.json.JSONException;
 
 import java.util.Date;
@@ -12,9 +14,12 @@ public class DataPoint implements Comparable<DataPoint> {
     private final Date date;
     private final int score;
 
-    public DataPoint( Date date, int score ) {
+    private final NBackVersion version;
+
+    public DataPoint( Date date, int score, NBackVersion version ) {
         this.date = date;
         this.score = score;
+        this.version = version;
     }
 
     public Date date( ) {
@@ -25,9 +30,17 @@ public class DataPoint implements Comparable<DataPoint> {
         return score;
     }
 
+    public NBackVersion getVersion( ) {
+        return version;
+    }
+
     @Override
     public String toString( ) {
-        return "data point with date: " + date.toString() + " and score: " + score;
+        return "DataPoint {" +
+                "date=" + date +
+                ", score=" + score +
+                ", version=" + version +
+                '}';
     }
 
     public String toJSON( ) {

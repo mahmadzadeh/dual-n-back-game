@@ -2,16 +2,21 @@ package com.dualnback;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dualnback.game.NBackVersion;
 import com.dualnback.util.DateUtil;
 
 import java.util.Date;
 
 import static com.dualnback.MainActivity.FINAL_SCORE;
+import static com.dualnback.MainActivity.VERSION;
 import static com.dualnback.util.IntentUtility.extractFromExtrasWithDefault;
+import static com.dualnback.util.IntentUtility.extractGameVersion;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
 import static com.dualnback.util.StartScreenActivityIntentUtil.backToStartScreen;
 
@@ -27,13 +32,15 @@ public class ContinueScreenActivity extends AppCompatActivity {
 
         setContentView( R.layout.continue_screen );
 
-        final Button saveButton = ( Button ) findViewById( R.id.saveButton );
-        final Button continueButton = ( Button ) findViewById( R.id.continueButton );
-        final Button quitButton = ( Button ) findViewById( R.id.quitButton );
+        final Button saveButton = findViewById( R.id.saveButton );
+        final Button continueButton = findViewById( R.id.continueButton );
+        final Button quitButton = findViewById( R.id.quitButton );
 
         final TextView scoreTextView = ( TextView ) findViewById( R.id.score );
 
         Double score = extractFromExtrasWithDefault( getIntent().getExtras(), FINAL_SCORE, 0.0D );
+        NBackVersion version = extractGameVersion( getIntent().getExtras() )
+                .orElseThrow( ( ) -> new IllegalArgumentException( "Unable to extract game verion from extras!" ) );
 
         final String actualScore = formatScore( score );
 
@@ -49,23 +56,17 @@ public class ContinueScreenActivity extends AppCompatActivity {
                         backToStartScreen( view, ContinueScreenActivity.this )
         );
 
-        saveButton.setOnClickListener( view -> {
+        saveButton.setOnClickListener( getOnClickListener( score, version ) );
+    }
+
+    @NonNull
+    private View.OnClickListener getOnClickListener( Double score, NBackVersion version ) {
+        return view -> {
             Intent chartActivityIntent = new Intent( view.getContext(), ChartActivity.class );
             chartActivityIntent.putExtra( FINAL_SCORE, score.toString() );
             chartActivityIntent.putExtra( ContinueScreenActivity.DATE, DateUtil.format( new Date() ) );
+            chartActivityIntent.putExtra( VERSION, version.getTextRepresentation() );
             startActivity( chartActivityIntent );
-        } );
-    }
-
-    private String extractScoreFromIntentExtras( ) {
-        Bundle extras = getIntent().getExtras();
-
-        double value = 0.0d;
-
-        if ( extras != null ) {
-            value = extras.getDouble( FINAL_SCORE );
-        }
-
-        return formatScore( value );
+        };
     }
 }

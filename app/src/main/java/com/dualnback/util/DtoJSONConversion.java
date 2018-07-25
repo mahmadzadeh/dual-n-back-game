@@ -12,6 +12,7 @@ import static com.dualnback.util.JSONUtil.DATAPOINT_ELEMENT;
 import static com.dualnback.util.JSONUtil.DATA_ELEMENT;
 import static com.dualnback.util.JSONUtil.DATE_ELEMENT;
 import static com.dualnback.util.JSONUtil.SCORE_ELEMENT;
+import static com.dualnback.util.JSONUtil.VERSION_ELEMENT;
 
 
 public class DtoJSONConversion {
@@ -23,6 +24,7 @@ public class DtoJSONConversion {
 
         innerObject.put( DATE_ELEMENT, DateUtil.format( dataPoint.date() ) );
         innerObject.put( SCORE_ELEMENT, dataPoint.score() );
+        innerObject.put( VERSION_ELEMENT, dataPoint.getVersion().getTextRepresentation() );
 
         jsonObject.put( DATAPOINT_ELEMENT, innerObject );
 

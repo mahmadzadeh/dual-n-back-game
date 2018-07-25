@@ -1,5 +1,6 @@
 package com.dualnback.dao;
 
+import org.apache.commons.collections4.list.UnmodifiableList;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -15,11 +16,11 @@ public class DataDto {
     private List<DataPoint> userDataPoints;
 
     public DataDto( List<DataPoint> userDataPoints ) {
-        this.userDataPoints = userDataPoints;
+        this.userDataPoints = new ArrayList<>( userDataPoints );
     }
 
     public List<DataPoint> userDataPoints( ) {
-        return userDataPoints;
+        return new UnmodifiableList<>( userDataPoints );
     }
 
     public int size( ) {

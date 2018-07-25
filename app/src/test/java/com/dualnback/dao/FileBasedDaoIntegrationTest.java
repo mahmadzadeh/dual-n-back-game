@@ -1,6 +1,5 @@
 package com.dualnback.dao;
 
-
 import com.dualnback.io.FileIO;
 
 import org.junit.After;
@@ -12,9 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
+import static com.dualnback.game.NBackVersion.TwoBack;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 public class FileBasedDaoIntegrationTest {
@@ -51,7 +49,7 @@ public class FileBasedDaoIntegrationTest {
 
         DataDto readData = fileBasedDao.read();
 
-        assertThat( readData.size(), is( equalTo( 0 ) ) );
+        assertThat( readData.size() ).isEqualTo( 0 );
     }
 
     @Test
@@ -63,8 +61,8 @@ public class FileBasedDaoIntegrationTest {
 
         Date now = new Date();
         ArrayList<DataPoint> userDataPoints = new ArrayList<>();
-        userDataPoints.add( new DataPoint( now, 1 ) );
-        userDataPoints.add( new DataPoint( now, 100 ) );
+        userDataPoints.add( new DataPoint( now, 1, TwoBack ) );
+        userDataPoints.add( new DataPoint( now, 100, TwoBack ) );
 
         DataDto dataDto = new DataDto( userDataPoints );
 
@@ -72,7 +70,7 @@ public class FileBasedDaoIntegrationTest {
 
         DataDto readData = fileBasedDao.read();
 
-        assertThat( readData.size(), is( equalTo( userDataPoints.size() ) ) );
+        assertThat( readData.size() ).isEqualTo( userDataPoints.size() );
     }
 
 }
