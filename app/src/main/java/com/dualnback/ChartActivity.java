@@ -29,7 +29,7 @@ import static com.dualnback.util.ChartUtil.setUpChart;
 
 public class ChartActivity extends AppCompatActivity {
 
-    Dao dao;
+    private Dao dao;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {

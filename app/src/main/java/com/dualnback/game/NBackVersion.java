@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public enum NBackVersion {
 
+    Null( -1, "Missing Version" ),
     OneBack( 1, "Dual 1-Back" ),
     TwoBack( 2, "Dual 2-Back" ),
     ThreeBack( 3, "Dual 3-Back" ),

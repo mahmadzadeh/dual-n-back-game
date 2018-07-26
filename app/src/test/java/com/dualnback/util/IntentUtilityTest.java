@@ -2,20 +2,26 @@ package com.dualnback.util;
 
 import android.os.Bundle;
 
+import com.dualnback.game.NBackVersion;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.dualnback.MainActivity.VERSION;
 import static com.dualnback.util.IntentUtility.extractFromExtrasWithDefault;
+import static com.dualnback.util.IntentUtility.extractGameVersion;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IntentUtilityTest {
 
     @Mock
-    Bundle mockBundle;
+    private Bundle mockBundle;
 
 
     @Test
@@ -53,5 +59,33 @@ public class IntentUtilityTest {
 
         assertEquals( defaultValue, actual );
     }
+
+    @Test
+    public void givenNoVersionThenExtractGameVersionReturnsNullVersion( ) {
+
+        when( mockBundle.getString( VERSION ) ).thenReturn( null );
+
+        assertThat( extractGameVersion( mockBundle ) ).isEqualTo( NBackVersion.Null );
+
+        verify( mockBundle ).getString( VERSION );
+    }
+
+    @Test
+    public void givenNoBundlePresentThenExtractGameVersionReturnsNullVersion( ) {
+
+        assertThat( extractGameVersion( null ) ).isEqualTo( NBackVersion.Null );
+
+    }
+
+    @Test
+    public void givenCorrectVersionInBundleThenExtractGameVersionReturnsIt( ) {
+
+        NBackVersion expectedVersion = NBackVersion.TwoBack;
+
+        when( mockBundle.getString( VERSION ) ).thenReturn( expectedVersion.getTextRepresentation() );
+
+        assertThat( extractGameVersion( mockBundle ) ).isEqualTo( expectedVersion );
+    }
+
 
 }

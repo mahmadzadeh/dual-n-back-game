@@ -14,6 +14,8 @@ import static com.dualnback.MainActivity.VERSION;
 
 public class IntentUtility {
 
+    private static final float DEFAULT_SCORE_WHEN_MISSING_IN_BUNDLE = 0.00f;
+
     public static <T> T extractFromExtrasWithDefault( Bundle extras, String key, T defaultValue ) {
         T value = defaultValue;
 
@@ -34,22 +36,25 @@ public class IntentUtility {
         return Optional.ofNullable( value );
     }
 
-    public static Optional<NBackVersion> extractGameVersion( Bundle extras ) {
+    public static NBackVersion extractGameVersion( Bundle extras ) {
 
-        Optional<NBackVersion> version = Optional.empty();
+        NBackVersion version = null;
 
         if ( extras != null ) {
             String string = extras.getString( VERSION );
 
-            version = NBackVersion.fromTextValue( string );
+            version = NBackVersion.fromTextValue( string ).orElse( NBackVersion.Null );
         }
 
-        return version;
+        return version != null ? version : NBackVersion.Null;
     }
 
     public static DataPoint extractDatePointFromExtras( Bundle extras ) {
-        Float score = 0.00f;
+        Float score = DEFAULT_SCORE_WHEN_MISSING_IN_BUNDLE;
+
         Date date = new Date();
+
+        NBackVersion nBackVersion = null;
 
         if ( extras != null ) {
             String string = extras.getString( FINAL_SCORE );
@@ -57,7 +62,10 @@ public class IntentUtility {
             score = Float.valueOf( string );
 
             date = DateUtil.parse( extras.getString( ContinueScreenActivity.DATE ) );
+
+            nBackVersion = extractGameVersion( extras );
         }
-        return new DataPoint( date, score.intValue(), null );
+
+        return new DataPoint( date, score.intValue(), nBackVersion );
     }
 }

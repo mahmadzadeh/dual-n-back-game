@@ -39,8 +39,7 @@ public class ContinueScreenActivity extends AppCompatActivity {
         final TextView scoreTextView = ( TextView ) findViewById( R.id.score );
 
         Double score = extractFromExtrasWithDefault( getIntent().getExtras(), FINAL_SCORE, 0.0D );
-        NBackVersion version = extractGameVersion( getIntent().getExtras() )
-                .orElseThrow( ( ) -> new IllegalArgumentException( "Unable to extract game verion from extras!" ) );
+        NBackVersion version = extractGameVersion( getIntent().getExtras() );
 
         final String actualScore = formatScore( score );
 
