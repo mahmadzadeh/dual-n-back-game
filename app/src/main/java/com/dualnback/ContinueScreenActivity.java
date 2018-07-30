@@ -36,7 +36,7 @@ public class ContinueScreenActivity extends AppCompatActivity {
         final Button continueButton = findViewById( R.id.continueButton );
         final Button quitButton = findViewById( R.id.quitButton );
 
-        final TextView scoreTextView = ( TextView ) findViewById( R.id.score );
+        final TextView scoreTextView = findViewById( R.id.score );
 
         Double score = extractFromExtrasWithDefault( getIntent().getExtras(), FINAL_SCORE, 0.0D );
         NBackVersion version = extractGameVersion( getIntent().getExtras() );

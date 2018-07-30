@@ -24,7 +24,7 @@ public class DtoJSONConversion {
 
         innerObject.put( DATE_ELEMENT, DateUtil.format( dataPoint.date() ) );
         innerObject.put( SCORE_ELEMENT, dataPoint.score() );
-        innerObject.put( VERSION_ELEMENT, dataPoint.getVersion().getTextRepresentation() );
+        innerObject.put( VERSION_ELEMENT, dataPoint.version().getTextRepresentation() );
 
         jsonObject.put( DATAPOINT_ELEMENT, innerObject );
 

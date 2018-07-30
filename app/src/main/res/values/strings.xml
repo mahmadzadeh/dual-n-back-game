@@ -24,6 +24,7 @@
     <string name="quit">Quit</string>
     <string name="titleContinueScreen">Continue</string>
     <string name="title_activity_chart">ChartActivity</string>
+    <string name="editConfiguration">Configuration</string>
     <string-array name="nBackArray">
         <item>Dual 2-Back</item>
         <item>Dual 3-Back</item>

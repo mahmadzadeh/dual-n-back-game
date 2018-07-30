@@ -66,7 +66,7 @@ public class JSONUtilTest {
 
         assertThat( dataPointList.size() ).isEqualTo( 1 );
 
-        assertThat( dataPointList.get( 0 ).getVersion() ).isEqualTo( DEFAULT_N_BACK_VERSION );
+        assertThat( dataPointList.get( 0 ).version() ).isEqualTo( DEFAULT_N_BACK_VERSION );
     }
 
     private String readTestFile( String testFileName ) throws FileIOException {

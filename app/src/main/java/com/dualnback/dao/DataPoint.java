@@ -13,7 +13,6 @@ public class DataPoint implements Comparable<DataPoint> {
 
     private final Date date;
     private final int score;
-
     private final NBackVersion version;
 
     public DataPoint( Date date, int score, NBackVersion version ) {
@@ -30,7 +29,7 @@ public class DataPoint implements Comparable<DataPoint> {
         return score;
     }
 
-    public NBackVersion getVersion( ) {
+    public NBackVersion version( ) {
         return version;
     }
 
