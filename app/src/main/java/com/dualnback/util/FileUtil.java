@@ -1,7 +1,5 @@
 package com.dualnback.util;
 
-import android.content.Context;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -10,8 +8,8 @@ public class FileUtil {
 
     public static final String FILE_NAME = "data.json";
 
-    public static File getDataFile( Context context, String fileName ) {
-        File file = new File( context.getFilesDir(), fileName );
+    public static File getDataFile( File filesDir, String fileName ) {
+        File file = new File( filesDir, fileName );
 
         if ( !file.exists() ) {
             try {
@@ -25,8 +23,8 @@ public class FileUtil {
 
     }
 
-    public static File getDataFile( Context context ) {
-        return getDataFile( context, FILE_NAME );
+    public static File getDataFile( File filesDir ) {
+        return getDataFile( filesDir, FILE_NAME );
 
     }
 }

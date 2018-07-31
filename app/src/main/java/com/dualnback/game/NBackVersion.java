@@ -2,10 +2,12 @@ package com.dualnback.game;
 
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.stream.IntStream.range;
 
 public enum NBackVersion {
 
@@ -84,6 +86,14 @@ public enum NBackVersion {
         return Arrays.stream( NBackVersion.values() )
                 .filter( v -> v.textRepresentation.equals( textValue ) )
                 .findFirst();
+    }
+
+    public int map( List<CharSequence> adapter ) {
+        return range( 0, adapter.size() )
+                .filter( index -> adapter.get( index ).toString().equals( getTextRepresentation() ) )
+                .findFirst()
+                .orElseThrow( ( ) ->
+                        new RuntimeException( "Unable to locate the version in list of version" ) );
     }
 
     public String getTextRepresentation( ) {

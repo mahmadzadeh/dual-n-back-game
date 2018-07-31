@@ -35,7 +35,7 @@ public class ChartActivity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
-        File file = FileUtil.getDataFile( this );
+        File file = FileUtil.getDataFile( this.getFilesDir() );
 
         dao = new FileBasedDao( new FileIO( file ) );
 

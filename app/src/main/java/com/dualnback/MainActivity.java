@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
+        Log.i( "MainActivity", "<<<<<  MainActivity >>>> creating new" );
+
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_main );

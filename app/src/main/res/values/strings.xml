@@ -26,6 +26,7 @@
     <string name="title_activity_chart">ChartActivity</string>
     <string name="editConfiguration">Configuration</string>
     <string-array name="nBackArray">
+        <item>Dual 1-Back</item>
         <item>Dual 2-Back</item>
         <item>Dual 3-Back</item>
         <item>Dual 4-Back</item>

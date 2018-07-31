@@ -1,8 +1,15 @@
 package com.dualnback.game;
 
-import org.junit.Test;
+import android.content.Context;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,13 +24,17 @@ import static com.dualnback.game.NBackVersion.SixBack;
 import static com.dualnback.game.NBackVersion.ThreeBack;
 import static com.dualnback.game.NBackVersion.TwoBack;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
+@RunWith(MockitoJUnitRunner.class)
 public class NBackVersionTest {
 
+    @Mock
+    private Context mockContext;
 
     @Test
     public void givenInvalidUiRepresentationOfNBackVersionThenFromUiReturnsOptionalEmpty( ) throws Exception {
@@ -58,6 +69,19 @@ public class NBackVersionTest {
         for ( NBackVersion version : NBackVersion.values() ) {
             assertThat( version.nextVersionUp() ).isEqualTo( expected.get( version ) );
         }
+    }
+
+    @Test
+    public void givenCurrentVersionThenMapMethodWillSelectIndexOfArrayAdapter( ) {
+
+        List<CharSequence> arrayAdapter = new ArrayList<>();
+
+        stream( NBackVersion.values() )
+                .forEach( ver -> arrayAdapter.add( ver.getTextRepresentation() ) );
+
+        assertThat( OneBack.map( arrayAdapter ) ).isEqualTo( 1 );
+        assertThat( TwoBack.map( arrayAdapter ) ).isEqualTo( 2 );
+        assertThat( NineBack.map( arrayAdapter ) ).isEqualTo( 9 );
     }
 
 
