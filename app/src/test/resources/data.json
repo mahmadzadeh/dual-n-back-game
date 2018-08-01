@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "datapoint": {
+        "date": "2013-04-23T18:25:43.511Z",
+        "score": 80,
+        "version": "Dual 3-Back"
+      }
+    },
+    {
+      "datapoint": {
+        "date": "2012-04-23T18:25:43.511Z",
+        "score": 2,
+        "version": "Dual 2-Back"
+      }
+    }
+  ]
+}

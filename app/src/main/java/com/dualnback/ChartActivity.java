@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.dualnback.dao.ChartData;
 import com.dualnback.dao.Dao;
 import com.dualnback.dao.DataDto;
+import com.dualnback.dao.DataFileUtil;
 import com.dualnback.dao.DataPoint;
 import com.dualnback.dao.FileBasedDao;
 import com.dualnback.io.FileIO;
@@ -45,7 +46,10 @@ public class ChartActivity extends AppCompatActivity {
 
         DataPoint lastDataPoint = IntentUtility.extractDatePointFromExtras( getIntent().getExtras() );
 
-        final DataDto allDataSoFar = dao.read().sortedDataPoints().addDataPoint( lastDataPoint );
+        final DataDto allDataSoFar = DataFileUtil
+                .readAllDataSortedByDate( this.getFilesDir() )
+                .addDataPoint( lastDataPoint );
+
         setData( lineChart, allDataSoFar );
 
         Button continueButton = ( Button ) findViewById( R.id.char_continue );
