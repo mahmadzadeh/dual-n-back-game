@@ -72,6 +72,26 @@ public class NBackVersionTest {
     }
 
     @Test
+    public void givenCurrentVersionThenPreviousVersionDownReturnsCorrectValue( ) {
+
+        Map<NBackVersion, Optional<NBackVersion>> expected = new HashMap<>();
+        expected.put( Null, Optional.empty() );
+        expected.put( OneBack, Optional.empty() );
+        expected.put( TwoBack, Optional.of( OneBack ) );
+        expected.put( ThreeBack, Optional.of( TwoBack ) );
+        expected.put( FourBack, Optional.of( ThreeBack ) );
+        expected.put( FiveBack, Optional.of( FourBack ) );
+        expected.put( SixBack, Optional.of( FiveBack ) );
+        expected.put( SevenBack, Optional.of( SixBack ) );
+        expected.put( EightBack, Optional.of( SevenBack ) );
+        expected.put( NineBack, Optional.of( EightBack ) );
+
+        for ( NBackVersion version : NBackVersion.values() ) {
+            assertThat( version.previousVersionDown() ).isEqualTo( expected.get( version ) );
+        }
+    }
+
+    @Test
     public void givenCurrentVersionThenMapMethodWillSelectIndexOfArrayAdapter( ) {
 
         List<CharSequence> arrayAdapter = new ArrayList<>();

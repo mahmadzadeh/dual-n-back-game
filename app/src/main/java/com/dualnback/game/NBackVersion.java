@@ -16,11 +16,21 @@ public enum NBackVersion {
         public Optional<NBackVersion> nextVersionUp( ) {
             return empty();
         }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return empty();
+        }
     },
     OneBack( 1, "Dual 1-Back" ) {
         @Override
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( TwoBack );
+        }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return empty();
         }
     },
     TwoBack( 2, "Dual 2-Back" ) {
@@ -28,11 +38,21 @@ public enum NBackVersion {
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( ThreeBack );
         }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( OneBack );
+        }
     },
     ThreeBack( 3, "Dual 3-Back" ) {
         @Override
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( FourBack );
+        }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( TwoBack );
         }
     },
     FourBack( 4, "Dual 4-Back" ) {
@@ -40,11 +60,21 @@ public enum NBackVersion {
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( FiveBack );
         }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( ThreeBack );
+        }
     },
     FiveBack( 5, "Dual 5-Back" ) {
         @Override
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( SixBack );
+        }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( FourBack );
         }
     },
     SixBack( 6, "Dual 6-Back" ) {
@@ -52,11 +82,21 @@ public enum NBackVersion {
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( SevenBack );
         }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( FiveBack );
+        }
     },
     SevenBack( 7, "Dual 7-Back" ) {
         @Override
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( EightBack );
+        }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( SixBack );
         }
     },
     EightBack( 8, "Dual 8-Back" ) {
@@ -64,11 +104,21 @@ public enum NBackVersion {
         public Optional<NBackVersion> nextVersionUp( ) {
             return of( NineBack );
         }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( SevenBack );
+        }
     },
     NineBack( 9, "Dual 9-Back" ) {
         @Override
         public Optional<NBackVersion> nextVersionUp( ) {
             return empty();
+        }
+
+        @Override
+        public Optional<NBackVersion> previousVersionDown( ) {
+            return of( EightBack );
         }
     };
 
@@ -105,4 +155,6 @@ public enum NBackVersion {
     }
 
     public abstract Optional<NBackVersion> nextVersionUp( );
+
+    public abstract Optional<NBackVersion> previousVersionDown( );
 }

@@ -17,9 +17,11 @@ import java.util.stream.IntStream;
 
 import static com.dualnback.game.NBackVersion.FiveBack;
 import static com.dualnback.game.NBackVersion.FourBack;
+import static com.dualnback.game.NBackVersion.OneBack;
 import static com.dualnback.game.NBackVersion.ThreeBack;
 import static com.dualnback.game.NBackVersion.TwoBack;
 import static com.dualnback.game.VersionSelection.MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL;
+import static com.dualnback.game.VersionSelection.MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -61,6 +63,22 @@ public class VersionSelectionTest {
         versionSelection = new VersionSelection( testDto( 10, MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL ) );
 
         assertThat( versionSelection.currentLevel() ).isEqualTo( ThreeBack );
+    }
+
+    @Test
+    public void givenOnePreviousGameWhenScoreLessThanMinThenVersionIsBumppedDown( ) {
+        versionSelection = new VersionSelection(
+                testDto( 10, MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL - 1 ) );
+
+        assertThat( versionSelection.currentLevel() ).isEqualTo( OneBack );
+    }
+
+    @Test
+    public void givenOnePreviousGameWhenScoreEqualToMinThenVersionIsNotBumppedDown( ) {
+        versionSelection = new VersionSelection(
+                testDto( 10, MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL ) );
+
+        assertThat( versionSelection.currentLevel() ).isEqualTo( TEST_VERSION );
     }
 
     @Test
