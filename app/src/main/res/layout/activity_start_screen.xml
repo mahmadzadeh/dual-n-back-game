@@ -56,14 +56,15 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/configButton"
+            android:id="@+id/settingsButton"
             android:layout_width="276dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="9dp"
             android:background="@drawable/custom_start_screen_config_background"
-            android:text="@string/editConfiguration"
-            android:textColor="@color/buttonTextColour"/>
+            android:text="@string/editSettings"
+            android:textColor="@color/buttonTextColour"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

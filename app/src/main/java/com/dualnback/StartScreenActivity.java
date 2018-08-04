@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
@@ -50,6 +51,14 @@ public class StartScreenActivity extends AppCompatActivity {
             startActivity( mainActivityIntent );
 
         } );
+
+        final Button settingsButton = findViewById( R.id.settingsButton );
+        settingsButton.setTransformationMethod( null );
+
+//        settingsButton.setOnClickListener( v -> {
+//            Intent mainActivityIntent = new Intent( v.getContext(), SettingsActivity.class );
+//            startActivity( mainActivityIntent );
+//        } );
 
         Pulsator.pulsate( button );
 
