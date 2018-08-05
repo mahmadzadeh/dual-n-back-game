@@ -41,6 +41,14 @@
             android:noHistory="true"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".StartScreenActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dualnback.StartScreenActivity"/>
+        </activity>
     </application>
 
 </manifest>

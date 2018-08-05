@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.VersionSelection;
+import com.dualnback.settings.SettingsActivity;
 import com.dualnback.util.Pulsator;
 
 import static android.widget.ArrayAdapter.createFromResource;
@@ -55,10 +56,10 @@ public class StartScreenActivity extends AppCompatActivity {
         final Button settingsButton = findViewById( R.id.settingsButton );
         settingsButton.setTransformationMethod( null );
 
-//        settingsButton.setOnClickListener( v -> {
-//            Intent mainActivityIntent = new Intent( v.getContext(), SettingsActivity.class );
-//            startActivity( mainActivityIntent );
-//        } );
+        settingsButton.setOnClickListener( v -> {
+            Intent settingsActivityIntent = new Intent( v.getContext(), SettingsActivity.class );
+            startActivity( settingsActivityIntent );
+        } );
 
         Pulsator.pulsate( button );
 
