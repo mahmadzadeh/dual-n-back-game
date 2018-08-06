@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_vibration_duration_list_titles">
+        <item>"Short"</item>
+        <item>"Medium"</item>
+        <item>"Long"</item>
+
+    </string-array>
+    <string-array name="pref_vibration_duration_list_values">
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+    </string-array>
+</resources>

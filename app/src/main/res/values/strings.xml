@@ -50,6 +50,8 @@
     </string>
 
     <string name="pref_default_display_name">80</string>
+    <string name="pref_feedback_vibration">Feedback Vibration</string>
+    <string name="pref_round_length_title_display_name">Single Round Length (seconds)</string>
 
     <string-array name="pref_sync_frequency_titles">
         <item>15 minutes</item>

@@ -13,13 +13,7 @@ import com.dualnback.R;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class GeneralPreferenceFragment extends PreferenceFragment {
-    /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-     */
+
     protected static void bindPreferenceSummaryToValue( Preference preference ) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener( SettingsActivity.sBindPreferenceSummaryToValueListener );
@@ -42,8 +36,8 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
         // to their values. When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
-        bindPreferenceSummaryToValue( findPreference( "example_text" ) );
-        bindPreferenceSummaryToValue( findPreference( "example_list" ) );
+        bindPreferenceSummaryToValue( findPreference( "vibration_duration_list" ) );
+        bindPreferenceSummaryToValue( findPreference( "round_length" ) );
     }
 
     @Override
