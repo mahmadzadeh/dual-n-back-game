@@ -2,24 +2,22 @@ package com.dualnback.settings;
 
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.util.Log;
 
 class SettingsPreferenceChangeListener implements Preference.OnPreferenceChangeListener {
 
     @Override
     public boolean onPreferenceChange( Preference preference, Object value ) {
-
+        String stringValue = value.toString();
         if ( preference instanceof ListPreference ) {
-            int index = Integer.parseInt( value.toString() );
+            ListPreference listPreference = ( ListPreference ) preference;
 
-            Log.e( "onPreferenceChange", " index is " + index );
-
-            ListPreference lp = ( ListPreference ) preference;
-
-            lp.setValueIndex( index );
+            int index = listPreference.findIndexOfValue( stringValue );
+            preference.setSummary(
+                    index >= 0
+                            ? listPreference.getEntries()[ index ]
+                            : "" );
 
         } else {
-            String stringValue = value.toString();
             preference.setSummary( stringValue );
         }
 
