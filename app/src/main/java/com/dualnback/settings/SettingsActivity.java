@@ -15,7 +15,7 @@ import com.dualnback.R;
 
 import java.util.List;
 
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class SettingsActivity extends GamePreferenceActivity {
 
     protected static OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new SettingsPreferenceChangeListener();
 

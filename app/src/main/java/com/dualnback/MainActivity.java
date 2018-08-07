@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +21,8 @@ import com.dualnback.game.factory.GameParameters;
 import com.dualnback.game.factory.NullTrial;
 import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.location.LocationCollection;
+import com.dualnback.settings.ApplicationConfig;
+import com.dualnback.settings.ConfigReader;
 import com.dualnback.sound.SoundCollection;
 
 import java.util.Optional;
@@ -61,11 +62,13 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
     private Vibrator vibrator;
 
+    private ApplicationConfig config = new ApplicationConfig( new ConfigReader( this ) );
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
-        Log.i( "MainActivity", "<<<<<  MainActivity >>>> creating new" );
-
         super.onCreate( savedInstanceState );
+
+        int vibrationLength = config.vibrationLength();
 
         setContentView( R.layout.activity_main );
 
@@ -95,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
             }
         };
 
-        locationMatchButton.setOnClickListener( view -> {
+        locationMatchButton.setOnClickListener( ( View view ) -> {
             boolean isCorrectAnswer = dualBackGame.recordLocationMatch( currentTrial );
-            vibrator.vibrate( VIBERATION_MILLISECONDS );
+            vibrator.vibrate( Integer.valueOf( vibrationLength ) );
             positionMatchFeedBackImg.setImageResource( isCorrectAnswer ?
                     R.drawable.checkmark :
                     R.drawable.xmark
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         soundMatchButton.setOnClickListener( ( View view ) -> {
             boolean isCorrectAnswer = dualBackGame.recordSoundMatch( currentTrial );
-            vibrator.vibrate( VIBERATION_MILLISECONDS );
+            vibrator.vibrate( vibrationLength );
             soundMatchFeedBackImg.setImageResource( isCorrectAnswer ?
                     R.drawable.checkmark :
                     R.drawable.xmark );
