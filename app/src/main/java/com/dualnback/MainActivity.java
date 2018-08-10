@@ -24,6 +24,7 @@ import com.dualnback.location.LocationCollection;
 import com.dualnback.settings.ApplicationConfig;
 import com.dualnback.settings.ConfigReader;
 import com.dualnback.sound.SoundCollection;
+import com.dualnback.util.timer.GameCountDownTimer;
 
 import java.util.Optional;
 import java.util.Timer;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     public static final int EXPECTED_SOUND_MATCHES = 7;
     public static final int EXPECTED_LOC_MATCHES = 7;
     public static final int VIBERATION_MILLISECONDS = 100;
-    public final int ONE_ROUND_IN_MILLIS = 75000;
+    public final int ONE_GAME_IN_MILLIS = 75000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
 
     private DualBackGame dualBackGame;
@@ -129,7 +130,11 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
             }, 500 );
         } );
 
-        timer = GameCountDownTimer.INSTANCE( this, ONE_ROUND_IN_MILLIS, COUNT_DOWN_INTERVAL_IN_MILLIS );
+        timer = GameCountDownTimer.INSTANCE( this,
+                ONE_GAME_IN_MILLIS,
+                COUNT_DOWN_INTERVAL_IN_MILLIS,
+                config.singleTrialDurationInMillis() );
+
         timer.start();
     }
 

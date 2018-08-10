@@ -5,7 +5,8 @@ public class ApplicationConfig implements Config {
 
     protected static final String VIBRATION_DEFAULT_MILLISECONDS = "100";
     protected static final String VIBRATION_DURATION_LIST_KEY = "vibration_duration_list";
-    private static final String DEF_VALUE = "";
+    protected static final String SINGLE_TRIAL_LENGTH_KEY = "trial_length";
+    protected static final int TRIAL_LENGTH_DEFAULT_IN_SECONDS = 3;
 
     private final ConfigReader reader;
 
@@ -29,7 +30,7 @@ public class ApplicationConfig implements Config {
     }
 
     @Override
-    public int singleRoundDuration( ) {
-        return 0;
+    public long singleTrialDurationInMillis( ) {
+        return reader.getIntPreference( SINGLE_TRIAL_LENGTH_KEY, TRIAL_LENGTH_DEFAULT_IN_SECONDS ) * 1000;
     }
 }

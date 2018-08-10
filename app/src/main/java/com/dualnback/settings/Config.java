@@ -9,6 +9,6 @@ interface Config {
 
     int vibrationLength( );
 
-    int singleRoundDuration( );
+    long singleTrialDurationInMillis( );
 
 }

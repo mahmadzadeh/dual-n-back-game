@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -11,19 +12,29 @@ import android.view.MenuItem;
 
 import com.dualnback.R;
 
+import static com.dualnback.settings.SettingsActivity.sBindPreferenceSummaryToValueListener;
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class GeneralPreferenceFragment extends PreferenceFragment {
 
     protected static void bindPreferenceSummaryToValue( Preference preference ) {
         // Set the listener to watch for value changes.
-        preference.setOnPreferenceChangeListener( SettingsActivity.sBindPreferenceSummaryToValueListener );
+        preference.setOnPreferenceChangeListener( sBindPreferenceSummaryToValueListener );
 
         // Trigger the listener immediately with the preference's
         // current value.
-        SettingsActivity.sBindPreferenceSummaryToValueListener.onPreferenceChange( preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences( preference.getContext() )
-                        .getString( preference.getKey(), "" ) );
+        if ( preference instanceof ListPreference ) {
+
+            sBindPreferenceSummaryToValueListener.onPreferenceChange( preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences( preference.getContext() )
+                            .getString( preference.getKey(), "" ) );
+        } else {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange( preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences( preference.getContext() )
+                            .getInt( preference.getKey(), 3 ) );
+        }
     }
 
     @Override
@@ -37,7 +48,7 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
         // updated to reflect the new value, per the Android Design
         // guidelines.
         bindPreferenceSummaryToValue( findPreference( "vibration_duration_list" ) );
-        bindPreferenceSummaryToValue( findPreference( "round_length" ) );
+        bindPreferenceSummaryToValue( findPreference( "trial_length" ) );
     }
 
     @Override

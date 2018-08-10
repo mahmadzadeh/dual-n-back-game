@@ -9,14 +9,14 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_feedback_vibration"/>
 
-    <EditTextPreference
+    <com.dualnback.settings.IntegerEditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_display_name"
         android:inputType="number"
-        android:key="round_length"
+        android:key="trial_length"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_round_length_title_display_name"/>
+        android:title="@string/pref_trial_length_title_display_name"/>
 
 </PreferenceScreen>

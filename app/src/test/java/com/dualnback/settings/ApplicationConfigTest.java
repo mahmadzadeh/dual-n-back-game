@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.dualnback.settings.ApplicationConfig.SINGLE_TRIAL_LENGTH_KEY;
+import static com.dualnback.settings.ApplicationConfig.TRIAL_LENGTH_DEFAULT_IN_SECONDS;
 import static com.dualnback.settings.ApplicationConfig.VIBRATION_DEFAULT_MILLISECONDS;
 import static com.dualnback.settings.ApplicationConfig.VIBRATION_DURATION_LIST_KEY;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +42,7 @@ public class ApplicationConfigTest {
 
     @Test
     public void getMinScoreToAdvance( ) throws Exception {
+
     }
 
     @Test
@@ -48,6 +51,12 @@ public class ApplicationConfigTest {
 
     @Test
     public void singleRoundDuration( ) throws Exception {
+        int expectedValue = 5;
+
+        when( reader.getIntPreference( SINGLE_TRIAL_LENGTH_KEY, TRIAL_LENGTH_DEFAULT_IN_SECONDS ) )
+                .thenReturn( expectedValue );
+
+        assertThat( sut.singleTrialDurationInMillis() ).isEqualTo( expectedValue * 1000 );
     }
 
 }
