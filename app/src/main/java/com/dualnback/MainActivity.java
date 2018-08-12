@@ -35,6 +35,7 @@ import static com.dualnback.StartScreenActivity.N_BACK_VERSION;
 import static com.dualnback.game.LocationToImageMapper.map;
 import static com.dualnback.util.IntentUtility.extractFromIntentExtras;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
+import static com.dualnback.util.timer.TimerUtil.getOneRoundTime;
 
 public class MainActivity extends AppCompatActivity implements SwappableImage {
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     public static final String VERSION = "VERSION";
     public static final int EXPECTED_SOUND_MATCHES = 7;
     public static final int EXPECTED_LOC_MATCHES = 7;
+    public static final int TOTAL_TRIAL_COUNT = 24;
     public static final int VIBERATION_MILLISECONDS = 100;
     public final int ONE_GAME_IN_MILLIS = 75000;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         } );
 
         timer = GameCountDownTimer.INSTANCE( this,
-                ONE_GAME_IN_MILLIS,
+                getOneRoundTime( config.singleTrialDurationInMillis(), TOTAL_TRIAL_COUNT ),
                 COUNT_DOWN_INTERVAL_IN_MILLIS,
                 config.singleTrialDurationInMillis() );
 

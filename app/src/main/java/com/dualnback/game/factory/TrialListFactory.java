@@ -27,7 +27,7 @@ public class TrialListFactory {
 
     public static List<Trial> updateListWithExpectedSoundAndLocationMatch( List<Trial> trials,
                                                                            int expectedSoundMatches,
-                                                                           int expectedLocMacthes,
+                                                                           int expectedLocMatches,
                                                                            NBackVersion version ) {
         int lowerBound = 0 + version.getHowFarBack();
         int upperBound = trials.size() - 1;
@@ -43,7 +43,7 @@ public class TrialListFactory {
                         }
                 );
 
-        next_N_DistinctRandomIntsWithinRange( expectedLocMacthes, range )
+        next_N_DistinctRandomIntsWithinRange( expectedLocMatches, range )
                 .stream()
                 .forEach( integer -> {
                             Trial trial = trials.get( integer );

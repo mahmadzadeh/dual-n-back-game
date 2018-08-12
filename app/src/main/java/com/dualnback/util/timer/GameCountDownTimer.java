@@ -1,7 +1,6 @@
 package com.dualnback.util.timer;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.dualnback.MainActivity;
 
@@ -41,12 +40,8 @@ public class GameCountDownTimer extends CountDownTimer {
     public void onTick( long millisUntilFinished ) {
 
         gameScreenActivity.setCountDownText( formatTime( millisUntilFinished ) );
-        Log.e( "GameCountDownTimer", "isEndOfTrialYet" + millisUntilFinished );
 
         if ( isEndOfTrialYet( millisUntilFinished, this.oneTrialInMillis ) ) {
-
-            Log.e( "GameCountDownTimer", "isEndOfTrialYet" + millisUntilFinished );
-
             gameScreenActivity.markEndOfOneRound();
         }
     }

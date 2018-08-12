@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.dualnback.util.timer.TimerUtil.formatTime;
+import static com.dualnback.util.timer.TimerUtil.getOneRoundTime;
+import static com.dualnback.util.timer.TimerUtil.isEndOfTrialYet;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -23,27 +24,21 @@ public class TimerUtilTest {
         int oneGameInMillis = 75000;
         int singleTick = 3000;
 
-        List<Long> testList = generateList( oneGameInMillis, i -> ( i % singleTick ) == 0 );
-        testList
+        generateList( oneGameInMillis, i -> ( i % singleTick ) == 0 )
                 .stream()
                 .forEach( it -> {
-                    assertTrue( TimerUtil.isEndOfTrialYet( it, singleTick ) );
+                    assertTrue( isEndOfTrialYet( it, singleTick ) );
                 } );
 
     }
 
     @Test
-    public void isEndOfRoundYetReturnsFalseForAllTimesNotDivisibleBySingleTick( ) throws Exception {
-        int oneGameInMillis = 75000;
-        int singleTick = 3000;
+    public void testIsEndOfTrialYetWithNonRoundNumbers( ) {
 
-        List<Long> testList = generateList( oneGameInMillis, i -> ( i % singleTick ) != 0 );
-        testList
-                .stream()
-                .forEach( it -> {
-                    assertFalse( TimerUtil.isEndOfTrialYet( it, singleTick ) );
-                } );
-
+        assertThat( isEndOfTrialYet( 69555l, 2000 ) ).isFalse();
+        assertThat( isEndOfTrialYet( 3001l, 3000 ) ).isTrue();
+        assertThat( isEndOfTrialYet( 6547, 6000 ) ).isTrue();
+        assertThat( isEndOfTrialYet( 6547, 5000 ) ).isFalse();
     }
 
     @Test
@@ -51,7 +46,10 @@ public class TimerUtilTest {
         // map of: format time in string form -> current time in millis
         Map<String, Long> testMap = new HashMap<String, Long>() {{
             put( "00:00", 0l );
-            put( "00:01", 01000l );
+            put( "00:01", 1000l );
+            put( "00:02", 2000l );
+            put( "00:03", 3000l );
+            put( "00:09", 9000l );
             put( "00:10", 10000l );
             put( "00:25", 25000l );
             put( "00:25", 25999l );
@@ -70,10 +68,20 @@ public class TimerUtilTest {
                 } );
     }
 
+    @Test
+    public void givenSingleTrialInMillisAndTotalTrialCntThenGetOnRoundTimeReturnsTimeForOneRound( ) {
+
+        long singleTrial = 3000l;
+        int totalTrialCount = 24;
+
+        assertThat( getOneRoundTime( singleTrial, totalTrialCount ) ).isEqualTo( 72000 );
+    }
+
+
     private List<Long> generateList( int endVal, IntPredicate predicate ) {
 
         return IntStream
-                .range( 1, endVal )
+                .range( 1000, endVal )
                 .filter( predicate )
                 .mapToObj( val -> new Long( val ) )
                 .collect( Collectors.toList() );
