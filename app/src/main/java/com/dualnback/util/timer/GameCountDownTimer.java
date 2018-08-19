@@ -29,11 +29,7 @@ public class GameCountDownTimer extends CountDownTimer {
     }
 
     public static GameCountDownTimer INSTANCE( MainActivity gameScreenActivity, long singleGameLengthMillis, long oneTickDurationMillis, long oneTrialInMillis ) {
-        if ( instance == null ) {
-            instance = new GameCountDownTimer( gameScreenActivity, singleGameLengthMillis, oneTickDurationMillis, oneTrialInMillis );
-        }
-
-        return instance;
+        return new GameCountDownTimer( gameScreenActivity, singleGameLengthMillis, oneTickDurationMillis, oneTrialInMillis );
     }
 
     @Override

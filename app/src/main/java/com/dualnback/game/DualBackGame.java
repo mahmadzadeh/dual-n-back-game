@@ -2,7 +2,6 @@ package com.dualnback.game;
 
 import com.dualnback.location.Location;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 import static com.dualnback.game.UserInput.LocationMatch;
@@ -16,8 +15,7 @@ public class DualBackGame {
 
     private final DualBackGrid dualBackGrid;
 
-    private final Iterator<Trial> trialIterator;
-
+    private final GameTrialCollection gameTrialCollection;
     private UserInput soundMatch;
     private UserInput locationMatch;
     private Score score;
@@ -25,12 +23,12 @@ public class DualBackGame {
     public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
-        this.trialIterator = gameTrialCollection.getTrials().iterator();
         this.score = new Score( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
+        this.gameTrialCollection = gameTrialCollection;
     }
 
     public Trial getNextTrial( ) {
-        return trialIterator.hasNext() ? trialIterator.next() : null;
+        return gameTrialCollection.hasNext() ? gameTrialCollection.next() : null;
     }
 
     public boolean recordSoundMatch( Trial currentTrial ) {

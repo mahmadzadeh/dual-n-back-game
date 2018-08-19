@@ -1,6 +1,5 @@
 package com.dualnback.sound;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 
 import java.util.Objects;
@@ -17,7 +16,7 @@ public abstract class Sound {
         return this.getSoundResource() == another.getSoundResource();
     }
 
-    public void playSound( Context context ) {
+    public void playSound( ) {
         mediaPlayer.start();
     }
 

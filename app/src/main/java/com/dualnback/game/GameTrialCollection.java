@@ -1,6 +1,7 @@
 package com.dualnback.game;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -10,17 +11,19 @@ import static com.dualnback.game.UserInput.NoInput;
 import static com.dualnback.game.UserInput.SoundMatch;
 import static java.util.stream.IntStream.range;
 
-public class GameTrialCollection {
+public class GameTrialCollection implements Iterator<Trial> {
 
     private final List<Trial> trials;
 
     private final NBackVersion version;
 
+    private int currIndex;
+
     public GameTrialCollection( NBackVersion version, List<Trial> trials ) {
         this.version = version;
-        this.trials = new ArrayList<>( trials );
-
-        initTrials();
+        this.trials = Collections.unmodifiableList( trials );
+        initTrials( trials );
+        currIndex = -1;
     }
 
     public int totalSoundMatches( ) {
@@ -34,10 +37,10 @@ public class GameTrialCollection {
     }
 
     public List<Trial> getTrials( ) {
-        return new ArrayList<>( trials );
+        return trials;
     }
 
-    private void initTrials( ) {
+    private void initTrials( List<Trial> trials ) {
         range( 0, trials.size() )
                 .forEach( i -> {
 
@@ -90,4 +93,15 @@ public class GameTrialCollection {
                 "trials=" + this.trials.stream().map( t -> t.toString() ).collect( Collectors.joining( ", \n" ) ) +
                 '}';
     }
+
+    @Override
+    public boolean hasNext( ) {
+        return currIndex < this.trials.size() - 1;
+    }
+
+    @Override
+    public Trial next( ) {
+        return trials.get( ++currIndex );
+    }
+
 }

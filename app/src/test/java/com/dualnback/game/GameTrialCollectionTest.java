@@ -20,6 +20,7 @@ import java.util.List;
 import static com.dualnback.game.UserInput.LocationMatch;
 import static com.dualnback.game.UserInput.NoInput;
 import static com.dualnback.game.UserInput.SoundMatch;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -167,7 +168,65 @@ public class GameTrialCollectionTest {
         GameTrialCollection gameTrialCollection = new GameTrialCollection( NBackVersion.ThreeBack, trials );
 
         assertEquals( 3, gameTrialCollection.totalSoundMatches() );
+
         assertEquals( 2, gameTrialCollection.totalLocationMatches() );
+    }
+
+    @Test
+    public void iterableInerfaceIsImplementedCorrectlyWithASingleTrial( ) {
+        List<Trial> trials = new ArrayList<Trial>() {{
+            add( new Trial( new Location( 0, 0 ), sSound ) );
+        }};
+
+        GameTrialCollection gameTrialCollection = new GameTrialCollection( NBackVersion.ThreeBack, trials );
+
+        assertThat( gameTrialCollection.hasNext() ).isTrue();
+
+        assertThat( gameTrialCollection.next() ).isEqualTo( trials.get( 0 ) );
+        assertThat( gameTrialCollection.hasNext() ).isFalse();
+    }
+
+    @Test
+    public void iterableInterfaceIsImplementedCorrectlyWithTwoTrial( ) {
+        List<Trial> trials = new ArrayList<Trial>() {{
+            add( new Trial( new Location( 0, 0 ), sSound ) );
+            add( new Trial( new Location( 1, 2 ), bSound ) );
+        }};
+
+        GameTrialCollection gameTrialCollection = new GameTrialCollection( NBackVersion.ThreeBack, trials );
+
+        assertThat( gameTrialCollection.hasNext() ).isTrue();
+        assertThat( gameTrialCollection.next() ).isEqualTo( trials.get( 0 ) );
+
+        assertThat( gameTrialCollection.hasNext() ).isTrue();
+        assertThat( gameTrialCollection.next() ).isEqualTo( trials.get( 1 ) );
+
+        assertThat( gameTrialCollection.hasNext() ).isFalse();
+
+    }
+
+    @Test
+    public void iterableInterfaceIsImplementedCorrectlyWithMultipleTrial( ) {
+        List<Trial> trials = new ArrayList<Trial>() {{
+            add( new Trial( new Location( 0, 0 ), sSound ) );
+            add( new Trial( new Location( 1, 2 ), bSound ) );
+            add( new Trial( new Location( 0, 0 ), kSound ) );
+            add( new Trial( new Location( 0, 0 ), sSound ) );
+            add( new Trial( new Location( 1, 2 ), jSound ) );
+            add( new Trial( new Location( 1, 2 ), kSound ) );
+            add( new Trial( new Location( 2, 2 ), sSound ) );
+        }};
+
+        GameTrialCollection gameTrialCollection = new GameTrialCollection( NBackVersion.ThreeBack, trials );
+
+        for ( Trial trial : trials ) {
+
+            assertThat( gameTrialCollection.hasNext() ).isTrue();
+            assertThat( gameTrialCollection.next() ).isEqualTo( trial );
+        }
+
+        assertThat( gameTrialCollection.hasNext() ).isFalse();
+
     }
 
     private void assertExpectedUserInput( Trial trial, UserInput locationInput, UserInput soundInput ) {
