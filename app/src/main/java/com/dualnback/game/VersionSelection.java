@@ -1,63 +1,50 @@
 package com.dualnback.game;
 
 
-import com.dualnback.dao.DataDto;
 import com.dualnback.dao.DataPoint;
 
-import java.util.List;
+import java.util.Optional;
 
 import static com.dualnback.game.NBackVersion.TwoBack;
 
 public class VersionSelection {
 
     protected static final NBackVersion DEFAULT_VERSION_WHEN_MISSING = TwoBack;
-    protected static final int MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL = 80;
-    protected static final int MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL = 60;
 
-    private final DataDto dataDto;
+    public static NBackVersion currentLevel( Optional<DataPoint> lastDataPoint,
+                                             int minRequiredScoreToNextLvl,
+                                             int minScoreToMaintainCurrLvl ) {
 
-    public VersionSelection( DataDto dataDto ) {
-        this.dataDto = dataDto;
+        return lastDataPoint
+                .map( dataPoint -> getVersion( minRequiredScoreToNextLvl, minScoreToMaintainCurrLvl, dataPoint ) )
+                .orElse( DEFAULT_VERSION_WHEN_MISSING );
+
     }
 
-    public NBackVersion currentLevel( ) {
-        DataDto sortedDataByDate = dataDto.sortedDataPoints();
+    private static NBackVersion getVersion( int minRequiredScoreToNextLvl,
+                                            int minScoreToMaintainCurrLvl,
+                                            DataPoint dataPoint ) {
 
-        List<DataPoint> scoreData = sortedDataByDate.userDataPoints();
-
-        if ( scoreData.size() > 0 ) {
-            DataPoint lastDataPoint = scoreData.get( scoreData.size() - 1 );
-
-            if ( shouldIncrementLevel( lastDataPoint ) ) {
-
-                return lastDataPoint
-                        .version()
-                        .nextVersionUp()
-                        .orElse( DEFAULT_VERSION_WHEN_MISSING );
-
-            } else if ( shouldDecrementLevel( lastDataPoint ) ) {
-
-                return lastDataPoint
-                        .version()
-                        .previousVersionDown()
-                        .orElse( DEFAULT_VERSION_WHEN_MISSING );
-            } else {
-
-                return lastDataPoint.version();
-
-            }
+        if ( shouldIncrementLevel( dataPoint, minRequiredScoreToNextLvl ) ) {
+            return dataPoint
+                    .version()
+                    .nextVersionUp()
+                    .orElse( dataPoint.version() );
+        } else if ( shouldDecrementLevel( dataPoint, minScoreToMaintainCurrLvl ) ) {
+            return dataPoint
+                    .version()
+                    .previousVersionDown()
+                    .orElse( dataPoint.version() );
+        } else {
+            return dataPoint.version();
         }
-
-        return DEFAULT_VERSION_WHEN_MISSING;
     }
 
-    private boolean shouldDecrementLevel( DataPoint lastDataPoint ) {
-        return lastDataPoint.score() < MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL;
+    private static boolean shouldIncrementLevel( DataPoint lastDataPoint, int minRequiredSc0ReToGoToNextLvl ) {
+        return lastDataPoint.score() >= minRequiredSc0ReToGoToNextLvl;
     }
 
-    private boolean shouldIncrementLevel( DataPoint lastDataPoint ) {
-        return lastDataPoint.score() >= MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL;
+    private static boolean shouldDecrementLevel( DataPoint lastDataPoint, int minRequiredSc0ReToMaintainCurrentLvl ) {
+        return lastDataPoint.score() < minRequiredSc0ReToMaintainCurrentLvl;
     }
-
-
 }

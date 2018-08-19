@@ -6,6 +6,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.dualnback.util.DtoJSONConversion.dataDtoToJSON;
 
@@ -48,6 +49,16 @@ public class DataDto {
         Collections.sort( sortedCopy );
 
         return new DataDto( sortedCopy );
+    }
+
+    public Optional<DataPoint> getLastDataPoint( ) {
+
+        DataDto sortedDataByDate = sortedDataPoints();
+
+        return Optional.ofNullable(
+                sortedDataByDate.size() == 0
+                        ? null
+                        : sortedDataByDate.userDataPoints().get( sortedDataByDate.size() - 1 ) );
     }
 
     // if size is too large then remove the oldest item from list

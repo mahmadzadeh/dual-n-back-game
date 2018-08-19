@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.dualnback.settings.ApplicationConfig.MIN_TRIAL_ADVANCE_DEFAULT;
+import static com.dualnback.settings.ApplicationConfig.MIN_TRIAL_ADVANCE_SCORE_KEY;
 import static com.dualnback.settings.ApplicationConfig.SINGLE_TRIAL_LENGTH_KEY;
 import static com.dualnback.settings.ApplicationConfig.TRIAL_LENGTH_DEFAULT_IN_SECONDS;
 import static com.dualnback.settings.ApplicationConfig.VIBRATION_DEFAULT_MILLISECONDS;
@@ -42,6 +44,13 @@ public class ApplicationConfigTest {
 
     @Test
     public void getMinScoreToAdvance( ) throws Exception {
+        int expectedValue = 100;
+
+        when( reader
+                .getIntPreference( MIN_TRIAL_ADVANCE_SCORE_KEY, MIN_TRIAL_ADVANCE_DEFAULT ) )
+                .thenReturn( expectedValue );
+
+        assertThat( sut.getMinScoreToAdvance() ).isEqualTo( expectedValue );
 
     }
 

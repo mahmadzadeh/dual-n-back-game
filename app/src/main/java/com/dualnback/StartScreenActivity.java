@@ -10,16 +10,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.dualnback.dao.DataPoint;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.VersionSelection;
 import com.dualnback.settings.SettingsActivity;
 import com.dualnback.util.Pulsator;
+
+import java.util.Optional;
 
 import static android.widget.ArrayAdapter.createFromResource;
 import static com.dualnback.dao.DataFileUtil.readAllData;
 import static com.dualnback.util.ArrayAdapterCopyUtil.copyToRegularArray;
 
 public class StartScreenActivity extends AppCompatActivity {
+    public static final int MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL = 80;
+    public static final int MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL = 60;
+
     public static final String N_BACK_VERSION = "nBackVersion";
 
     public static final NBackVersion DEFAULT_VERSION = NBackVersion.TwoBack;
@@ -39,8 +45,10 @@ public class StartScreenActivity extends AppCompatActivity {
         spinner = findViewById( R.id.nBackVersion );
         spinner.setAdapter( adapter );
 
-        NBackVersion version = new VersionSelection( readAllData( this.getFilesDir() ) )
-                .currentLevel();
+        Optional<DataPoint> lastDataPoint = readAllData( this.getFilesDir() ).getLastDataPoint();
+        NBackVersion version = VersionSelection.currentLevel( lastDataPoint,
+                MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL,
+                MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL );
 
         spinner.setSelection( version.map( copyToRegularArray( adapter ) ) );
 

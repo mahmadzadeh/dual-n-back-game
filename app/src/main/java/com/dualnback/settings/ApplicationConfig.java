@@ -5,8 +5,12 @@ public class ApplicationConfig implements Config {
 
     protected static final String VIBRATION_DEFAULT_MILLISECONDS = "100";
     protected static final String VIBRATION_DURATION_LIST_KEY = "vibration_duration_list";
+
     protected static final String SINGLE_TRIAL_LENGTH_KEY = "trial_length";
     protected static final int TRIAL_LENGTH_DEFAULT_IN_SECONDS = 3;
+
+    protected static final String MIN_TRIAL_ADVANCE_SCORE_KEY = "min_advance_score";
+    protected static final int MIN_TRIAL_ADVANCE_DEFAULT = 85;
 
     private final ConfigReader reader;
 
@@ -16,7 +20,7 @@ public class ApplicationConfig implements Config {
 
     @Override
     public int getMinScoreToAdvance( ) {
-        return 0;
+        return reader.getIntPreference( MIN_TRIAL_ADVANCE_SCORE_KEY, MIN_TRIAL_ADVANCE_DEFAULT );
     }
 
     @Override

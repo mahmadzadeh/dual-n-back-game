@@ -8,20 +8,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Optional;
 
-import static com.dualnback.game.NBackVersion.FiveBack;
-import static com.dualnback.game.NBackVersion.FourBack;
+import static com.dualnback.game.NBackVersion.NineBack;
 import static com.dualnback.game.NBackVersion.OneBack;
-import static com.dualnback.game.NBackVersion.ThreeBack;
 import static com.dualnback.game.NBackVersion.TwoBack;
-import static com.dualnback.game.VersionSelection.MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL;
-import static com.dualnback.game.VersionSelection.MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL;
+import static com.dualnback.game.VersionSelection.currentLevel;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -32,6 +25,9 @@ public class VersionSelectionTest {
 
     private static final NBackVersion TEST_VERSION = NBackVersion.TwoBack;
 
+    private static final int MIN_REQUIRED_SCORE_UP = 80;
+    private static final int MIN_SCORE_TO_MAINTAIN = 50;
+
     private DataDto dataDto;
 
     private VersionSelection versionSelection;
@@ -39,85 +35,65 @@ public class VersionSelectionTest {
 
     @Test
     public void givenNoPreviousGamesPlayedThenLevelDefaultsToTwo( ) {
-        versionSelection = new VersionSelection( testDto( 0 ) );
-
-        assertThat( versionSelection.currentLevel() ).isEqualTo( NBackVersion.TwoBack );
+        assertThat( currentLevel( Optional.empty(), MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) )
+                .isEqualTo( NBackVersion.TwoBack );
     }
 
     @Test
     public void givenOnePreviousGameThenItsScoreIsUsedToDetermineNextGameLevel( ) {
-        versionSelection = new VersionSelection( testDto( 1 ) );
+        Optional<DataPoint> dataPoint = lastDataDto( 60, TEST_VERSION );
 
-        assertThat( versionSelection.currentLevel() ).isEqualTo( TwoBack );
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) ).isEqualTo( TwoBack );
     }
 
     @Test
-    public void givenOnePreviousGameWhenScoreHighNextGameLevelIsIncremented( ) {
-        versionSelection = new VersionSelection( testDto( 1, MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL ) );
+    public void givenPreviousGameWhenScoreHighEnoughThenNextGameLevelIsIncremented( ) {
+        Optional<DataPoint> dataPoint = lastDataDto( MIN_REQUIRED_SCORE_UP + 1, TEST_VERSION );
 
-        assertThat( versionSelection.currentLevel() ).isEqualTo( ThreeBack );
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) )
+                .isEqualTo( TEST_VERSION.nextVersionUp().get() );
     }
 
     @Test
-    public void givenMultiplePreviousGameWhenScoreHighNextGameLevelIsIncremented( ) {
-        versionSelection = new VersionSelection( testDto( 10, MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL ) );
+    public void givenPreviousGameWhenScoreEqualToMaxThenVersionIsIncremented( ) {
+        Optional<DataPoint> dataPoint = lastDataDto( MIN_REQUIRED_SCORE_UP, TEST_VERSION );
 
-        assertThat( versionSelection.currentLevel() ).isEqualTo( ThreeBack );
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) )
+                .isEqualTo( TEST_VERSION.nextVersionUp().get() );
+    }
+
+    @Test
+    public void givenPreviousGameWhenAtHighestLevelThenCurrentLvlStays( ) {
+        Optional<DataPoint> dataPoint = lastDataDto( MIN_REQUIRED_SCORE_UP, NineBack );
+
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) ).isEqualTo( NineBack );
+    }
+
+    @Test
+    public void givenPreviousGameWhenAtLowestLevelThenCurrentLvlStays( ) {
+        Optional<DataPoint> dataPoint = lastDataDto( MIN_SCORE_TO_MAINTAIN - 1, OneBack );
+
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) ).isEqualTo( OneBack );
     }
 
     @Test
     public void givenOnePreviousGameWhenScoreLessThanMinThenVersionIsBumppedDown( ) {
-        versionSelection = new VersionSelection(
-                testDto( 10, MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL - 1 ) );
+        Optional<DataPoint> dataPoint = lastDataDto( MIN_SCORE_TO_MAINTAIN - 1, TEST_VERSION );
 
-        assertThat( versionSelection.currentLevel() ).isEqualTo( OneBack );
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) )
+                .isEqualTo( TEST_VERSION.previousVersionDown().get() );
     }
 
     @Test
-    public void givenOnePreviousGameWhenScoreEqualToMinThenVersionIsNotBumppedDown( ) {
-        versionSelection = new VersionSelection(
-                testDto( 10, MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL ) );
+    public void givenOnePreviousGameWhenScoreEqualToMinThenVersionIsNotBumpedDown( ) {
+        Optional<DataPoint> dataPoint = lastDataDto( MIN_SCORE_TO_MAINTAIN, TEST_VERSION );
 
-        assertThat( versionSelection.currentLevel() ).isEqualTo( TEST_VERSION );
+        assertThat( currentLevel( dataPoint, MIN_REQUIRED_SCORE_UP, MIN_SCORE_TO_MAINTAIN ) )
+                .isEqualTo( TEST_VERSION );
     }
 
-    @Test
-    public void givenTwoGamesWhenLastGameScoreSmallerThanMinRequiredScoreThenLastGameVersionUsed( ) {
-        Date today = new Date();
-
-        Calendar instance = Calendar.getInstance();
-        instance.add( Calendar.DAY_OF_MONTH, -1 );
-
-        Date yesterday = instance.getTime();
-
-        DataDto dataDto = new DataDto(
-                Arrays.asList(
-                        createDataPoint( yesterday, 90, FourBack ),
-                        createDataPoint( today, 66, FiveBack )
-                ) );
-
-        versionSelection = new VersionSelection( dataDto );
-
-        assertThat( versionSelection.currentLevel() ).isEqualTo( FiveBack );
-    }
-
-    private DataDto testDto( int size ) {
-
-        return testDto( size, HIGHEST_SCORE );
-    }
-
-    private DataDto testDto( int size, int highestScore ) {
-
-        List<DataPoint> userDataPoints = getRandomDataPoints( size, highestScore );
-
-        return new DataDto( userDataPoints );
-    }
-
-    private List<DataPoint> getRandomDataPoints( int count, int highestScore ) {
-        return IntStream
-                .range( 0, count )
-                .mapToObj( i -> createDataPoint( new Date(), highestScore, TEST_VERSION ) )
-                .collect( ArrayList::new, ArrayList::add, ArrayList::addAll );
+    private Optional<DataPoint> lastDataDto( int highestScore, NBackVersion version ) {
+        return Optional.of( createDataPoint( new Date(), highestScore, version ) );
     }
 
     private DataPoint createDataPoint( Date date, int score, NBackVersion version ) {
