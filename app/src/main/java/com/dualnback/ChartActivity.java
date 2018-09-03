@@ -42,7 +42,7 @@ public class ChartActivity extends AppCompatActivity {
 
         setContentView( R.layout.chart_screen );
 
-        LineChart lineChart = ( LineChart ) findViewById( R.id.line_chart );
+        LineChart lineChart = findViewById( R.id.line_chart );
 
         DataPoint lastDataPoint = IntentUtility.extractDatePointFromExtras( getIntent().getExtras() );
 
@@ -52,7 +52,7 @@ public class ChartActivity extends AppCompatActivity {
 
         setData( lineChart, allDataSoFar );
 
-        Button continueButton = ( Button ) findViewById( R.id.char_continue );
+        Button continueButton = findViewById( R.id.chart_continue );
 
         continueButton.setOnClickListener( new View.OnClickListener() {
             @Override
