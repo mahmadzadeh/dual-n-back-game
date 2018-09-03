@@ -28,7 +28,11 @@ public class GameCountDownTimer extends CountDownTimer {
         this.oneTrialInMillis = oneTrialInMillis;
     }
 
-    public static GameCountDownTimer INSTANCE( MainActivity gameScreenActivity, long singleGameLengthMillis, long oneTickDurationMillis, long oneTrialInMillis ) {
+    public static GameCountDownTimer INSTANCE( MainActivity gameScreenActivity,
+                                               long singleGameLengthMillis,
+                                               long oneTickDurationMillis,
+                                               long oneTrialInMillis ) {
+
         return new GameCountDownTimer( gameScreenActivity, singleGameLengthMillis, oneTickDurationMillis, oneTrialInMillis );
     }
 

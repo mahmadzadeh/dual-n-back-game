@@ -26,6 +26,8 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.dualnback.R.drawable.checkmark;
+import static com.dualnback.R.drawable.xmark;
 import static com.dualnback.StartScreenActivity.DEFAULT_VERSION;
 import static com.dualnback.StartScreenActivity.N_BACK_VERSION;
 import static com.dualnback.game.LocationToImageMapper.map;
@@ -90,15 +92,13 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         locationMatchButton.setOnClickListener( ( View view ) -> {
             boolean isCorrectAnswer = dualBackGame.recordLocationMatch( handler.getCurrentTrial() );
             vibrator.vibrate( Integer.valueOf( vibrationLength ) );
-            positionMatchFeedBackImg.setImageResource( isCorrectAnswer ?
-                    R.drawable.checkmark :
-                    R.drawable.xmark
-            );
+            positionMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
 
             new Timer( false ).schedule( new TimerTask() {
                 @Override
                 public void run( ) {
-                    runOnUiThread( ( ) -> positionMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
+                    runOnUiThread( ( ) ->
+                            positionMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
                 }
             }, 500 );
         } );
@@ -106,14 +106,13 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
         soundMatchButton.setOnClickListener( ( View view ) -> {
             boolean isCorrectAnswer = dualBackGame.recordSoundMatch( handler.getCurrentTrial() );
             vibrator.vibrate( vibrationLength );
-            soundMatchFeedBackImg.setImageResource( isCorrectAnswer ?
-                    R.drawable.checkmark :
-                    R.drawable.xmark );
+            soundMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
 
             new Timer( false ).schedule( new TimerTask() {
                 @Override
                 public void run( ) {
-                    runOnUiThread( ( ) -> soundMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
+                    runOnUiThread( ( ) ->
+                            soundMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
                 }
             }, 500 );
         } );
