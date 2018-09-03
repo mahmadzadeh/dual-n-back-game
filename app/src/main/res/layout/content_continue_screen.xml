@@ -1,70 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:background="@drawable/gradient">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layoutHolder1"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/gradient"
+              android:baselineAligned="false"
+              android:orientation="vertical">
 
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="108sp"
+        android:layout_height="50sp"
+        android:text="fff"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="60dp"
+        android:textColor="@android:color/white"/>
 
-        <TextView
-            android:id="@+id/score"
-            android:layout_width="108sp"
-            android:layout_height="50sp"
-            android:text="fff"
-            android:textAlignment="center"
-            android:layout_marginTop="30dp"
-            android:textColor="@android:color/white"
-            android:layout_column="4"/>
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/layoutHolder2"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:baselineAligned="false"
+                  android:orientation="horizontal">
         <Button
             android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="136dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="55dp"
             android:background="@drawable/background"
             android:text="@string/save"
             android:textColor="#fbfcfc"
             android:textStyle="bold|italic"
-            android:layout_column="3"
             />
         <Button
             android:id="@+id/quitButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="55dp"
             android:background="@drawable/background"
             android:text="@string/quit"
             android:textColor="#fbfcfc"
             android:textStyle="bold|italic"
-            android:layout_column="4"
             />
         <Button
             android:id="@+id/continueButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/background"
             android:text="@string/continueButton"
             android:textColor="#fbfcfc"
-            android:textStyle="bold|italic"
-            android:layout_column="5"/>
-    </TableRow>
-</TableLayout>
+            android:textStyle="bold|italic"/>
+    </LinearLayout>
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--</TableRow>-->
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/saveButton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginStart="136dp"-->
+    <!--android:layout_marginTop="15dp"-->
+    <!--android:background="@drawable/background"-->
+    <!--android:text="@string/save"-->
+    <!--android:textColor="#fbfcfc"-->
+    <!--android:textStyle="bold|italic"-->
+    <!--android:layout_column="3"-->
+    <!--/>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/continueButton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="15dp"-->
+    <!--android:background="@drawable/background"-->
+    <!--android:text="@string/continueButton"-->
+    <!--android:textColor="#fbfcfc"-->
+    <!--android:textStyle="bold|italic"-->
+    <!--android:layout_column="5"/>-->
+    <!--</TableRow>-->
+</LinearLayout>
 
     <!--</LinearLayout>-->

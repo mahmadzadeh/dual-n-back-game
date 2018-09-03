@@ -6,6 +6,6 @@
     <color name="mainBackground">#254524</color>
     <color name="buttonTextColour">#fbfcfc</color>
     <color name="dropDownGray">#e8e8e8</color>
-    <color name="gradientEndColor">#e5f0fc</color>
+    <color name="gradientEndColor">#c0bfc1</color>
     <color name="startScreenGradientEndColor">#e6dfdf</color>
 </resources>
