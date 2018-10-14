@@ -5,6 +5,7 @@ import com.dualnback.location.Location;
 import java.util.Optional;
 
 import static com.dualnback.game.UserInput.LocationMatch;
+import static com.dualnback.game.UserInput.NoInput;
 import static com.dualnback.game.UserInput.SoundMatch;
 import static com.dualnback.game.UserInputEvaluation.CorrectLocation;
 import static com.dualnback.game.UserInputEvaluation.CorrectSound;
@@ -51,15 +52,22 @@ public class DualBackGame {
             return;
         }
 
-        if ( currentTrial.getUserInput().isLocationMatch( this.locationMatch ) ) {
+        if ( currentTrial.getUserInput().getLocationMatch() == NoInput && this.locationMatch != null ) {
+            score = score.update( IncorrectLocation );
+        } else if ( currentTrial.getUserInput().getLocationMatch() == NoInput && this.locationMatch == null ) {
+            // do nothing
+        } else if ( currentTrial.getUserInput().getLocationMatch() == this.locationMatch ) {
             score = score.update( CorrectLocation );
-        } else {
+        } else if ( currentTrial.getUserInput().getLocationMatch() != this.locationMatch ) {
             score = score.update( IncorrectLocation );
         }
-
-        if ( currentTrial.getUserInput().isSoundMatch( this.soundMatch ) ) {
+        if ( currentTrial.getUserInput().getSoundMatch() == NoInput && this.soundMatch != null ) {
+            score = score.update( IncorrectSound );
+        } else if ( currentTrial.getUserInput().getSoundMatch() == NoInput && this.soundMatch == null ) {
+            // do nothing
+        } else if ( currentTrial.getUserInput().getSoundMatch() == this.soundMatch ) {
             score = score.update( CorrectSound );
-        } else {
+        } else if ( currentTrial.getUserInput().getSoundMatch() != this.soundMatch ) {
             score = score.update( IncorrectSound );
         }
 

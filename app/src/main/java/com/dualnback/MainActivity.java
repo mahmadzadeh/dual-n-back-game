@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     private ImageView soundMatchFeedBackImg;
     private CountDownText countdownTimerTxt;
     private GameCountDownTimer timer;
-    private MyMainThreadHandler handler;
+    private GameMainThreadHandler handler;
     private TextView gameVersionText;
     private NBackVersion version;
 
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
 
         vibrator = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
 
-        handler = new MyMainThreadHandler( dualBackGame );
+        handler = new GameMainThreadHandler( dualBackGame );
 
         locationMatchButton.setOnClickListener( ( View view ) -> {
             boolean isCorrectAnswer = dualBackGame.recordLocationMatch( handler.getCurrentTrial() );
-            vibrator.vibrate( Integer.valueOf( vibrationLength ) );
+            vibrator.vibrate( vibrationLength );
             positionMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
 
             new Timer( false ).schedule( new TimerTask() {

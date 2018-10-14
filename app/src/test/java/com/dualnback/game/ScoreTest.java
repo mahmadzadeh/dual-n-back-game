@@ -18,7 +18,7 @@ public class ScoreTest {
         double score = new Score( 0, 0 )
                 .calculateScorePercentage();
 
-        assertEquals( 0.0, score, 0.00001 );
+        assertEquals( 0.0, score, DELTA );
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ScoreTest {
                 .update( IncorrectLocation )
                 .calculateScorePercentage();
 
-        assertEquals( 50.0, score, 0.00001 );
+        assertEquals( 0.0, score, 0.00001 );
     }
 
     @Test

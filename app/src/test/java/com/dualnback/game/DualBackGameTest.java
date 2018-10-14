@@ -101,7 +101,7 @@ public class DualBackGameTest {
 
         double score = sut.getCurrentScore();
 
-        assertEquals( 0.0, score, 0.0001 );
+        assertEquals( -100, score, 0.0001 );
     }
 
     @Test
@@ -132,7 +132,7 @@ public class DualBackGameTest {
 
         double score = sut.getCurrentScore();
 
-        assertEquals( 0.0, score, 0.0001 );
+        assertEquals( -200, score, 0.0001 );
     }
 
     @Test
@@ -161,7 +161,7 @@ public class DualBackGameTest {
 
         double score = sut.getCurrentScore();
 
-        assertEquals( 50.0, score, 0.0001 );
+        assertEquals( 0, score, 0.0001 );
     }
 
     @Test

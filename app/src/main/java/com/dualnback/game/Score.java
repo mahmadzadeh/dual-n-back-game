@@ -1,17 +1,32 @@
 package com.dualnback.game;
 
 class Score {
-    private final int expectedTotalSoundMatch;
-    private final int expectedTotalLocationMatch;
-    private int countOfRightLocationGuesses;
-    private int countOfRightSoundGuesses;
 
+    private int countOfRightSoundGuesses;
+    private int countOfWrongSoundGuesses;
+
+    private int countOfRightLocationGuesses;
+    private int countOfWrongLocationGuesses;
+
+    private int expectedTotalSoundMatch;
+    private int expectedTotalLocationMatch;
+
+    private double singlePoint;
 
     public Score( int expectedTotalSoundMatch, int expectedTotalLocationMatch ) {
         this.expectedTotalSoundMatch = expectedTotalSoundMatch;
         this.expectedTotalLocationMatch = expectedTotalLocationMatch;
+
         this.countOfRightSoundGuesses = 0;
+        this.countOfWrongSoundGuesses = 0;
+
         this.countOfRightLocationGuesses = 0;
+        this.countOfWrongLocationGuesses = 0;
+
+        singlePoint = divideIfDivisorOrDefault(
+                100d,
+                expectedTotalLocationMatch + expectedTotalSoundMatch,
+                0.0 );
     }
 
 
@@ -24,8 +39,10 @@ class Score {
                 this.countOfRightLocationGuesses++;
                 return this;
             case IncorrectSound:
+                this.countOfWrongSoundGuesses++;
                 return this;
             case IncorrectLocation:
+                this.countOfWrongLocationGuesses++;
                 return this;
             default:
                 throw new IllegalArgumentException( "Invalid user input given " + userInputEvaluation );
@@ -33,25 +50,20 @@ class Score {
     }
 
     public double calculateScorePercentage( ) {
+        double correctSoundScore = singlePoint * countOfRightSoundGuesses;
+        double correctLocationScore = singlePoint * countOfRightLocationGuesses;
 
-        int rightGuessPercent = 100 * countOfRightSoundGuesses;
-        int rightLocGuessPercent = 100 * countOfRightLocationGuesses;
+        double incorrectSoundScore = singlePoint * countOfWrongSoundGuesses;
+        double incorrectLocationScore = singlePoint * countOfWrongLocationGuesses;
 
-        double correctSoundPercentage =
-                divideIfDivisorOrDefault( rightGuessPercent, expectedTotalSoundMatch, 0 );
-        double correctLocPercentage = divideIfDivisorOrDefault( rightLocGuessPercent, expectedTotalLocationMatch, 0 );
+        double correct = correctSoundScore + correctLocationScore;
+        double incorrect = incorrectLocationScore + incorrectSoundScore;
 
-        double totalPercentage = correctLocPercentage + correctSoundPercentage;
-
-
-        return totalPercentage != 0
-                ? totalPercentage / 2
-                : 0;
+        return correct - incorrect;
     }
 
-    private double divideIfDivisorOrDefault( int numerator, double denom, double defaultNum ) {
-
-        return numerator != 0 ? ( numerator / denom ) : defaultNum;
+    private double divideIfDivisorOrDefault( double numerator, int denom, double defaultNum ) {
+        return denom == 0 || numerator == 0 ? defaultNum : ( numerator / denom );
     }
 
     @Override

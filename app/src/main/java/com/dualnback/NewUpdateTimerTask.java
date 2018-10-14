@@ -4,9 +4,9 @@ import java.util.TimerTask;
 
 public class NewUpdateTimerTask extends TimerTask {
 
-    private final MyMainThreadHandler handler;
+    private final GameMainThreadHandler handler;
 
-    public NewUpdateTimerTask( MyMainThreadHandler handler ) {
+    public NewUpdateTimerTask( GameMainThreadHandler handler ) {
         this.handler = handler;
     }
 

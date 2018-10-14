@@ -10,12 +10,12 @@ import com.dualnback.game.factory.NullTrial;
 import java.util.Optional;
 
 
-public class MyMainThreadHandler extends Handler {
+public class GameMainThreadHandler extends Handler {
 
     private final DualBackGame dualBackGame;
     private Optional<Trial> currentTrial;
 
-    public MyMainThreadHandler( DualBackGame dualBackGame ) {
+    public GameMainThreadHandler( DualBackGame dualBackGame ) {
         this.dualBackGame = dualBackGame;
         this.currentTrial = Optional.empty();
     }
