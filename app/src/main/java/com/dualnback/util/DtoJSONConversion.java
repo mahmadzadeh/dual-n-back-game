@@ -1,8 +1,8 @@
 package com.dualnback.util;
 
 
-import com.dualnback.dao.DataDto;
 import com.dualnback.dao.DataPoint;
+import com.dualnback.dao.DataPointCollection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +31,7 @@ public class DtoJSONConversion {
         return jsonObject;
     }
 
-    public static JSONObject dataDtoToJSON( DataDto dto ) throws JSONException {
+    public static JSONObject dataDtoToJSON( DataPointCollection dto ) throws JSONException {
 
         JSONObject rootObject = new JSONObject();
         JSONArray array = new JSONArray();

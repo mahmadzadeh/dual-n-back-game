@@ -22,7 +22,7 @@ public class FileBasedDao implements Dao {
     }
 
     @Override
-    public DataDto read( ) {
+    public DataPointCollection read( ) {
         List<DataPoint> dataPoints = new ArrayList<>();
 
         try {
@@ -35,13 +35,13 @@ public class FileBasedDao implements Dao {
             Log.e( "JSON_ERROR", e.getMessage() );
         }
 
-        return new DataDto( dataPoints );
+        return new DataPointCollection( dataPoints );
     }
 
     @Override
-    public void write( DataDto dataDto ) {
+    public void write( DataPointCollection dataPointCollection ) {
 
-        String JSON = dataDto.toJSON();
+        String JSON = dataPointCollection.toJSON();
 
         try {
 

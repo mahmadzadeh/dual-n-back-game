@@ -1,7 +1,6 @@
 package com.dualnback.game;
 
 
-import com.dualnback.dao.DataDto;
 import com.dualnback.dao.DataPoint;
 
 import org.junit.Test;
@@ -27,11 +26,6 @@ public class VersionSelectionTest {
 
     private static final int MIN_REQUIRED_SCORE_UP = 80;
     private static final int MIN_SCORE_TO_MAINTAIN = 50;
-
-    private DataDto dataDto;
-
-    private VersionSelection versionSelection;
-
 
     @Test
     public void givenNoPreviousGamesPlayedThenLevelDefaultsToTwo( ) {

@@ -64,7 +64,7 @@ public class FileBasedDaoTest {
 
         Dao dao = new FileBasedDao( mockFileIO );
 
-        DataDto dataPoints = dao.read();
+        DataPointCollection dataPoints = dao.read();
 
         verify( mockFileIO ).read();
 
@@ -82,7 +82,7 @@ public class FileBasedDaoTest {
 
         doNothing().when( mockFileIO ).write( anyString() );
 
-        dao.write( new DataDto( new ArrayList<DataPoint>() ) );
+        dao.write( new DataPointCollection( new ArrayList<DataPoint>() ) );
 
         verify( mockFileIO ).write( anyString() );
     }

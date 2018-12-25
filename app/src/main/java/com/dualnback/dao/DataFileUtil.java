@@ -10,13 +10,13 @@ import java.io.File;
 
 public class DataFileUtil {
 
-    public static DataDto readAllData( File filesDir ) {
+    public static DataPointCollection readAllData( File filesDir ) {
         Dao dao = getDao( filesDir );
 
         return dao.read();
     }
 
-    public static DataDto readAllDataSortedByDate( File filesDir ) {
+    public static DataPointCollection readAllDataSortedByDate( File filesDir ) {
 
         return readAllData( filesDir ).sortedDataPoints();
     }

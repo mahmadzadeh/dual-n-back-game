@@ -9,12 +9,12 @@ import static com.dualnback.util.DateUtil.formatForChartUI;
 
 
 public class DataDtoConversion {
-    public static ChartData convertToChartData( DataDto dataDto ) {
+    public static ChartData convertToChartData( DataPointCollection dataPointCollection ) {
 
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<Entry> yVals = new ArrayList<>();
 
-        for ( DataPoint dataPoint : dataDto.userDataPoints() ) {
+        for ( DataPoint dataPoint : dataPointCollection.userDataPoints() ) {
             xVals.add( formatForChartUI( dataPoint.date() ) );
             yVals.add( new Entry( dataPoint.score(), xVals.size() - 1 ) );
         }

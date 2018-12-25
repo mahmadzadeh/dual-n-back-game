@@ -3,8 +3,8 @@ package com.dualnback.dao;
 
 public interface Dao {
 
-    DataDto read( );
+    DataPointCollection read( );
 
-    void write( DataDto data );
+    void write( DataPointCollection data );
 
 }

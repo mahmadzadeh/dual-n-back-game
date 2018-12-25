@@ -8,14 +8,14 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 
-public class DataDtoConversionTest {
+public class DataPointCollectionConversionTest {
 
     @Test
     public void givenEmptyDataDtoThenConvertToChartDataReturnsEmptyChartData( ) {
 
-        DataDto dataDto = new DataDto( new ArrayList<DataPoint>() );
+        DataPointCollection dataPointCollection = new DataPointCollection( new ArrayList<DataPoint>() );
 
-        ChartData chartData = DataDtoConversion.convertToChartData( dataDto );
+        ChartData chartData = DataDtoConversion.convertToChartData( dataPointCollection );
 
         assertEquals( 0, chartData.getxVals().size() );
         assertEquals( 0, chartData.getyVals().size() );
@@ -27,9 +27,9 @@ public class DataDtoConversionTest {
         ArrayList<DataPoint> dataPoints = new ArrayList<>();
         dataPoints.add( new DataPoint( new Date( 1461478244180l ), 14, null ) );
 
-        DataDto dataDto = new DataDto( dataPoints );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPoints );
 
-        ChartData chartData = DataDtoConversion.convertToChartData( dataDto );
+        ChartData chartData = DataDtoConversion.convertToChartData( dataPointCollection );
 
         assertEquals( "2016/04/23-23:10:44", chartData.getxVals().get( 0 ) );
         assertEquals( 14, chartData.getyVals().get( 0 ).getVal(), 0.1 );

@@ -1,5 +1,7 @@
 package com.dualnback.dao;
 
+import android.util.Log;
+
 import org.apache.commons.collections4.list.UnmodifiableList;
 import org.json.JSONException;
 
@@ -11,12 +13,12 @@ import java.util.Optional;
 import static com.dualnback.util.DtoJSONConversion.dataDtoToJSON;
 
 
-public class DataDto {
+public class DataPointCollection {
 
     public static final int MAX_DATA_POINT_SIZE = 40;
     private List<DataPoint> userDataPoints;
 
-    public DataDto( List<DataPoint> userDataPoints ) {
+    public DataPointCollection( List<DataPoint> userDataPoints ) {
         this.userDataPoints = new ArrayList<>( userDataPoints );
     }
 
@@ -28,11 +30,11 @@ public class DataDto {
         return userDataPoints.size();
     }
 
-    public DataDto addDataPoint( DataPoint dataPoint ) {
+    public DataPointCollection addDataPoint( DataPoint dataPoint ) {
         List<DataPoint> copy = new ArrayList<>( userDataPoints );
         copy.add( dataPoint );
 
-        return new DataDto( copy );
+        return new DataPointCollection( copy );
     }
 
     public String toJSON( ) {
@@ -43,17 +45,17 @@ public class DataDto {
         }
     }
 
-    public DataDto sortedDataPoints( ) {
+    public DataPointCollection sortedDataPoints( ) {
         List<DataPoint> sortedCopy = new ArrayList<>( userDataPoints );
 
         Collections.sort( sortedCopy );
 
-        return new DataDto( sortedCopy );
+        return new DataPointCollection( sortedCopy );
     }
 
     public Optional<DataPoint> getLastDataPoint( ) {
 
-        DataDto sortedDataByDate = sortedDataPoints();
+        DataPointCollection sortedDataByDate = sortedDataPoints();
 
         return Optional.ofNullable(
                 sortedDataByDate.size() == 0
@@ -62,9 +64,11 @@ public class DataDto {
     }
 
     // if size is too large then remove the oldest item from list
-    public DataDto shrinkDataSize( ) {
+    public DataPointCollection shrinkDataSize( ) {
+        Log.e( "DataPointCollection", "userDataPoints.size()" + userDataPoints.size() );
+
         return userDataPoints.size() > MAX_DATA_POINT_SIZE
-                ? new DataDto( new ArrayList<>( this.userDataPoints.subList( 1, MAX_DATA_POINT_SIZE + 1 ) ) )
+                ? new DataPointCollection( new ArrayList<>( this.userDataPoints.subList( 1, MAX_DATA_POINT_SIZE + 1 ) ) )
                 : this;
     }
 }

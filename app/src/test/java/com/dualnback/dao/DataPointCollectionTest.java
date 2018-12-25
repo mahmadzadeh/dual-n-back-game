@@ -13,13 +13,13 @@ import static com.dualnback.game.NBackVersion.TwoBack;
 import static com.dualnback.util.JSONUtil.parse;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DataDtoTest {
+public class DataPointCollectionTest {
 
     @Test
     public void testToJSONWithEmptyDataPointList( ) throws JSONException {
         List<DataPoint> dataPointList = new ArrayList<>();
 
-        String json = new DataDto( dataPointList ).toJSON();
+        String json = new DataPointCollection( dataPointList ).toJSON();
 
         assertThat( parse( json ).size() ).isEqualTo( 0 );
     }
@@ -28,7 +28,7 @@ public class DataDtoTest {
     public void testToJSONWithDataPointList( ) throws JSONException {
         List<DataPoint> dataPointList = Arrays.asList( new DataPoint( new Date(), 2, TwoBack ) );
 
-        String json = new DataDto( dataPointList ).toJSON();
+        String json = new DataPointCollection( dataPointList ).toJSON();
 
         assertThat( parse( json ).size() ).isEqualTo( 1 );
     }
@@ -45,9 +45,9 @@ public class DataDtoTest {
                 new DataPoint( yesterdayThisTime, 30, null )
         );
 
-        DataDto dataDto = new DataDto( dataPointList );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPointList );
 
-        List<DataPoint> sorted = dataDto.sortedDataPoints().userDataPoints();
+        List<DataPoint> sorted = dataPointCollection.sortedDataPoints().userDataPoints();
 
         assertThat( sorted.get( 0 ).score() ).isEqualTo( 20 );
         assertThat( sorted.get( 1 ).score() ).isEqualTo( 30 );
@@ -57,40 +57,40 @@ public class DataDtoTest {
     @Test
     public void shrinkDataSizeReturnsInstanceWithSmallerDataSize( ) {
 
-        int size = DataDto.MAX_DATA_POINT_SIZE + 1;
+        int size = DataPointCollection.MAX_DATA_POINT_SIZE + 1;
         List<DataPoint> dataPointList = getDataPointListOfSize( size );
 
-        DataDto dataDto = new DataDto( dataPointList );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPointList );
 
-        DataDto shrunkDataDto = dataDto.shrinkDataSize();
+        DataPointCollection shrunkDataPointCollection = dataPointCollection.shrinkDataSize();
 
-        assertThat( shrunkDataDto.userDataPoints().size() ).isEqualTo( DataDto.MAX_DATA_POINT_SIZE );
+        assertThat( shrunkDataPointCollection.userDataPoints().size() ).isEqualTo( DataPointCollection.MAX_DATA_POINT_SIZE );
     }
 
     @Test
     public void givenDataSizeSmallerThandMaxThenDataSizeStaysSame( ) {
 
-        int size = DataDto.MAX_DATA_POINT_SIZE - 1;
+        int size = DataPointCollection.MAX_DATA_POINT_SIZE - 1;
         List<DataPoint> dataPointList = getDataPointListOfSize( size );
 
-        DataDto dataDto = new DataDto( dataPointList );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPointList );
 
-        DataDto shrunkDataDto = dataDto.shrinkDataSize();
+        DataPointCollection shrunkDataPointCollection = dataPointCollection.shrinkDataSize();
 
-        assertThat( shrunkDataDto.userDataPoints().size() ).isEqualTo( size );
+        assertThat( shrunkDataPointCollection.userDataPoints().size() ).isEqualTo( size );
     }
 
     @Test
     public void givenDataSizeEqualToMaxThenDataSizeStaysSame( ) {
 
-        int size = DataDto.MAX_DATA_POINT_SIZE;
+        int size = DataPointCollection.MAX_DATA_POINT_SIZE;
         List<DataPoint> dataPointList = getDataPointListOfSize( size );
 
-        DataDto dataDto = new DataDto( dataPointList );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPointList );
 
-        DataDto shrunkDataDto = dataDto.shrinkDataSize();
+        DataPointCollection shrunkDataPointCollection = dataPointCollection.shrinkDataSize();
 
-        assertThat( shrunkDataDto.userDataPoints().size() ).isEqualTo( size );
+        assertThat( shrunkDataPointCollection.userDataPoints().size() ).isEqualTo( size );
     }
 
     @Test
@@ -98,9 +98,9 @@ public class DataDtoTest {
 
         int size = 0;
 
-        DataDto dataDto = new DataDto( getDataPointListOfSize( size ) );
+        DataPointCollection dataPointCollection = new DataPointCollection( getDataPointListOfSize( size ) );
 
-        assertThat( dataDto.getLastDataPoint() ).isEqualTo( Optional.empty() );
+        assertThat( dataPointCollection.getLastDataPoint() ).isEqualTo( Optional.empty() );
     }
 
     @Test
@@ -109,9 +109,9 @@ public class DataDtoTest {
         int size = 1;
 
         List<DataPoint> dataPointListOfSize = getDataPointListOfSize( size );
-        DataDto dataDto = new DataDto( dataPointListOfSize );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPointListOfSize );
 
-        assertThat( dataDto.getLastDataPoint().get() ).isEqualTo( dataPointListOfSize.get( 0 ) );
+        assertThat( dataPointCollection.getLastDataPoint().get() ).isEqualTo( dataPointListOfSize.get( 0 ) );
     }
 
     @Test
@@ -120,9 +120,9 @@ public class DataDtoTest {
         int size = 5;
 
         List<DataPoint> dataPoints = getDataPointListOfSize( size );
-        DataDto dataDto = new DataDto( dataPoints );
+        DataPointCollection dataPointCollection = new DataPointCollection( dataPoints );
 
-        assertThat( dataDto.getLastDataPoint().get() )
+        assertThat( dataPointCollection.getLastDataPoint().get() )
                 .isEqualTo( dataPoints.get( dataPoints.size() - 1 ) );
     }
 

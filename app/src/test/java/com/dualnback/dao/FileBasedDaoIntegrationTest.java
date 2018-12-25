@@ -43,11 +43,11 @@ public class FileBasedDaoIntegrationTest {
 
         FileBasedDao fileBasedDao = new FileBasedDao( fileIO );
 
-        DataDto dataDto = new DataDto( new ArrayList<DataPoint>() );
+        DataPointCollection dataPointCollection = new DataPointCollection( new ArrayList<DataPoint>() );
 
-        fileBasedDao.write( dataDto );
+        fileBasedDao.write( dataPointCollection );
 
-        DataDto readData = fileBasedDao.read();
+        DataPointCollection readData = fileBasedDao.read();
 
         assertThat( readData.size() ).isEqualTo( 0 );
     }
@@ -64,11 +64,11 @@ public class FileBasedDaoIntegrationTest {
         userDataPoints.add( new DataPoint( now, 1, TwoBack ) );
         userDataPoints.add( new DataPoint( now, 100, TwoBack ) );
 
-        DataDto dataDto = new DataDto( userDataPoints );
+        DataPointCollection dataPointCollection = new DataPointCollection( userDataPoints );
 
-        fileBasedDao.write( dataDto );
+        fileBasedDao.write( dataPointCollection );
 
-        DataDto readData = fileBasedDao.read();
+        DataPointCollection readData = fileBasedDao.read();
 
         assertThat( readData.size() ).isEqualTo( userDataPoints.size() );
     }
