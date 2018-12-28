@@ -17,7 +17,6 @@ public class DataFileUtil {
     }
 
     public static DataPointCollection readAllDataSortedByDate( File filesDir ) {
-
         return readAllData( filesDir ).sortedDataPoints();
     }
 

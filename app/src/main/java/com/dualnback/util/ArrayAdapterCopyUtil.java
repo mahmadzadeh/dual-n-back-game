@@ -9,7 +9,7 @@ public class ArrayAdapterCopyUtil {
 
     // Copy the data into a regular list so that ArrayAdapter is not leaked into
     // parts of the code that need to stay clean of android-y- stuff
-    public static List<CharSequence> copyToRegularArray( ArrayAdapter<CharSequence> adapter ) {
+    public static List<CharSequence> copyToRegularArrayList( ArrayAdapter<CharSequence> adapter ) {
 
         List<CharSequence> list = new ArrayList<>();
 

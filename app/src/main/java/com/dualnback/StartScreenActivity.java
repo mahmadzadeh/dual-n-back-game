@@ -10,19 +10,17 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
-import com.dualnback.dao.DataPoint;
 import com.dualnback.game.NBackVersion;
-import com.dualnback.game.VersionSelection;
+import com.dualnback.presenter.StartScreenPresenter;
 import com.dualnback.settings.SettingsActivity;
 import com.dualnback.util.Pulsator;
-
-import java.util.Optional;
+import com.dualnback.view.StartScreenView;
 
 import static android.widget.ArrayAdapter.createFromResource;
-import static com.dualnback.dao.DataFileUtil.readAllData;
-import static com.dualnback.util.ArrayAdapterCopyUtil.copyToRegularArray;
+import static com.dualnback.util.ArrayAdapterCopyUtil.copyToRegularArrayList;
 
-public class StartScreenActivity extends AppCompatActivity {
+public class StartScreenActivity extends AppCompatActivity implements StartScreenView {
+
     public static final int MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL = 80;
     public static final int MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL = 60;
 
@@ -33,6 +31,8 @@ public class StartScreenActivity extends AppCompatActivity {
     private Spinner spinner;
     private NBackVersion selectedVersion = DEFAULT_VERSION;
     private ArrayAdapter<CharSequence> adapter;
+
+    private StartScreenPresenter presenter = new StartScreenPresenter( this );
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -45,12 +45,11 @@ public class StartScreenActivity extends AppCompatActivity {
         spinner = findViewById( R.id.nBackVersion );
         spinner.setAdapter( adapter );
 
-        Optional<DataPoint> lastDataPoint = readAllData( this.getFilesDir() ).getLastDataPoint();
-        NBackVersion version = VersionSelection.currentLevel( lastDataPoint,
-                MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL,
+
+        NBackVersion version = presenter.getCurrentVersion( MIN_REQUIRED_SC0RE_TO_GO_TO_NEXT_LVL,
                 MIN_REQUIRED_SC0RE_TO_MAINTAIN_CURRENT_LVL );
 
-        spinner.setSelection( version.map( copyToRegularArray( adapter ) ) );
+        spinner.setSelection( version.map( copyToRegularArrayList( adapter ) ) );
 
         final ImageButton button = findViewById( R.id.startScreenButton );
 
@@ -76,7 +75,7 @@ public class StartScreenActivity extends AppCompatActivity {
             @Override
             public void onItemSelected( AdapterView<?> adapterView, View view, int position, long id ) {
                 CharSequence item = adapter.getItem( position );
-                selectedVersion = NBackVersion.fromTextValue( item.toString() ).orElse( DEFAULT_VERSION );
+                selectedVersion = presenter.getSelectedVersion( item );
             }
 
             @Override
