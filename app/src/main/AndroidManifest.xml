@@ -35,7 +35,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".ChartActivity"
+            android:name=".view.ChartActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_chart"
             android:noHistory="true"

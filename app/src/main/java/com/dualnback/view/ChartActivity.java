@@ -1,15 +1,15 @@
-package com.dualnback;
+package com.dualnback.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
+import com.dualnback.R;
 import com.dualnback.dao.ChartData;
 import com.dualnback.dao.DataPoint;
 import com.dualnback.presenter.ChartPresenter;
 import com.dualnback.util.IntentUtility;
 import com.dualnback.util.StartScreenActivityIntentUtil;
-import com.dualnback.view.ChartView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;

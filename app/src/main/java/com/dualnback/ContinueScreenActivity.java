@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dualnback.game.NBackVersion;
 import com.dualnback.util.DateUtil;
+import com.dualnback.view.ChartActivity;
 
 import java.util.Date;
 
