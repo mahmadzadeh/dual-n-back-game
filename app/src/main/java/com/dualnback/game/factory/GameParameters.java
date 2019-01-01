@@ -1,6 +1,6 @@
 package com.dualnback.game.factory;
 
-import com.dualnback.SwappableImage;
+import com.dualnback.MainScreenView;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
@@ -8,7 +8,7 @@ import com.dualnback.sound.SoundCollection;
 public class GameParameters {
 
     private NBackVersion version;
-    private SwappableImage context;
+    private MainScreenView context;
     private int expectedSoundMatches;
     private int expectedLocMatches;
     private LocationCollection locationCollection;
@@ -18,7 +18,7 @@ public class GameParameters {
         return version;
     }
 
-    public SwappableImage getContext( ) {
+    public MainScreenView getContext( ) {
         return context;
     }
 
@@ -43,7 +43,7 @@ public class GameParameters {
         return this;
     }
 
-    public GameParameters withContext( SwappableImage context ) {
+    public GameParameters withContext( MainScreenView context ) {
         this.context = context;
         return this;
     }

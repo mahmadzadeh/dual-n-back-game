@@ -35,7 +35,7 @@ import static com.dualnback.util.IntentUtility.extractFromIntentExtras;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
 import static com.dualnback.util.timer.TimerUtil.getOneRoundTime;
 
-public class MainActivity extends AppCompatActivity implements SwappableImage {
+public class MainActivity extends AppCompatActivity implements MainScreenView {
 
     public static final String FINAL_SCORE = "FINAL_SCORE";
     public static final String VERSION = "VERSION";
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
     public static final int EXPECTED_LOC_MATCHES = 7;
     public static final int TOTAL_TRIAL_COUNT = 24;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
-    final Timer gameUpdateTimer = new Timer();
+    private final Timer gameUpdateTimer = new Timer( false );
     private DualBackGame dualBackGame;
     private Button soundMatchButton;
     private Button locationMatchButton;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
             vibrator.vibrate( vibrationLength );
             positionMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
 
-            new Timer( false ).schedule( new TimerTask() {
+            gameUpdateTimer.schedule( new TimerTask() {
                 @Override
                 public void run( ) {
                     runOnUiThread( ( ) ->
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements SwappableImage {
             vibrator.vibrate( vibrationLength );
             soundMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
 
-            new Timer( false ).schedule( new TimerTask() {
+            gameUpdateTimer.schedule( new TimerTask() {
                 @Override
                 public void run( ) {
                     runOnUiThread( ( ) ->

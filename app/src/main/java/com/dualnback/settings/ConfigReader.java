@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.dualnback.util.NumberFormatterUtil.convertToIntOrDefault;
 
-public class ConfigReader {
+public class ConfigReader implements IConfigReader {
 
     private final Context context;
 
@@ -15,6 +15,7 @@ public class ConfigReader {
         this.context = context;
     }
 
+    @Override
     public int getStringPreferenceWithCastToInt( String key, String defaultVal ) {
         String value = defaultVal;
 
@@ -27,6 +28,7 @@ public class ConfigReader {
         return convertToIntOrDefault( value, Integer.valueOf( defaultVal ) );
     }
 
+    @Override
     public String getStringPreference( String key, String defaultVal ) {
 
         String value = null;
@@ -40,6 +42,7 @@ public class ConfigReader {
         return value;
     }
 
+    @Override
     public int getIntPreference( String key, int defaultVal ) {
 
         int value = defaultVal;

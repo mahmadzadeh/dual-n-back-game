@@ -2,7 +2,7 @@ package com.dualnback.game;
 
 import android.support.annotation.NonNull;
 
-import com.dualnback.SwappableImage;
+import com.dualnback.MainScreenView;
 import com.dualnback.game.factory.GridFactory;
 import com.dualnback.location.Location;
 import com.dualnback.sound.BSound;
@@ -37,7 +37,7 @@ public class DualBackGameTest {
     DualBackGrid dualBackGrid;
 
     @Mock
-    SwappableImage swappableImage;
+    MainScreenView swappableImage;
 
     GameTrialCollection gameTrialCollection;
 
@@ -247,7 +247,7 @@ public class DualBackGameTest {
      */
     @Test
     public void playTwoBackWithThreeTrials( ) {
-        SwappableImage context = mock( SwappableImage.class );
+        MainScreenView context = mock( MainScreenView.class );
 
         sut = new DualBackGame( GridFactory.instance( context ),
                 new GameTrialCollection( TwoBack, getTestTrials() ) );

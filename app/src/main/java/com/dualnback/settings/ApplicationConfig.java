@@ -12,9 +12,9 @@ public class ApplicationConfig implements Config {
     protected static final String MIN_TRIAL_ADVANCE_SCORE_KEY = "min_advance_score";
     protected static final int MIN_TRIAL_ADVANCE_DEFAULT = 85;
 
-    private final ConfigReader reader;
+    private final IConfigReader reader;
 
-    public ApplicationConfig( ConfigReader reader ) {
+    public ApplicationConfig( IConfigReader reader ) {
         this.reader = reader;
     }
 

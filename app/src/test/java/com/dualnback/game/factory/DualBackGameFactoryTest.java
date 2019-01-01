@@ -2,7 +2,7 @@ package com.dualnback.game.factory;
 
 import android.content.Context;
 
-import com.dualnback.SwappableImage;
+import com.dualnback.MainScreenView;
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
@@ -27,7 +27,7 @@ public class DualBackGameFactoryTest {
     private Context mockContext;
 
     @Mock
-    private SwappableImage mockSwappableImage;
+    private MainScreenView mockSwappableImage;
 
 
     /**

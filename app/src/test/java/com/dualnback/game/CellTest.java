@@ -1,6 +1,6 @@
 package com.dualnback.game;
 
-import com.dualnback.SwappableImage;
+import com.dualnback.MainScreenView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class CellTest {
 
     @Mock
-    SwappableImage mockImageView;
+    MainScreenView mockImageView;
 
     Cell cell;
 

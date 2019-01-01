@@ -2,7 +2,7 @@ package com.dualnback;
 
 import com.dualnback.game.Cell;
 
-public interface SwappableImage {
+public interface MainScreenView {
 
     void swapImage( Cell cell, int resourceId );
 }

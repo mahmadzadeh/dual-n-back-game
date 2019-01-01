@@ -1,7 +1,7 @@
 package com.dualnback.game.factory;
 
+import com.dualnback.MainScreenView;
 import com.dualnback.R;
-import com.dualnback.SwappableImage;
 import com.dualnback.game.Cell;
 import com.dualnback.game.DualBackGrid;
 
@@ -12,7 +12,7 @@ import static java.util.stream.IntStream.range;
 
 public class GridFactory {
 
-    public static DualBackGrid instance( SwappableImage context ) {
+    public static DualBackGrid instance( MainScreenView context ) {
         int onImg = R.mipmap.square_blue;
         int offImg = R.mipmap.square;
 
@@ -27,7 +27,7 @@ public class GridFactory {
         return new DualBackGrid( grid );
     }
 
-    private static Cell createSingleCell( int onImg, int offImg, int row, int col, SwappableImage context ) {
+    private static Cell createSingleCell( int onImg, int offImg, int row, int col, MainScreenView context ) {
         return new Cell( onImg, offImg, context );
     }
 }

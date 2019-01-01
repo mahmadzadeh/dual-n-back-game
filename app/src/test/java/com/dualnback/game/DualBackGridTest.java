@@ -2,7 +2,7 @@ package com.dualnback.game;
 
 import android.support.annotation.NonNull;
 
-import com.dualnback.SwappableImage;
+import com.dualnback.MainScreenView;
 import com.dualnback.location.Location;
 
 import org.junit.Before;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 public class DualBackGridTest {
 
     @Mock
-    SwappableImage mockImgView;
+    MainScreenView mockImgView;
 
     int onImageId = 0;
     int offImageId = 1;
