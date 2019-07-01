@@ -57,7 +57,6 @@ public class StartScreenActivity extends AppCompatActivity implements StartScree
             Intent mainActivityIntent = new Intent( v.getContext(), MainActivity.class );
             mainActivityIntent.putExtra( N_BACK_VERSION, selectedVersion );
             startActivity( mainActivityIntent );
-
         } );
 
         final Button settingsButton = findViewById( R.id.settingsButton );

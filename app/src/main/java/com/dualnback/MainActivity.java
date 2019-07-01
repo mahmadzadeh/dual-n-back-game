@@ -20,9 +20,10 @@ import com.dualnback.location.LocationCollection;
 import com.dualnback.settings.ApplicationConfig;
 import com.dualnback.settings.ConfigReader;
 import com.dualnback.sound.SoundCollection;
+import com.dualnback.util.IntentUtility;
 import com.dualnback.util.timer.GameCountDownTimer;
+import com.dualnback.view.MainScreenView;
 
-import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +32,6 @@ import static com.dualnback.R.drawable.xmark;
 import static com.dualnback.StartScreenActivity.DEFAULT_VERSION;
 import static com.dualnback.StartScreenActivity.N_BACK_VERSION;
 import static com.dualnback.game.LocationToImageMapper.map;
-import static com.dualnback.util.IntentUtility.extractFromIntentExtras;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;
 import static com.dualnback.util.timer.TimerUtil.getOneRoundTime;
 
@@ -41,9 +41,10 @@ public class MainActivity extends AppCompatActivity implements MainScreenView {
     public static final String VERSION = "VERSION";
     public static final int EXPECTED_SOUND_MATCHES = 7;
     public static final int EXPECTED_LOC_MATCHES = 7;
-    public static final int TOTAL_TRIAL_COUNT = 24;
+    public static final int TOTAL_TRIAL_COUNT = 25;
     public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
     private final Timer gameUpdateTimer = new Timer( false );
+
     private DualBackGame dualBackGame;
     private Button soundMatchButton;
     private Button locationMatchButton;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements MainScreenView {
 
     private ApplicationConfig config = new ApplicationConfig( new ConfigReader( this ) );
 
+//    private MainActivityPresenter presenter = new MainActivityPresenter( this, parameters );
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -68,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenView {
 
         setContentView( R.layout.activity_main );
 
-        Optional<NBackVersion> mayBeVersion = extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION );
-        version = mayBeVersion.orElse( DEFAULT_VERSION );
+        version = IntentUtility.<NBackVersion>extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION ).orElse( DEFAULT_VERSION );
 
         GameParameters parameters = new GameParameters()
                 .withVersion( version )

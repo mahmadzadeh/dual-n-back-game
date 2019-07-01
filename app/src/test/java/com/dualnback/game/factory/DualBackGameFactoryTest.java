@@ -2,12 +2,12 @@ package com.dualnback.game.factory;
 
 import android.content.Context;
 
-import com.dualnback.MainScreenView;
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
+import com.dualnback.view.MainScreenView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -7,7 +7,7 @@ import android.widget.Button;
 import com.dualnback.R;
 import com.dualnback.dao.ChartData;
 import com.dualnback.dao.DataPoint;
-import com.dualnback.presenter.ChartPresenter;
+import com.dualnback.presenter.ChartIChartPresenter;
 import com.dualnback.util.IntentUtility;
 import com.dualnback.util.StartScreenActivityIntentUtil;
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,13 +24,13 @@ import static com.dualnback.util.ChartUtil.setUpChart;
 
 public class ChartActivity extends AppCompatActivity implements ChartView {
 
-    private ChartPresenter presenter;
+    private ChartIChartPresenter presenter;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
-        presenter = new ChartPresenter( this );
+        presenter = new ChartIChartPresenter( this );
 
         setContentView( R.layout.chart_screen );
 

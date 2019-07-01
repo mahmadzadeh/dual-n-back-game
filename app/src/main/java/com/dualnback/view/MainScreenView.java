@@ -1,4 +1,4 @@
-package com.dualnback;
+package com.dualnback.view;
 
 import com.dualnback.game.Cell;
 

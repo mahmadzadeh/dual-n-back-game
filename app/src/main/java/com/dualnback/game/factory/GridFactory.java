@@ -1,9 +1,9 @@
 package com.dualnback.game.factory;
 
-import com.dualnback.MainScreenView;
 import com.dualnback.R;
 import com.dualnback.game.Cell;
 import com.dualnback.game.DualBackGrid;
+import com.dualnback.view.MainScreenView;
 
 import java.util.List;
 import java.util.stream.Collectors;

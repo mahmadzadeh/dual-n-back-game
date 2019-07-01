@@ -5,11 +5,11 @@ import com.dualnback.dao.DataPoint;
 import com.dualnback.model.ChartModel;
 import com.dualnback.view.ChartView;
 
-public class ChartPresenter implements Presenter {
+public class ChartIChartPresenter implements IChartPresenter {
     private final ChartModel model;
     private final ChartView view;
 
-    public ChartPresenter( ChartView chartView ) {
+    public ChartIChartPresenter( ChartView chartView ) {
         this.view = chartView;
         this.model = new ChartModel( view.getFilesDirectory() );
     }

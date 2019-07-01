@@ -9,7 +9,7 @@ import java.util.Optional;
 import static com.dualnback.dao.DataFileUtil.readAllData;
 import static com.dualnback.game.VersionSelection.currentLevel;
 
-public class StartScreenPresenter {
+public class StartScreenPresenter implements IStartScreenPresenter {
 
     private static final NBackVersion DEFAULT_VERSION = NBackVersion.TwoBack;
 
@@ -19,12 +19,14 @@ public class StartScreenPresenter {
         this.startScreenView = startScreenView;
     }
 
+    @Override
     public NBackVersion getCurrentVersion( int minScoreToUpgrade, int minScoreToMaintain ) {
         Optional<DataPoint> lastDataPoint = readAllData( startScreenView.getFilesDir() ).getLastDataPoint();
 
         return currentLevel( lastDataPoint, minScoreToUpgrade, minScoreToMaintain );
     }
 
+    @Override
     public NBackVersion getSelectedVersion( CharSequence dropDownItem ) {
         return NBackVersion.fromTextValue( dropDownItem.toString() ).orElse( DEFAULT_VERSION );
     }

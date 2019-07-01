@@ -3,7 +3,7 @@ package com.dualnback.presenter;
 import com.dualnback.dao.ChartData;
 import com.dualnback.dao.DataPoint;
 
-interface Presenter {
+interface IChartPresenter {
 
     void onCreate( );
 

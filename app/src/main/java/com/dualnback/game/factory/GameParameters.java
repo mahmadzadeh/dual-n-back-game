@@ -1,9 +1,9 @@
 package com.dualnback.game.factory;
 
-import com.dualnback.MainScreenView;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.location.LocationCollection;
 import com.dualnback.sound.SoundCollection;
+import com.dualnback.view.MainScreenView;
 
 public class GameParameters {
 
