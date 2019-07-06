@@ -14,7 +14,7 @@ public class DualBackGameFactory {
 
     public static DualBackGame create( GameParameters gameParameters ) {
 
-        DualBackGrid instance = GridFactory.instance( gameParameters.getContext() );
+        DualBackGrid instance = GridFactory.instance();
 
         GameTrialCollection gameTrialCollection = new GameTrialCollection(
                 gameParameters.version(),

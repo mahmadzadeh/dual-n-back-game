@@ -20,37 +20,61 @@ public class DualBackGame {
     private UserInput soundMatch;
     private UserInput locationMatch;
     private Score score;
+    private Trial currentTrial;
 
     public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
         this.score = new Score( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
         this.gameTrialCollection = gameTrialCollection;
+        this.currentTrial = null;
     }
 
     public Trial getNextTrial( ) {
         return gameTrialCollection.hasNext() ? gameTrialCollection.next() : null;
     }
 
-    public boolean recordSoundMatch( Trial currentTrial ) {
+    public boolean recordSoundMatch( ) {
         this.soundMatch = SoundMatch;
 
         return currentTrial.getUserInput().isSoundMatch( this.soundMatch );
     }
 
-    public boolean recordLocationMatch( Trial currentTrial ) {
+    public boolean recordLocationMatch( ) {
         this.locationMatch = LocationMatch;
 
         return currentTrial.getUserInput().isLocationMatch( this.locationMatch );
     }
 
-    public void markEndOfTrial( Trial currentTrial ) {
+    public double getCurrentScore( ) {
+        return score.calculateScorePercentage();
+    }
 
-        if ( currentTrial == null ) {
-            this.soundMatch = null;
-            this.locationMatch = null;
-            return;
-        }
+    public Optional<Cell> turnOffCurrentOnCell( ) {
+
+        return dualBackGrid
+                .getTurnedOnCell()
+                .map( cell -> {
+                    cell.turnOff();
+                    return cell;
+                } );
+    }
+
+    public Cell turnOnCellAtLocation( Location location ) {
+        return dualBackGrid
+                .turnOnCellAtLocation( location );
+    }
+
+    public Trial nextTrial( ) {
+        return getNextTrial();
+    }
+
+    public Cell markStartOfTrial( ) {
+        currentTrial = getNextTrial();
+        return turnOnCellAtLocation( currentTrial.getLocation() );
+    }
+
+    public Optional<Cell> markEndOfTrial( ) {
 
         if ( currentTrial.getUserInput().getLocationMatch() == NoInput && this.locationMatch != null ) {
             score = score.update( IncorrectLocation );
@@ -75,39 +99,15 @@ public class DualBackGame {
 
         this.soundMatch = null;
         this.locationMatch = null;
+
+        return turnOffCurrentOnCell();
     }
-
-    public double getCurrentScore( ) {
-        return score.calculateScorePercentage();
-    }
-
-    public Optional<Cell> turnOffCurrentOnCell( ) {
-
-        return dualBackGrid
-                .getTurnedOnCell()
-                .map( cell -> {
-                    cell.turnOff();
-                    return cell;
-                } );
-    }
-
-    public Cell turnOnCellAtLocation( Location location ) {
-        return dualBackGrid
-                .turnOnCellAtLocation( location );
-    }
-
-    public Trial markStartOfTrial( ) {
-        Trial trial = getNextTrial();
-
-        turnOffCurrentOnCell();
-
-        turnOnCellAtLocation( trial.getLocation() );
-
-        return trial;
-    }
-
 
     public Optional<Location> findCellLocation( Cell cell ) {
         return dualBackGrid.locationOfCell( cell );
+    }
+
+    public Trial getCurrentTrial( ) {
+        return currentTrial;
     }
 }

@@ -10,18 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dualnback.game.Cell;
-import com.dualnback.game.DualBackGame;
 import com.dualnback.game.NBackVersion;
-import com.dualnback.game.factory.DualBackGameFactory;
 import com.dualnback.game.factory.GameParameters;
 import com.dualnback.game.factory.SoundCollectionFactory;
 import com.dualnback.location.LocationCollection;
+import com.dualnback.presenter.MainActivityPresenter;
 import com.dualnback.settings.ApplicationConfig;
 import com.dualnback.settings.ConfigReader;
 import com.dualnback.sound.SoundCollection;
 import com.dualnback.util.IntentUtility;
-import com.dualnback.util.timer.GameCountDownTimer;
 import com.dualnback.view.MainScreenView;
 
 import java.util.Timer;
@@ -31,9 +28,7 @@ import static com.dualnback.R.drawable.checkmark;
 import static com.dualnback.R.drawable.xmark;
 import static com.dualnback.StartScreenActivity.DEFAULT_VERSION;
 import static com.dualnback.StartScreenActivity.N_BACK_VERSION;
-import static com.dualnback.game.LocationToImageMapper.map;
-import static com.dualnback.util.NumberFormatterUtil.formatScore;
-import static com.dualnback.util.timer.TimerUtil.getOneRoundTime;
+import static com.dualnback.presenter.MainActivityPresenter.TIME_TEXT_NORMAL_COLOUR;
 
 public class MainActivity extends AppCompatActivity implements MainScreenView {
 
@@ -42,131 +37,127 @@ public class MainActivity extends AppCompatActivity implements MainScreenView {
     public static final int EXPECTED_SOUND_MATCHES = 7;
     public static final int EXPECTED_LOC_MATCHES = 7;
     public static final int TOTAL_TRIAL_COUNT = 25;
-    public final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
+    public static final int COUNT_DOWN_INTERVAL_IN_MILLIS = 1000;
     private final Timer gameUpdateTimer = new Timer( false );
-
-    private DualBackGame dualBackGame;
+    private TextView countDownTextView;
     private Button soundMatchButton;
     private Button locationMatchButton;
     private TextView scoreTxt;
     private ImageView positionMatchFeedBackImg;
     private ImageView soundMatchFeedBackImg;
-    private CountDownText countdownTimerTxt;
-    private GameCountDownTimer timer;
-    private GameMainThreadHandler handler;
     private TextView gameVersionText;
     private NBackVersion version;
-
     private Vibrator vibrator;
 
-    private ApplicationConfig config = new ApplicationConfig( new ConfigReader( this ) );
-
-//    private MainActivityPresenter presenter = new MainActivityPresenter( this, parameters );
+    private MainActivityPresenter presenter = null;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
-        int vibrationLength = config.vibrationLength();
+        version = IntentUtility.<NBackVersion>extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION ).orElse( DEFAULT_VERSION );
+
+        if ( presenter == null ) {
+            presenter = new MainActivityPresenter( this,
+                    new GameParameters()
+                            .withVersion( version )
+                            .withContext( this )
+                            .withExpectedSoundMatches( EXPECTED_SOUND_MATCHES )
+                            .withExpectedLocationMatches( EXPECTED_LOC_MATCHES )
+                            .withLocationCollection( new LocationCollection() )
+                            .withSoundCollection( new SoundCollection( SoundCollectionFactory.instance( this ) ) )
+                            .withConfig( new ApplicationConfig( new ConfigReader( this ) ) ) );
+        }
 
         setContentView( R.layout.activity_main );
 
-        version = IntentUtility.<NBackVersion>extractFromIntentExtras( this.getIntent().getExtras(), N_BACK_VERSION ).orElse( DEFAULT_VERSION );
-
-        GameParameters parameters = new GameParameters()
-                .withVersion( version )
-                .withContext( this )
-                .withExpectedSoundMatches( EXPECTED_SOUND_MATCHES )
-                .withExpectedLocationMatches( EXPECTED_LOC_MATCHES )
-                .withLocationCollection( new LocationCollection() )
-                .withSoundCollection( new SoundCollection( SoundCollectionFactory.instance( this ) ) );
-
-        dualBackGame = DualBackGameFactory.create( parameters );
-
         initGameUiElements( version );
 
-        countdownTimerTxt = new CountDownText( findViewById( R.id.textViewCountDownTimer ) );
+        countDownTextView = findViewById( R.id.textViewCountDownTimer );
 
         vibrator = ( Vibrator ) getSystemService( Context.VIBRATOR_SERVICE );
 
-        handler = new GameMainThreadHandler( dualBackGame );
-
         locationMatchButton.setOnClickListener( ( View view ) -> {
-            boolean isCorrectAnswer = dualBackGame.recordLocationMatch( handler.getCurrentTrial() );
-            vibrator.vibrate( vibrationLength );
-            positionMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
-
-            gameUpdateTimer.schedule( new TimerTask() {
-                @Override
-                public void run( ) {
-                    runOnUiThread( ( ) ->
-                            positionMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
-                }
-            }, 500 );
+            presenter.handleLocationButtonClick();
         } );
 
         soundMatchButton.setOnClickListener( ( View view ) -> {
-            boolean isCorrectAnswer = dualBackGame.recordSoundMatch( handler.getCurrentTrial() );
-            vibrator.vibrate( vibrationLength );
-            soundMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
-
-            gameUpdateTimer.schedule( new TimerTask() {
-                @Override
-                public void run( ) {
-                    runOnUiThread( ( ) ->
-                            soundMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
-                }
-            }, 500 );
+            presenter.handleSoundButtonClick();
         } );
 
-        timer = GameCountDownTimer.INSTANCE( this,
-                getOneRoundTime( config.singleTrialDurationInMillis(), TOTAL_TRIAL_COUNT ),
-                COUNT_DOWN_INTERVAL_IN_MILLIS,
-                config.singleTrialDurationInMillis() );
+        presenter.startTimer();
 
-        timer.start();
+        presenter.startTrial();
     }
 
+    public void updateLocationFeedBackImage( ) {
+        gameUpdateTimer.schedule( new TimerTask() {
+            @Override
+            public void run( ) {
+                runOnUiThread( ( ) ->
+                        positionMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
+            }
+        }, 500 );
+    }
+
+    @Override
+    public void updateSoundFeedBackImage( ) {
+        gameUpdateTimer.schedule( new TimerTask() {
+            @Override
+            public void run( ) {
+                runOnUiThread( ( ) ->
+                        soundMatchFeedBackImg.setImageResource( R.drawable.transparent ) );
+            }
+        }, 500 );
+    }
+
+    @Override
+    public void setPositionMatchFeedBack( boolean isCorrectAnswer ) {
+        positionMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
+    }
+
+    @Override
+    public void setSoundMatchFeedBack( boolean isCorrectAnswer ) {
+        soundMatchFeedBackImg.setImageResource( isCorrectAnswer ? checkmark : xmark );
+    }
+
+    @Override
+    public void vibrateFor( int vibrationLength ) {
+        vibrator.vibrate( vibrationLength );
+    }
+
+    @Override
     public void setCountDownText( String text ) {
-        countdownTimerTxt.setText( text );
+        setCountDownTextAndColor( text, TIME_TEXT_NORMAL_COLOUR );
     }
 
-    public void markEndOfOneRound( ) {
-        dualBackGame.markEndOfTrial( handler.getCurrentTrial() );
-        scoreTxt.setText( formatScore( dualBackGame.getCurrentScore() ) );
-        updateUI();
+    @Override
+    public void setCountDownTextAndColor( String text, int color ) {
+        countDownTextView.setTextColor( color );
+        countDownTextView.setText( text );
     }
 
-    public void swapImage( Cell cell, int resourceId ) {
-        dualBackGame
-                .findCellLocation( cell )
-                .ifPresent( cellLocation -> {
-                    ImageView imageView = findViewById( map( cellLocation ) );
-                    imageView.setImageResource( resourceId );
-                } );
+    @Override
+    public void setScoreTextRound( String text ) {
+        scoreTxt.setText( text );
     }
 
-    public double currentPoints( ) {
-        return dualBackGame.getCurrentScore();
-    }
-
-    public void onFinish( ) {
+    public void onFinish( double currentScore ) {
 
         setCountDownText( "00:00" );
 
         Intent countDownIntent = new Intent( this, ContinueScreenActivity.class );
 
-        double currentPoints = currentPoints();
-
-        countDownIntent.putExtra( FINAL_SCORE, currentPoints );
+        countDownIntent.putExtra( FINAL_SCORE, currentScore );
         countDownIntent.putExtra( VERSION, version.getTextRepresentation() );
 
         startActivity( countDownIntent );
     }
 
-    private void updateUI( ) {
-        long TIMER_DELAY = 1;
-        gameUpdateTimer.schedule( new NewUpdateTimerTask( handler ), TIMER_DELAY );
+    @Override
+    public void updateCellState( int cell, int state ) {
+        ImageView imageView = findViewById( cell );
+        imageView.setImageResource( state );
     }
 
     private void initGameUiElements( NBackVersion version ) {

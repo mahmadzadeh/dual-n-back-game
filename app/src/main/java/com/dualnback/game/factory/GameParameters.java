@@ -2,6 +2,7 @@ package com.dualnback.game.factory;
 
 import com.dualnback.game.NBackVersion;
 import com.dualnback.location.LocationCollection;
+import com.dualnback.settings.ApplicationConfig;
 import com.dualnback.sound.SoundCollection;
 import com.dualnback.view.MainScreenView;
 
@@ -13,6 +14,8 @@ public class GameParameters {
     private int expectedLocMatches;
     private LocationCollection locationCollection;
     private SoundCollection soundCollection;
+
+    private ApplicationConfig config;
 
     public NBackVersion version( ) {
         return version;
@@ -36,6 +39,10 @@ public class GameParameters {
 
     public SoundCollection soundCollection( ) {
         return soundCollection;
+    }
+
+    public ApplicationConfig getConfig( ) {
+        return config;
     }
 
     public GameParameters withVersion( NBackVersion version ) {
@@ -65,6 +72,11 @@ public class GameParameters {
 
     public GameParameters withSoundCollection( SoundCollection soundCollection ) {
         this.soundCollection = soundCollection;
+        return this;
+    }
+
+    public GameParameters withConfig( ApplicationConfig config ) {
+        this.config = config;
         return this;
     }
 }

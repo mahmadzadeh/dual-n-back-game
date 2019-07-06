@@ -1,8 +1,24 @@
 package com.dualnback.view;
 
-import com.dualnback.game.Cell;
-
 public interface MainScreenView {
 
-    void swapImage( Cell cell, int resourceId );
+    void setCountDownText( String text );
+
+    void vibrateFor( int vibrationLength );
+
+    void setCountDownTextAndColor( String text, int color );
+
+    void setPositionMatchFeedBack( boolean isCorrectAnswer );
+
+    void setSoundMatchFeedBack( boolean isCorrectAnswer );
+
+    void updateLocationFeedBackImage( );
+
+    void updateSoundFeedBackImage( );
+
+    void setScoreTextRound( String text );
+
+    void onFinish( double currentScore );
+
+    void updateCellState( int cellToTurnOff, int offCellState );
 }

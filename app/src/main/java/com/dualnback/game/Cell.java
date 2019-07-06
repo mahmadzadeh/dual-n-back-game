@@ -1,33 +1,33 @@
 package com.dualnback.game;
 
-import com.dualnback.view.MainScreenView;
-
 public class Cell {
 
     private int onImage;
     private int offImage;
     private int currentState;
-    private MainScreenView view;
 
-    public Cell( int onImageResourceId, int offImageResourceId, MainScreenView view ) {
+    public Cell( int onImageResourceId, int offImageResourceId ) {
         this.onImage = onImageResourceId;
         this.offImage = offImageResourceId;
         this.currentState = offImageResourceId;
-        this.view = view;
     }
 
     public boolean isTurnedOn( ) {
         return currentState == onImage;
     }
 
-    public void turnOff( ) {
+    public int turnOff( ) {
         currentState = offImage;
-        view.swapImage( this, currentState );
+        return currentState;
     }
 
-    public void turnOn( ) {
+    public int turnOn( ) {
         currentState = onImage;
-        view.swapImage( this, currentState );
+        return currentState;
+    }
+
+    public int getCurrentState( ) {
+        return this.currentState;
     }
 
     @Override

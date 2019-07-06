@@ -22,7 +22,7 @@ public class GameMainThreadHandler extends Handler {
 
     @Override
     public void handleMessage( Message msg ) {
-        Trial trial = dualBackGame.markStartOfTrial();
+        Trial trial = dualBackGame.nextTrial();
         trial.getSound().playSound();
 
         currentTrial = Optional.of( trial );

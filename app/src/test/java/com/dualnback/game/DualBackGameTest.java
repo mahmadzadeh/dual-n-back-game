@@ -64,19 +64,19 @@ public class DualBackGameTest {
     @Test
     public void givenStartOfATrialThenRecordSoundMatchRecordsASingleSoundMatch( ) {
 
-        sut.recordSoundMatch( currentTrial );
+        sut.recordSoundMatch();
     }
 
     @Test
     public void givenStartOfTrialThenRecordLocationMatchRecordsSingleLocationMatch( ) {
-        sut.recordLocationMatch( currentTrial );
+        sut.recordLocationMatch();
     }
 
     @Test
     public void givenSingleTrialAndTwoNBackThenMarkEndOfTrialUpdatesScoreAccordingly( ) {
         Trial currTrial = sut.getNextTrial();
 
-        sut.markEndOfTrial( currTrial );
+        sut.markEndOfTrial();
 
         double score = sut.getCurrentScore();
 
@@ -95,9 +95,9 @@ public class DualBackGameTest {
 
         sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
-        sut.markEndOfTrial( sut.getNextTrial() );
-        sut.markEndOfTrial( sut.getNextTrial() );
-        sut.markEndOfTrial( sut.getNextTrial() );
+        sut.markEndOfTrial();
+        sut.markEndOfTrial();
+        sut.markEndOfTrial();
 
         double score = sut.getCurrentScore();
 
@@ -118,17 +118,17 @@ public class DualBackGameTest {
 
         Trial nextTrial = sut.getNextTrial();
 
-        sut.recordLocationMatch( currentTrial );
-        sut.recordSoundMatch( currentTrial );
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
 
-        sut.markEndOfTrial( nextTrial );
-
-        nextTrial = sut.getNextTrial();
-        sut.markEndOfTrial( nextTrial );
-
+        sut.markEndOfTrial();
 
         nextTrial = sut.getNextTrial();
-        sut.markEndOfTrial( nextTrial );
+        sut.markEndOfTrial();
+
+
+        nextTrial = sut.getNextTrial();
+        sut.markEndOfTrial();
 
         double score = sut.getCurrentScore();
 
@@ -146,18 +146,18 @@ public class DualBackGameTest {
         sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
         Trial nextTrial = sut.getNextTrial();
-        sut.markEndOfTrial( nextTrial );
+        sut.markEndOfTrial();
 
         nextTrial = sut.getNextTrial();
-        sut.markEndOfTrial( nextTrial );
+        sut.markEndOfTrial();
 
         nextTrial = sut.getNextTrial();
-        sut.recordLocationMatch( currentTrial );
-        sut.recordSoundMatch( currentTrial );
-        sut.markEndOfTrial( nextTrial );
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
+        sut.markEndOfTrial();
 
         nextTrial = sut.getNextTrial();
-        sut.markEndOfTrial( nextTrial );
+        sut.markEndOfTrial();
 
         double score = sut.getCurrentScore();
 
@@ -182,7 +182,7 @@ public class DualBackGameTest {
 
     @Test
     public void givenCurrentGameStateWhenOneCellInGridTurnedOnThenTurnOffOnGridCellTurnsOffCell( ) {
-        Cell expectedOffCell = new Cell( 1, 2, swappableImage );
+        Cell expectedOffCell = new Cell( 1, 2 );
 
         trials = getTestTrials();
 
@@ -203,7 +203,7 @@ public class DualBackGameTest {
     public void givenLocationThenCanTurnOnCellAtLocation( ) {
         Location location = new Location( 0, 0 );
 
-        Cell expectedOnCell = new Cell( 1, 2, swappableImage );
+        Cell expectedOnCell = new Cell( 1, 2 );
         expectedOnCell.turnOn();
 
         trials = getTestTrials();
@@ -225,7 +225,7 @@ public class DualBackGameTest {
     public void giveInvalidCellThenFindCellLocationReturnOptionalEmpty( ) {
         Location location = new Location( 0, 0 );
 
-        Cell expectedOnCell = new Cell( 1, 2, swappableImage );
+        Cell expectedOnCell = new Cell( 1, 2 );
         expectedOnCell.turnOn();
 
         trials = getTestTrials();
@@ -234,7 +234,7 @@ public class DualBackGameTest {
 
         sut = new DualBackGame( dualBackGrid, gameTrialCollection );
 
-        Cell nonExistentCell = new Cell( 22, 222, swappableImage );
+        Cell nonExistentCell = new Cell( 22, 222 );
 
         Optional<Location> loc = sut.findCellLocation( nonExistentCell );
 
@@ -249,7 +249,7 @@ public class DualBackGameTest {
     public void playTwoBackWithThreeTrials( ) {
         MainScreenView context = mock( MainScreenView.class );
 
-        sut = new DualBackGame( GridFactory.instance( context ),
+        sut = new DualBackGame( GridFactory.instance(),
                 new GameTrialCollection( TwoBack, getTestTrials() ) );
 
         Trial trial = sut.getNextTrial();
@@ -260,24 +260,24 @@ public class DualBackGameTest {
         Cell onCell = sut.turnOnCellAtLocation( trial.getLocation() );
         assertTrue( onCell.isTurnedOn() ); // initially nothing is turned on
 
-        sut.markEndOfTrial( trial );
+        sut.markEndOfTrial();
 
-        trial = sut.markStartOfTrial();
-        sut.markEndOfTrial( trial );
+        trial = sut.nextTrial();
+        sut.markEndOfTrial();
 
-        trial = sut.markStartOfTrial();
+        trial = sut.nextTrial();
 
-        sut.recordLocationMatch( currentTrial );
-        sut.recordSoundMatch( currentTrial );
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
 
-        sut.markEndOfTrial( trial );
+        sut.markEndOfTrial();
 
-        trial = sut.markStartOfTrial();
+        trial = sut.nextTrial();
 
-        sut.recordLocationMatch( currentTrial );
-        sut.recordSoundMatch( currentTrial );
+        sut.recordLocationMatch();
+        sut.recordSoundMatch();
 
-        sut.markEndOfTrial( trial );
+        sut.markEndOfTrial();
 
         double currentScore = sut.getCurrentScore();
 

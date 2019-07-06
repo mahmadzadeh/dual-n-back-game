@@ -8,11 +8,11 @@ import com.dualnback.util.IntegerRange;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.dualnback.MainActivity.TOTAL_TRIAL_COUNT;
 import static com.dualnback.random.RandomNumberGenerator.next_N_DistinctRandomIntsWithinRange;
 import static java.util.stream.IntStream.range;
 
 public class TrialListFactory {
-    private static int DEFAULT_TRIAL_COUNT_PER_GAME = 24;
 
     public static List<Trial> create( int count, RandomTrialGenerator randomTrialGenerator ) {
         return range( 0, count )
@@ -21,7 +21,7 @@ public class TrialListFactory {
     }
 
     public static List<Trial> create( RandomTrialGenerator randomTrialGenerator ) {
-        return create( DEFAULT_TRIAL_COUNT_PER_GAME, randomTrialGenerator );
+        return create( TOTAL_TRIAL_COUNT, randomTrialGenerator );
     }
 
 

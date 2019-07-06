@@ -17,10 +17,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DualBackGridTest {
@@ -40,10 +36,8 @@ public class DualBackGridTest {
 
     @Before
     public void setUp( ) {
-        doNothing().when( mockImgView ).swapImage( any( Cell.class ), anyInt() );
-
-        onCell = new Cell( 1, 2, mockImgView );
-        offCell = new Cell( 1, 2, mockImgView );
+        onCell = new Cell( 1, 2 );
+        offCell = new Cell( 1, 2 );
 
         onCell.turnOn();
     }
@@ -51,17 +45,6 @@ public class DualBackGridTest {
     @Test(expected = IllegalArgumentException.class)
     public void givenInvalidGridThenConstructorThrowsException( ) {
         new DualBackGrid( null );
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void givenMalformedGridThenConstructorThrowsException( ) {
-        Cell onCell = new Cell( 1, 2, mockImgView );
-        onCell.turnOn();
-        Cell offCell = new Cell( 1, 2, mockImgView );
-
-        new DualBackGrid( Arrays.asList( buildOneRowWithOneOnCellAnd( onCell, offCell ) ) );
-
-        verify( mockImgView ).swapImage( any( Cell.class ), anyInt() );
     }
 
     @Test
@@ -128,7 +111,7 @@ public class DualBackGridTest {
 
     @Test
     public void givenInvalidCellThenLocationOfCellReturnsOptionalEmpty( ) {
-        Cell nonExistentCell = new Cell( 333, 444, mockImgView );
+        Cell nonExistentCell = new Cell( 333, 444 );
 
         grid = getGrid( onCell, offCell );
 
