@@ -2,6 +2,7 @@ package com.dualnback.model;
 
 import com.dualnback.game.Cell;
 import com.dualnback.game.DualBackGame;
+import com.dualnback.game.Trial;
 import com.dualnback.location.Location;
 
 import java.util.Optional;
@@ -47,6 +48,11 @@ public class MainActivityModel implements MainModelContract.Model {
     @Override
     public Optional<Location> findCellLocation( Cell cell ) {
         return dualBackGame.findCellLocation( cell );
+    }
+
+    @Override
+    public Trial getCurrentTrial( ) {
+        return dualBackGame.getCurrentTrial();
     }
 
 }

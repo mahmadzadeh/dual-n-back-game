@@ -1,6 +1,7 @@
 package com.dualnback.model;
 
 import com.dualnback.game.Cell;
+import com.dualnback.game.Trial;
 import com.dualnback.location.Location;
 
 import java.util.Optional;
@@ -22,5 +23,7 @@ interface MainModelContract {
         double currentPoints( );
 
         Optional<Location> findCellLocation( Cell cell );
+
+        Trial getCurrentTrial( );
     }
 }

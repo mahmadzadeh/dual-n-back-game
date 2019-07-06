@@ -96,6 +96,8 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
     public void startTrial( ) {
         Cell cellToTurnOn = model.markStartOfTrial();
 
+        model.getCurrentTrial().getSound().playSound();
+
         Location onLocation = model.findCellLocation( cellToTurnOn ).orElseThrow(
                 ( ) -> new IllegalStateException( "Unable to locate cell to turn on" + cellToTurnOn ) );
 
