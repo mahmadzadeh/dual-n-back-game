@@ -19,7 +19,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationConfigTest {
 
-    ApplicationConfig sut;
+    private ApplicationConfig sut;
+
     @Mock
     private ConfigReader reader;
 

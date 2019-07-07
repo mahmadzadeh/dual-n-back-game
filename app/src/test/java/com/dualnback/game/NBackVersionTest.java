@@ -1,10 +1,7 @@
 package com.dualnback.game;
 
-import android.content.Context;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -32,9 +29,6 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NBackVersionTest {
-
-    @Mock
-    private Context mockContext;
 
     @Test
     public void givenInvalidUiRepresentationOfNBackVersionThenFromUiReturnsOptionalEmpty( ) throws Exception {

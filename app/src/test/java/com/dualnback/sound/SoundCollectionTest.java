@@ -1,10 +1,7 @@
 package com.dualnback.sound;
 
-import android.media.MediaPlayer;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +14,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class SoundCollectionTest {
 
     private final KSound sound = new KSound( 11111 );
-
-    @Mock
-    private MediaPlayer mockMediaPlayer;
 
     @Before
     public void setUp( ) {

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 
 public class IntegerRangeTest {
+
     @Test(expected = IllegalArgumentException.class)
     public void lowerBoundIsAlwaysSmallerThanUpperBound( ) {
 

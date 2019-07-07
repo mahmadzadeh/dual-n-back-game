@@ -16,6 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static com.dualnback.MainActivity.EXPECTED_LOC_MATCHES;
 import static com.dualnback.MainActivity.EXPECTED_SOUND_MATCHES;
+import static com.dualnback.MainActivity.TOTAL_TRIAL_COUNT;
 import static com.dualnback.game.factory.DualBackGameFactory.create;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,7 +58,7 @@ public class DualBackGameFactoryTest {
             trialCount++;
         }
 
-        assertThat( trialCount ).isEqualTo( 24 );
+        assertThat( trialCount ).isEqualTo( TOTAL_TRIAL_COUNT );
 
         trialCount = 0;
 
@@ -68,7 +69,7 @@ public class DualBackGameFactoryTest {
             trialCount++;
         }
 
-        assertThat( trialCount ).isEqualTo( 24 );
+        assertThat( trialCount ).isEqualTo( TOTAL_TRIAL_COUNT );
     }
 
 }

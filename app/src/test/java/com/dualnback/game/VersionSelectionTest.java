@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class VersionSelectionTest {
 
-    private static final int HIGHEST_SCORE = 60;
-
     private static final NBackVersion TEST_VERSION = NBackVersion.TwoBack;
 
     private static final int MIN_REQUIRED_SCORE_UP = 80;

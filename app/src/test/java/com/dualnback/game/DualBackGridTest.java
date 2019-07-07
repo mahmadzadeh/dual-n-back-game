@@ -22,17 +22,14 @@ import static org.junit.Assert.assertTrue;
 public class DualBackGridTest {
 
     @Mock
-    MainScreenView mockImgView;
+    private MainScreenView mockImgView;
 
-    int onImageId = 0;
-    int offImageId = 1;
+    private Cell onCell;
+    private Cell offCell;
 
-    Cell onCell;
-    Cell offCell;
+    private List<List<Cell>> grid;
 
-    List<List<Cell>> grid;
-
-    DualBackGrid sut;
+    private DualBackGrid sut;
 
     @Before
     public void setUp( ) {

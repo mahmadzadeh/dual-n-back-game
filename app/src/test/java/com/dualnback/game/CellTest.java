@@ -13,9 +13,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class CellTest {
 
     @Mock
-    MainScreenView mockImageView;
+    private MainScreenView mockImageView;
 
-    Cell cell;
+    private Cell cell;
 
     @Before
     public void setUp( ) {
