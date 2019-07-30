@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenView {
     }
 
     public void onFinish( double currentScore ) {
-
         setCountDownText( "00:00" );
 
         Intent countDownIntent = new Intent( this, ContinueScreenActivity.class );

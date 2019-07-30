@@ -20,7 +20,7 @@ public class DualBackGame {
     private UserInput soundMatch;
     private UserInput locationMatch;
     private Score score;
-    private Trial currentTrial;
+    private Optional<Trial> currentTrial;
 
     public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
@@ -30,20 +30,24 @@ public class DualBackGame {
         this.currentTrial = null;
     }
 
-    public Trial getNextTrial( ) {
-        return gameTrialCollection.hasNext() ? gameTrialCollection.next() : null;
+    public Optional<Trial> getNextTrial( ) {
+        return gameTrialCollection.hasNext()
+                ? Optional.of( gameTrialCollection.next() )
+                : Optional.empty();
     }
 
     public boolean recordSoundMatch( ) {
         this.soundMatch = SoundMatch;
-
-        return currentTrial.getUserInput().isSoundMatch( this.soundMatch );
+        return currentTrial
+                .map( t -> t.getUserInput().isSoundMatch( this.soundMatch ) )
+                .orElse( false );
     }
 
     public boolean recordLocationMatch( ) {
         this.locationMatch = LocationMatch;
-
-        return currentTrial.getUserInput().isLocationMatch( this.locationMatch );
+        return currentTrial.
+                map( t -> t.getUserInput().isLocationMatch( this.locationMatch ) )
+                .orElse( false );
     }
 
     public double getCurrentScore( ) {
@@ -65,49 +69,50 @@ public class DualBackGame {
                 .turnOnCellAtLocation( location );
     }
 
-    public Trial nextTrial( ) {
+    public Optional<Trial> nextTrial( ) {
         return getNextTrial();
     }
 
-    public Cell markStartOfTrial( ) {
+    public Optional<Cell> markStartOfTrial( ) {
         currentTrial = getNextTrial();
-        return turnOnCellAtLocation( currentTrial.getLocation() );
+        return currentTrial.map( ct -> turnOnCellAtLocation( ct.getLocation() ) );
     }
 
     public Optional<Cell> markEndOfTrial( ) {
-
-        if ( currentTrial.getUserInput().getLocationMatch() == NoInput && this.locationMatch != null ) {
-            score = score.update( IncorrectLocation );
-        } else if ( currentTrial.getUserInput().getLocationMatch() == NoInput && this.locationMatch == null ) {
-            // do nothing
-        } else if ( currentTrial.getUserInput().getLocationMatch() == this.locationMatch ) {
-            score = score.update( CorrectLocation );
-        } else if ( currentTrial.getUserInput().getLocationMatch() != this.locationMatch ) {
-            score = score.update( IncorrectLocation );
-        }
-        if ( currentTrial.getUserInput().getSoundMatch() == NoInput && this.soundMatch != null ) {
-            score = score.update( IncorrectSound );
-        } else if ( currentTrial.getUserInput().getSoundMatch() == NoInput && this.soundMatch == null ) {
-            // do nothing
-        } else if ( currentTrial.getUserInput().getSoundMatch() == this.soundMatch ) {
-            score = score.update( CorrectSound );
-        } else if ( currentTrial.getUserInput().getSoundMatch() != this.soundMatch ) {
-            score = score.update( IncorrectSound );
-        }
-
+        currentTrial.ifPresent( trial -> calculateScore( trial ) );
         // clear current sound/location  match
-
         this.soundMatch = null;
         this.locationMatch = null;
 
         return turnOffCurrentOnCell();
     }
 
+    private void calculateScore( Trial trial ) {
+        if ( trial.getUserInput().getLocationMatch() == NoInput && this.locationMatch != null ) {
+            score.update( IncorrectLocation );
+        } else if ( trial.getUserInput().getLocationMatch() == NoInput && this.locationMatch == null ) {
+            // do nothing
+        } else if ( trial.getUserInput().getLocationMatch() == this.locationMatch ) {
+            score.update( CorrectLocation );
+        } else if ( trial.getUserInput().getLocationMatch() != this.locationMatch ) {
+            score.update( IncorrectLocation );
+        }
+        if ( trial.getUserInput().getSoundMatch() == NoInput && this.soundMatch != null ) {
+            score.update( IncorrectSound );
+        } else if ( trial.getUserInput().getSoundMatch() == NoInput && this.soundMatch == null ) {
+            // do nothing
+        } else if ( trial.getUserInput().getSoundMatch() == this.soundMatch ) {
+            score.update( CorrectSound );
+        } else if ( trial.getUserInput().getSoundMatch() != this.soundMatch ) {
+            score.update( IncorrectSound );
+        }
+    }
+
     public Optional<Location> findCellLocation( Cell cell ) {
         return dualBackGrid.locationOfCell( cell );
     }
 
-    public Trial getCurrentTrial( ) {
+    public Optional<Trial> getCurrentTrial( ) {
         return currentTrial;
     }
 }

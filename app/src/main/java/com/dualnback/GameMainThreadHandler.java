@@ -5,7 +5,6 @@ import android.os.Message;
 
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.Trial;
-import com.dualnback.game.factory.NullTrial;
 
 import java.util.Optional;
 
@@ -13,22 +12,15 @@ import java.util.Optional;
 public class GameMainThreadHandler extends Handler {
 
     private final DualBackGame dualBackGame;
-    private Optional<Trial> currentTrial;
 
     public GameMainThreadHandler( DualBackGame dualBackGame ) {
         this.dualBackGame = dualBackGame;
-        this.currentTrial = Optional.empty();
     }
 
     @Override
     public void handleMessage( Message msg ) {
-        Trial trial = dualBackGame.nextTrial();
-        trial.getSound().playSound();
+        Optional<Trial> trial = dualBackGame.nextTrial();
 
-        currentTrial = Optional.of( trial );
-    }
-
-    public Trial getCurrentTrial( ) {
-        return currentTrial.orElse( new NullTrial() );
+        trial.ifPresent( t -> t.getSound().playSound() );
     }
 }

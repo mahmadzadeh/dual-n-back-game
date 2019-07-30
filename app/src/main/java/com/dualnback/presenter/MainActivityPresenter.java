@@ -11,6 +11,8 @@ import com.dualnback.model.MainActivityModel;
 import com.dualnback.util.timer.GameCountDownTimer;
 import com.dualnback.view.MainScreenView;
 
+import java.util.Optional;
+
 import static com.dualnback.MainActivity.COUNT_DOWN_INTERVAL_IN_MILLIS;
 import static com.dualnback.MainActivity.TOTAL_TRIAL_COUNT;
 import static com.dualnback.game.LocationToImageMapper.map;
@@ -77,13 +79,11 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
     @Override
     public void endTrial( ) {
 
-        Cell cellToTurnOff = model.markEndOfTrial().orElseThrow(
-                ( ) -> new IllegalStateException( "Unable to mark end of a trial" ) );
+        Cell cellToTurnOff = getCellToTurnOff( "Unable to mark end of a trial" );
 
         mainScreenView.setScoreTextRound( formatScore( model.getCurrentScore() ) );
 
-        Location offLocation = model.findCellLocation( cellToTurnOff )
-                .orElseThrow( ( ) -> new IllegalStateException( "Unable to locate cell to turn off " + cellToTurnOff ) );
+        Location offLocation = getLocation( cellToTurnOff, "Unable to locate cell to turn off " );
 
         mainScreenView.updateCellState(
                 map( offLocation ), cellToTurnOff.getCurrentState()
@@ -94,14 +94,15 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
 
     @Override
     public void startTrial( ) {
-        Cell cellToTurnOn = model.markStartOfTrial();
+        Optional<Cell> cellToTurnOn = model.markStartOfTrial();
 
-        model.getCurrentTrial().getSound().playSound();
+        model.getCurrentTrial().ifPresent( c -> c.getSound().playSound() );
 
-        Location onLocation = model.findCellLocation( cellToTurnOn ).orElseThrow(
-                ( ) -> new IllegalStateException( "Unable to locate cell to turn on" + cellToTurnOn ) );
+        if ( cellToTurnOn.isPresent() ) {
+            Location onLocation = getLocation( cellToTurnOn.get(), "Unable to locate cell to turn on" );
+            mainScreenView.updateCellState( map( onLocation ), cellToTurnOn.get().getCurrentState() );
+        }
 
-        mainScreenView.updateCellState( map( onLocation ), cellToTurnOn.getCurrentState() );
     }
 
     @Override
@@ -124,6 +125,25 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
         String[] split = time.split( ":" );
         return ( Integer.valueOf( split[ 0 ] ) * 60 ) + Integer.valueOf( split[ 1 ] );
 
+    }
+
+    @NonNull
+    private Cell getCellToTurnOff( String message ) throws RuntimeException {
+        try {
+            return model.markEndOfTrial().orElseThrow( ( ) -> new RuntimeException( message ) );
+        } catch ( Throwable throwable ) {
+            throw new RuntimeException( message );
+        }
+    }
+
+    @NonNull
+    private Location getLocation( Cell cellToTurnOn, String s ) throws RuntimeException {
+        try {
+            return model.findCellLocation( cellToTurnOn ).orElseThrow(
+                    ( ) -> new IllegalStateException( s + cellToTurnOn ) );
+        } catch ( Throwable throwable ) {
+            throw new RuntimeException( s );
+        }
     }
 
 }

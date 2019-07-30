@@ -31,7 +31,7 @@ public class MainActivityModel implements MainModelContract.Model {
     }
 
     @Override
-    public Cell markStartOfTrial( ) {
+    public Optional<Cell> markStartOfTrial( ) {
         return dualBackGame.markStartOfTrial();
     }
 
@@ -51,7 +51,7 @@ public class MainActivityModel implements MainModelContract.Model {
     }
 
     @Override
-    public Trial getCurrentTrial( ) {
+    public Optional<Trial> getCurrentTrial( ) {
         return dualBackGame.getCurrentTrial();
     }
 

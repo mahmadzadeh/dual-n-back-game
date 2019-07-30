@@ -51,7 +51,7 @@ public class DualBackGameTest {
 
     @Test
     public void givenInstanceThenGetNextSoundLocationReturns( ) {
-        Trial trial = sut.getNextTrial();
+        Optional<Trial> trial = sut.getNextTrial();
 
         assertNotNull( trial );
     }

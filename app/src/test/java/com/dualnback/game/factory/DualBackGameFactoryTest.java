@@ -53,7 +53,7 @@ public class DualBackGameFactoryTest {
 
         int trialCount = 0;
 
-        while ( ( trial = dualBackGame.getNextTrial() ) != null ) {
+        while ( dualBackGame.getNextTrial().isPresent() ) {
             // iterate through all trials
             trialCount++;
         }
@@ -64,7 +64,7 @@ public class DualBackGameFactoryTest {
 
         dualBackGame = create( parameters );
 
-        while ( ( trial = dualBackGame.getNextTrial() ) != null ) {
+        while ( dualBackGame.getNextTrial().isPresent() ) {
             // iterate through all trials
             trialCount++;
         }

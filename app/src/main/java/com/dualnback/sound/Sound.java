@@ -12,10 +12,6 @@ public abstract class Sound {
 
     abstract int getSoundResource( );
 
-    public boolean matches( Sound another ) {
-        return this.getSoundResource() == another.getSoundResource();
-    }
-
     public void playSound( ) {
         mediaPlayer.start();
     }

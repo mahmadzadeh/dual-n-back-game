@@ -76,7 +76,8 @@ public class TrialListFactoryTest {
                 expectedLocMatches,
                 TwoBack );
 
-        trialCollection = new GameTrialCollection( version, trials );
+
+        new GameTrialCollection( version, trials );
 
     }
 
@@ -102,28 +103,28 @@ public class TrialListFactoryTest {
     private void expectTwentyFourInvocations( ) {
         when( mockRandomTrialGenerator.nextTrial() )
                 .thenReturn( new Trial( getLocation( 0, 0 ), SSound ) )
-                .thenReturn( new Trial( getLocation( 1, 0 ), newSound( 2 ) ) )
-                .thenReturn( new Trial( getLocation( 2, 0 ), SSound ) )    // sound match
+                .thenReturn( new Trial( getLocation( 0, 1 ), newSound( 2 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 2 ), SSound ) )    // sound match
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 3 ) ) )
-                .thenReturn( new Trial( getLocation( 2, 0 ), SSound ) ) // loc match and sound match
-                .thenReturn( new Trial( getLocation( 1, 0 ), newSound( 5 ) ) )
-                .thenReturn( new Trial( getLocation( 2, 1 ), newSound( 6 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 2 ), SSound ) ) // loc match and sound match
+                .thenReturn( new Trial( getLocation( 0, 1 ), newSound( 5 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 2 ), newSound( 6 ) ) )
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 7 ) ) )
                 .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 8 ) ) )
-                .thenReturn( new Trial( getLocation( 1, 2 ), newSound( 9 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 1 ), newSound( 9 ) ) )
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 10 ) ) )
-                .thenReturn( new Trial( getLocation( 2, 1 ), newSound( 11 ) ) )
+                .thenReturn( new Trial( getLocation( 1, 2 ), newSound( 11 ) ) )
                 .thenReturn( new Trial( getLocation( 2, 2 ), newSound( 12 ) ) )
                 .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 2 ) ) )
-                .thenReturn( new Trial( getLocation( 1, 0 ), newSound( 3 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 1 ), newSound( 3 ) ) )
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 42 ) ) )
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 5 ) ) )
                 .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 6 ) ) )
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 2 ) ) ) // loc match
                 .thenReturn( new Trial( getLocation( 0, 0 ), newSound( 4 ) ) )
                 .thenReturn( new Trial( getLocation( 1, 1 ), newSound( 5 ) ) )
-                .thenReturn( new Trial( getLocation( 2, 0 ), newSound( 6 ) ) )
-                .thenReturn( new Trial( getLocation( 1, 2 ), newSound( 7 ) ) )
+                .thenReturn( new Trial( getLocation( 0, 2 ), newSound( 6 ) ) )
+                .thenReturn( new Trial( getLocation( 2, 1 ), newSound( 7 ) ) )
                 .thenReturn( new Trial( getLocation( 2, 2 ), newSound( 2 ) ) );
     }
 
@@ -131,7 +132,7 @@ public class TrialListFactoryTest {
         return new GSound( i );
     }
 
-    private Location getLocation( int row, int col ) {
+    private Location getLocation( int col, int row ) {
         return new Location( row, col );
     }
 

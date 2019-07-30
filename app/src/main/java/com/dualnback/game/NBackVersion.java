@@ -142,8 +142,7 @@ public enum NBackVersion {
         return range( 0, adapter.size() )
                 .filter( index -> adapter.get( index ).toString().equals( getTextRepresentation() ) )
                 .findFirst()
-                .orElseThrow( ( ) ->
-                        new RuntimeException( "Unable to locate the version in list of version" ) );
+                .orElse( 1 );
     }
 
     public String getTextRepresentation( ) {

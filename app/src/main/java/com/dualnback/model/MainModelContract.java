@@ -16,7 +16,7 @@ interface MainModelContract {
 
         Optional<Cell> markEndOfTrial( );
 
-        Cell markStartOfTrial( );
+        Optional<Cell> markStartOfTrial( );
 
         double getCurrentScore( );
 
@@ -24,6 +24,6 @@ interface MainModelContract {
 
         Optional<Location> findCellLocation( Cell cell );
 
-        Trial getCurrentTrial( );
+        Optional<Trial> getCurrentTrial( );
     }
 }
