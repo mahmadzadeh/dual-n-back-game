@@ -36,7 +36,8 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
         this.model = new MainActivityModel( DualBackGameFactory.create( parameters ) );
 
         this.timer = GameCountDownTimer.INSTANCE( this,
-                getOneRoundTime( parameters.getConfig().singleTrialDurationInMillis(),
+                getOneRoundTime(
+                        parameters.getConfig().singleTrialDurationInMillis(),
                         TOTAL_TRIAL_COUNT ),
                 COUNT_DOWN_INTERVAL_IN_MILLIS,
                 parameters.getConfig().singleTrialDurationInMillis() );

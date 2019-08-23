@@ -61,17 +61,6 @@ public class DualBackGrid {
         return Optional.empty();
     }
 
-    private List<List<Cell>> copy( List<List<Cell>> grid ) {
-        return Arrays.asList( grid.get( 0 ), grid.get( 1 ), grid.get( 2 ) );
-    }
-
-    private boolean validLocation( Location location ) {
-        return location.getRow() <= ROW_CNT &&
-                location.getRow() >= 0 &&
-                location.getCol() <= COL_CNT &&
-                location.getCol() >= 0;
-    }
-
     public Optional<Location> locationOfCell( Cell cell ) {
         for ( int row = 0; row < ROW_CNT; row++ ) {
             for ( int col = 0; col < COL_CNT; col++ ) {
@@ -82,5 +71,16 @@ public class DualBackGrid {
         }
 
         return Optional.empty();
+    }
+
+    private List<List<Cell>> copy( List<List<Cell>> grid ) {
+        return Arrays.asList( grid.get( 0 ), grid.get( 1 ), grid.get( 2 ) );
+    }
+
+    private boolean validLocation( Location location ) {
+        return location.getRow() <= ROW_CNT &&
+                location.getRow() >= 0 &&
+                location.getCol() <= COL_CNT &&
+                location.getCol() >= 0;
     }
 }

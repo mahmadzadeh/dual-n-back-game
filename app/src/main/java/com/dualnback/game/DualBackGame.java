@@ -17,17 +17,19 @@ public class DualBackGame {
     private final DualBackGrid dualBackGrid;
 
     private final GameTrialCollection gameTrialCollection;
-    private UserInput soundMatch;
-    private UserInput locationMatch;
-    private Score score;
+    private Optional<UserInput> soundMatch;
+    private Optional<UserInput> locationMatch;
     private Optional<Trial> currentTrial;
+    private Score score;
 
     public DualBackGame( DualBackGrid dualBackGrid, GameTrialCollection gameTrialCollection ) {
 
         this.dualBackGrid = dualBackGrid;
         this.score = new Score( gameTrialCollection.totalSoundMatches(), gameTrialCollection.totalLocationMatches() );
         this.gameTrialCollection = gameTrialCollection;
-        this.currentTrial = null;
+        this.currentTrial = Optional.empty();
+        this.locationMatch = Optional.empty();
+        this.soundMatch = Optional.empty();
     }
 
     public Optional<Trial> getNextTrial( ) {
@@ -37,16 +39,16 @@ public class DualBackGame {
     }
 
     public boolean recordSoundMatch( ) {
-        this.soundMatch = SoundMatch;
+        this.soundMatch = Optional.of( SoundMatch );
         return currentTrial
-                .map( t -> t.getUserInput().isSoundMatch( this.soundMatch ) )
+                .map( t -> t.getUserInput().isSoundMatch( this.soundMatch.get() ) )
                 .orElse( false );
     }
 
     public boolean recordLocationMatch( ) {
-        this.locationMatch = LocationMatch;
+        this.locationMatch = Optional.of( LocationMatch );
         return currentTrial.
-                map( t -> t.getUserInput().isLocationMatch( this.locationMatch ) )
+                map( t -> t.getUserInput().isLocationMatch( this.locationMatch.get() ) )
                 .orElse( false );
     }
 
@@ -69,10 +71,6 @@ public class DualBackGame {
                 .turnOnCellAtLocation( location );
     }
 
-    public Optional<Trial> nextTrial( ) {
-        return getNextTrial();
-    }
-
     public Optional<Cell> markStartOfTrial( ) {
         currentTrial = getNextTrial();
         return currentTrial.map( ct -> turnOnCellAtLocation( ct.getLocation() ) );
@@ -81,29 +79,36 @@ public class DualBackGame {
     public Optional<Cell> markEndOfTrial( ) {
         currentTrial.ifPresent( trial -> calculateScore( trial ) );
         // clear current sound/location  match
-        this.soundMatch = null;
-        this.locationMatch = null;
+        this.soundMatch = Optional.empty();
+        this.locationMatch = Optional.empty();
 
         return turnOffCurrentOnCell();
     }
 
     private void calculateScore( Trial trial ) {
-        if ( trial.getUserInput().getLocationMatch() == NoInput && this.locationMatch != null ) {
+
+        if ( trial.getUserInput().getLocationMatch() == NoInput && this.locationMatch.isPresent() ) {
             score.update( IncorrectLocation );
-        } else if ( trial.getUserInput().getLocationMatch() == NoInput && this.locationMatch == null ) {
+        } else if ( trial.getUserInput().getLocationMatch() == NoInput && !this.locationMatch.isPresent() ) {
             // do nothing
-        } else if ( trial.getUserInput().getLocationMatch() == this.locationMatch ) {
+        } else if ( trial.getUserInput().getLocationMatch() == LocationMatch && !this.locationMatch.isPresent() ) {
+            score.update( IncorrectLocation );
+        } else if ( trial.getUserInput().getLocationMatch() == LocationMatch && this.locationMatch.isPresent() &&
+                this.locationMatch.get() == LocationMatch ) {
             score.update( CorrectLocation );
-        } else if ( trial.getUserInput().getLocationMatch() != this.locationMatch ) {
+        } else {
             score.update( IncorrectLocation );
         }
-        if ( trial.getUserInput().getSoundMatch() == NoInput && this.soundMatch != null ) {
+
+        if ( trial.getUserInput().getSoundMatch() == NoInput && this.soundMatch.isPresent() ) {
             score.update( IncorrectSound );
-        } else if ( trial.getUserInput().getSoundMatch() == NoInput && this.soundMatch == null ) {
+        } else if ( trial.getUserInput().getSoundMatch() == NoInput && !this.soundMatch.isPresent() ) {
             // do nothing
-        } else if ( trial.getUserInput().getSoundMatch() == this.soundMatch ) {
+        } else if ( trial.getUserInput().getSoundMatch() == SoundMatch && !this.soundMatch.isPresent() ) {
+            score.update( IncorrectSound );
+        } else if ( trial.getUserInput().getSoundMatch() == SoundMatch && this.soundMatch.isPresent() ) {
             score.update( CorrectSound );
-        } else if ( trial.getUserInput().getSoundMatch() != this.soundMatch ) {
+        } else {
             score.update( IncorrectSound );
         }
     }

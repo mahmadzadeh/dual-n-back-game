@@ -19,7 +19,7 @@ public class GameMainThreadHandler extends Handler {
 
     @Override
     public void handleMessage( Message msg ) {
-        Optional<Trial> trial = dualBackGame.nextTrial();
+        Optional<Trial> trial = dualBackGame.getNextTrial();
 
         trial.ifPresent( t -> t.getSound().playSound() );
     }
