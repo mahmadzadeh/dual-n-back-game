@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChartModelTest {
 
-    private static final String TEST_RESOURCES_DIR = "app/src/test/resources";
+    private static final String TEST_RESOURCES_DIR = "src/test/resources";
     private ChartModel chartModel;
 
     @Before

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class DataFileUtilTest {
 
-    private static final String TEST_RESOURCES_DIR = "app/src/test/resources";
+    private static final String TEST_RESOURCES_DIR = "src/test/resources";
 
     @Test
     public void givenDataFileDirThenReadAllDataReadsIt( ) {

@@ -17,7 +17,7 @@ import static org.junit.Assert.fail;
 
 public class FileBasedDaoIntegrationTest {
 
-    private final String TEST_RESOURCES_DIR = "app/src/test/resources";
+    private final String TEST_RESOURCES_DIR = "src/test/resources";
     private File file;
 
     @Before
