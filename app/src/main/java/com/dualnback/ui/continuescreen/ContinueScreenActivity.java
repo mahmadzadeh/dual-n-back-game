@@ -17,7 +17,7 @@ import java.util.Date;
 
 import static com.dualnback.ui.mainscreen.MainActivity.FINAL_SCORE;
 import static com.dualnback.ui.mainscreen.MainActivity.VERSION;
-import static com.dualnback.ui.startscreen.StartScreenActivityIntentUtil.backToStartScreen;
+import static com.dualnback.ui.startscreen.util.StartScreenActivityIntentUtil.backToStartScreen;
 import static com.dualnback.util.IntentUtility.extractFromExtrasWithDefault;
 import static com.dualnback.util.IntentUtility.extractGameVersion;
 import static com.dualnback.util.NumberFormatterUtil.formatScore;

@@ -14,9 +14,10 @@ import com.dualnback.R;
 import com.dualnback.data.settings.SettingsActivity;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.ui.mainscreen.MainActivity;
+import com.dualnback.ui.startscreen.util.Pulsator;
 
 import static android.widget.ArrayAdapter.createFromResource;
-import static com.dualnback.util.ArrayAdapterCopyUtil.copyToRegularArrayList;
+import static com.dualnback.ui.startscreen.util.ArrayAdapterCopyUtil.copyToRegularArrayList;
 
 public class StartScreenActivity extends AppCompatActivity implements StartScreenView {
 

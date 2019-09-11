@@ -1,4 +1,4 @@
-package com.dualnback.util;
+package com.dualnback.ui.startscreen.util;
 
 import android.widget.ArrayAdapter;
 

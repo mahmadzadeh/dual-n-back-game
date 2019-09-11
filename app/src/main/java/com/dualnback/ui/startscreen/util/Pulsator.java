@@ -1,4 +1,4 @@
-package com.dualnback.ui.startscreen;
+package com.dualnback.ui.startscreen.util;
 
 
 import android.animation.ObjectAnimator;

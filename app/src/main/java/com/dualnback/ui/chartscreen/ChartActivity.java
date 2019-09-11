@@ -7,7 +7,7 @@ import android.widget.Button;
 import com.dualnback.R;
 import com.dualnback.data.filesystem.dao.ChartData;
 import com.dualnback.data.filesystem.dao.DataPoint;
-import com.dualnback.ui.startscreen.StartScreenActivityIntentUtil;
+import com.dualnback.ui.startscreen.util.StartScreenActivityIntentUtil;
 import com.dualnback.util.IntentUtility;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
