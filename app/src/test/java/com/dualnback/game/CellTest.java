@@ -1,6 +1,6 @@
 package com.dualnback.game;
 
-import com.dualnback.view.MainScreenView;
+import com.dualnback.ui.mainscreen.MainScreenView;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -2,15 +2,15 @@ package com.dualnback.util;
 
 import android.os.Bundle;
 
-import com.dualnback.ContinueScreenActivity;
-import com.dualnback.dao.DataPoint;
+import com.dualnback.data.filesystem.dao.DataPoint;
 import com.dualnback.game.NBackVersion;
+import com.dualnback.ui.continuescreen.ContinueScreenActivity;
 
 import java.util.Date;
 import java.util.Optional;
 
-import static com.dualnback.MainActivity.FINAL_SCORE;
-import static com.dualnback.MainActivity.VERSION;
+import static com.dualnback.ui.mainscreen.MainActivity.FINAL_SCORE;
+import static com.dualnback.ui.mainscreen.MainActivity.VERSION;
 
 public class IntentUtility {
 

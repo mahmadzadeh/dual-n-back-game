@@ -1,12 +1,12 @@
 package com.dualnback.game;
 
 
-import com.dualnback.location.Location;
-import com.dualnback.random.RandomTrialGenerator;
-import com.dualnback.sound.BSound;
-import com.dualnback.sound.JSound;
-import com.dualnback.sound.KSound;
-import com.dualnback.sound.SSound;
+import com.dualnback.data.location.Location;
+import com.dualnback.data.sound.BSound;
+import com.dualnback.data.sound.JSound;
+import com.dualnback.data.sound.KSound;
+import com.dualnback.data.sound.SSound;
+import com.dualnback.data.util.random.RandomTrialGenerator;
 
 import org.junit.Before;
 import org.junit.Test;

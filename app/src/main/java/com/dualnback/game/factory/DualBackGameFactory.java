@@ -1,10 +1,10 @@
 package com.dualnback.game.factory;
 
+import com.dualnback.data.util.random.RandomTrialGenerator;
 import com.dualnback.game.DualBackGame;
 import com.dualnback.game.DualBackGrid;
 import com.dualnback.game.GameTrialCollection;
 import com.dualnback.game.Trial;
-import com.dualnback.random.RandomTrialGenerator;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package com.dualnback.util;
 
-import com.dualnback.dao.DataPoint;
-import com.dualnback.io.FileIO;
-import com.dualnback.io.FileIOException;
+import com.dualnback.data.filesystem.dao.DataPoint;
+import com.dualnback.data.filesystem.io.FileIO;
+import com.dualnback.data.filesystem.io.FileIOException;
+import com.dualnback.data.filesystem.util.JSONUtil;
 
 import org.json.JSONException;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import static com.dualnback.util.JSONUtil.DEFAULT_N_BACK_VERSION;
+import static com.dualnback.data.filesystem.util.JSONUtil.DEFAULT_N_BACK_VERSION;
 import static junit.framework.Assert.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 

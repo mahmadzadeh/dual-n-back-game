@@ -1,7 +1,8 @@
 package com.dualnback.model;
 
-import com.dualnback.dao.DataPoint;
+import com.dualnback.data.filesystem.dao.DataPoint;
 import com.dualnback.game.NBackVersion;
+import com.dualnback.ui.chartscreen.ChartModel;
 
 import org.junit.Before;
 import org.junit.Test;

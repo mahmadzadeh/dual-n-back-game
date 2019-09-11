@@ -1,15 +1,15 @@
 package com.dualnback.game.factory;
 
+import com.dualnback.data.util.random.RandomTrialGenerator;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.game.Trial;
-import com.dualnback.random.RandomTrialGenerator;
 import com.dualnback.util.IntegerRange;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.dualnback.MainActivity.TOTAL_TRIAL_COUNT;
-import static com.dualnback.random.RandomNumberGenerator.next_N_DistinctRandomIntsWithinRange;
+import static com.dualnback.data.util.random.RandomNumberGenerator.next_N_DistinctRandomIntsWithinRange;
+import static com.dualnback.ui.mainscreen.MainActivity.TOTAL_TRIAL_COUNT;
 import static java.util.stream.IntStream.range;
 
 public class TrialListFactory {

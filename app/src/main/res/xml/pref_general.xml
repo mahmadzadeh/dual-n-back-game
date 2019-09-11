@@ -9,7 +9,7 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_feedback_vibration"/>
 
-    <com.dualnback.settings.IntegerEditTextPreference
+    <com.dualnback.data.settings.IntegerEditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_display_name"
         android:inputType="number"

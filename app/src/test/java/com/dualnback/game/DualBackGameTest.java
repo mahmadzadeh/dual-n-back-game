@@ -2,10 +2,10 @@ package com.dualnback.game;
 
 import android.support.annotation.NonNull;
 
+import com.dualnback.data.location.Location;
+import com.dualnback.data.sound.BSound;
+import com.dualnback.data.sound.SSound;
 import com.dualnback.game.factory.GridFactory;
-import com.dualnback.location.Location;
-import com.dualnback.sound.BSound;
-import com.dualnback.sound.SSound;
 
 import org.junit.Before;
 import org.junit.Test;

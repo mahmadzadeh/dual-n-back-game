@@ -1,7 +1,7 @@
 package com.dualnback.game;
 
 
-import com.dualnback.dao.DataPoint;
+import com.dualnback.data.filesystem.dao.DataPoint;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

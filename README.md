@@ -15,3 +15,18 @@ General Settings:
 - Each round duration 
 - Starting level (not implemented yet)
 
+Dir structure
+Java
+  |
+  com
+    |
+    dualnback
+        |
+        data
+          |
+          filesystem
+               |
+               FileIO
+               FileIOException
+               IO
+               ChartData

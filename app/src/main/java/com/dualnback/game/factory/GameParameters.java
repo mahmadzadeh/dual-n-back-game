@@ -1,10 +1,10 @@
 package com.dualnback.game.factory;
 
+import com.dualnback.data.location.LocationCollection;
+import com.dualnback.data.settings.ApplicationConfig;
+import com.dualnback.data.sound.SoundCollection;
 import com.dualnback.game.NBackVersion;
-import com.dualnback.location.LocationCollection;
-import com.dualnback.settings.ApplicationConfig;
-import com.dualnback.sound.SoundCollection;
-import com.dualnback.view.MainScreenView;
+import com.dualnback.ui.mainscreen.MainScreenView;
 
 public class GameParameters {
 

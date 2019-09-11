@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static com.dualnback.MainActivity.VERSION;
+import static com.dualnback.ui.mainscreen.MainActivity.VERSION;
 import static com.dualnback.util.IntentUtility.extractFromExtrasWithDefault;
 import static com.dualnback.util.IntentUtility.extractGameVersion;
 import static org.assertj.core.api.Assertions.assertThat;

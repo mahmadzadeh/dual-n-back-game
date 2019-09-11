@@ -9,9 +9,9 @@ import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.dualnback.util.timer.TimerUtil.formatTime;
-import static com.dualnback.util.timer.TimerUtil.getOneRoundTime;
-import static com.dualnback.util.timer.TimerUtil.isEndOfTrialYet;
+import static com.dualnback.ui.mainscreen.util.TimerUtil.formatTime;
+import static com.dualnback.ui.mainscreen.util.TimerUtil.getOneRoundTime;
+import static com.dualnback.ui.mainscreen.util.TimerUtil.isEndOfTrialYet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 

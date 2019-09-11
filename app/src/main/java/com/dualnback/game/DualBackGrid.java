@@ -1,6 +1,6 @@
 package com.dualnback.game;
 
-import com.dualnback.location.Location;
+import com.dualnback.data.location.Location;
 
 import java.util.Arrays;
 import java.util.List;

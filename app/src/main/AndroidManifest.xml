@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StartScreenActivity"
+            android:name=".ui.startscreen.StartScreenActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
@@ -23,31 +23,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.mainscreen.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_main"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ContinueScreenActivity"
+            android:name=".ui.continuescreen.ContinueScreenActivity"
             android:label="@string/titleContinueScreen"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".view.ChartActivity"
+            android:name=".ui.chartscreen.ChartActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_chart"
             android:noHistory="true"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name=".data.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".StartScreenActivity">
+            android:parentActivityName=".ui.startscreen.StartScreenActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dualnback.StartScreenActivity"/>
+                android:value="com.dualnback.ui.startscreen.StartScreenActivity"/>
         </activity>
     </application>
 

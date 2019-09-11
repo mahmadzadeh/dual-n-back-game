@@ -1,8 +1,8 @@
 package com.dualnback.game;
 
 
-import com.dualnback.location.Location;
-import com.dualnback.sound.Sound;
+import com.dualnback.data.location.Location;
+import com.dualnback.data.sound.Sound;
 
 public class Trial {
 

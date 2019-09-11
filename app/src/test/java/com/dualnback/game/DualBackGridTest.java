@@ -2,8 +2,8 @@ package com.dualnback.game;
 
 import android.support.annotation.NonNull;
 
-import com.dualnback.location.Location;
-import com.dualnback.view.MainScreenView;
+import com.dualnback.data.location.Location;
+import com.dualnback.ui.mainscreen.MainScreenView;
 
 import org.junit.Before;
 import org.junit.Test;
