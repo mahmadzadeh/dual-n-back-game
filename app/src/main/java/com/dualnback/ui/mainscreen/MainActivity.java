@@ -85,9 +85,21 @@ public class MainActivity extends AppCompatActivity implements MainScreenView {
             presenter.handleSoundButtonClick();
         } );
 
-        presenter.startTimer();
-
         presenter.startTrial();
+    }
+
+    @Override
+    public void onStart( ) {
+        super.onStart();
+
+        presenter.startTimer();
+    }
+
+    @Override
+    public void onPause( ) {
+        super.onPause();
+
+        presenter.pauseTimer();
     }
 
     public void updateLocationFeedBackImage( ) {

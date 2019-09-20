@@ -17,5 +17,7 @@ public interface MainViewContract {
         void onFinish( );
 
         void startTimer( );
+
+        void pauseTimer( );
     }
 }

@@ -82,7 +82,7 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
 
         mainScreenView.setScoreTextRound( formatScore( model.getCurrentScore() ) );
 
-        Location offLocation = getLocation( cellToTurnOff, "Unable to locate cell to turn off " );
+        Location offLocation = getLocationOrException( cellToTurnOff, "Unable to locate cell to turn off " );
 
         mainScreenView.updateCellState(
                 map( offLocation ), cellToTurnOff.getCurrentState()
@@ -98,7 +98,7 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
         model.getCurrentTrial().ifPresent( c -> c.getSound().playSound() );
 
         if ( cellToTurnOn.isPresent() ) {
-            Location onLocation = getLocation( cellToTurnOn.get(), "Unable to locate cell to turn on" );
+            Location onLocation = getLocationOrException( cellToTurnOn.get(), "Unable to locate cell to turn on" );
             mainScreenView.updateCellState( map( onLocation ), cellToTurnOn.get().getCurrentState() );
         }
 
@@ -112,6 +112,11 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
     @Override
     public void startTimer( ) {
         timer.start();
+    }
+
+    @Override
+    public void pauseTimer( ) {
+        timer.onPause();
     }
 
     private boolean isTimeToChangeTimeTxtColour( String now ) {
@@ -136,7 +141,7 @@ public class MainActivityPresenter implements MainViewContract.Presenter {
     }
 
     @NonNull
-    private Location getLocation( Cell cellToTurnOn, String s ) throws RuntimeException {
+    private Location getLocationOrException( Cell cellToTurnOn, String s ) throws RuntimeException {
         try {
             return model.findCellLocation( cellToTurnOn ).orElseThrow(
                     ( ) -> new IllegalStateException( s + cellToTurnOn ) );
