@@ -1,7 +1,5 @@
 package com.dualnback.game;
 
-import android.support.annotation.NonNull;
-
 import com.dualnback.data.location.Location;
 import com.dualnback.data.sound.BSound;
 import com.dualnback.data.sound.SSound;
@@ -16,6 +14,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import androidx.annotation.NonNull;
 
 import static com.dualnback.game.NBackVersion.TwoBack;
 import static org.junit.Assert.assertEquals;

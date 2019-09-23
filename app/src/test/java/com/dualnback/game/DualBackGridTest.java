@@ -1,7 +1,5 @@
 package com.dualnback.game;
 
-import android.support.annotation.NonNull;
-
 import com.dualnback.data.location.Location;
 import com.dualnback.ui.mainscreen.MainScreenView;
 
@@ -14,6 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import androidx.annotation.NonNull;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

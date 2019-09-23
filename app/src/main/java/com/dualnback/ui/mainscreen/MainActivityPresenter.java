@@ -1,7 +1,6 @@
 package com.dualnback.ui.mainscreen;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 
 import com.dualnback.data.location.Location;
 import com.dualnback.game.Cell;
@@ -10,6 +9,8 @@ import com.dualnback.game.factory.GameParameters;
 import com.dualnback.ui.mainscreen.util.GameCountDownTimer;
 
 import java.util.Optional;
+
+import androidx.annotation.NonNull;
 
 import static com.dualnback.game.LocationToImageMapper.map;
 import static com.dualnback.ui.mainscreen.MainActivity.COUNT_DOWN_INTERVAL_IN_MILLIS;

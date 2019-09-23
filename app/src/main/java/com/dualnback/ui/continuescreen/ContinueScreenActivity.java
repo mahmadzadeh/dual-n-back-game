@@ -2,8 +2,6 @@ package com.dualnback.ui.continuescreen;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +12,9 @@ import com.dualnback.ui.chartscreen.ChartActivity;
 import com.dualnback.util.DateUtil;
 
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.dualnback.ui.mainscreen.MainActivity.FINAL_SCORE;
 import static com.dualnback.ui.mainscreen.MainActivity.VERSION;

@@ -1,7 +1,6 @@
 package com.dualnback.ui.chartscreen;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.dualnback.R;
@@ -16,6 +15,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.dualnback.ui.chartscreen.ChartUtil.dataSetForYAxis;
 import static com.dualnback.ui.chartscreen.ChartUtil.setUpChart;

@@ -2,7 +2,6 @@ package com.dualnback.ui.startscreen;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +14,8 @@ import com.dualnback.data.settings.SettingsActivity;
 import com.dualnback.game.NBackVersion;
 import com.dualnback.ui.mainscreen.MainActivity;
 import com.dualnback.ui.startscreen.util.Pulsator;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static android.widget.ArrayAdapter.createFromResource;
 import static com.dualnback.ui.startscreen.util.ArrayAdapterCopyUtil.copyToRegularArrayList;
