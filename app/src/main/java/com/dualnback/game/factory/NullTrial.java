@@ -10,4 +10,11 @@ public class NullTrial extends Trial {
         super( null, null );
         setUserInput( new ExpectedUserInput( UserInput.NoInput, UserInput.NoInput ) );
     }
+
+    public NullTrial( String s ) {
+        super( null, null );
+        setUserInput( new ExpectedUserInput( UserInput.NoInput, UserInput.NoInput ) );
+    }
+
+
 }
