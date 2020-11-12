@@ -7,3 +7,6 @@
 /captures
 .externalNativeBuild
 /app/release
+/projectFilesBackup/.idea/workspace.xml
+/Move_codebase_to_Kotlin.patch
+/gradle/wrapper/gradle-wrapper.jar
